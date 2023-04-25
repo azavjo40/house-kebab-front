@@ -160,7 +160,13 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
             {product?.additions?.map((item: IAddition, index: number) => (
               <FormControlLabel
                 key={index}
-                control={<Checkbox required onChange={(event) => handlecheckboxChange(event, index)} />}
+                control={
+                  <Checkbox
+                    checked={item?.isChoosed}
+                    required
+                    onChange={(event) => handlecheckboxChange(event, index)}
+                  />
+                }
                 label={item?.title + " " + item?.cost + " zł"}
                 className="ml-1"
               />

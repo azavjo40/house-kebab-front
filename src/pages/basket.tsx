@@ -15,7 +15,8 @@ export default function Basket() {
       let reduceResults = 0;
       if (product?.additions !== undefined) {
         reduceResults = product?.additions?.reduce((accumulator: number, currentValue: IAddition) => {
-          return accumulator + currentValue?.cost;
+          if (currentValue?.isChoosed) return accumulator + currentValue?.cost;
+          return accumulator;
         }, 0);
       }
       setCost((num) => Math.floor(num + resuls + reduceResults));

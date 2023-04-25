@@ -14,7 +14,8 @@ export function BasketCard({ product }: IProductCardProps) {
     setCost(0);
     if (product?.additions !== undefined) {
       let resuls = product?.additions?.reduce((accumulator: number, currentValue: IAddition) => {
-        return accumulator + currentValue?.cost;
+        if (currentValue?.isChoosed) return accumulator + currentValue?.cost;
+        return accumulator;
       }, 0);
       setCost((num) => num + resuls);
     }
