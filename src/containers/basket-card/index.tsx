@@ -8,7 +8,7 @@ export interface IProductCardProps {
 
 export function BasketCard({ product }: IProductCardProps) {
   return (
-    <div className="mb-10">
+    <div className="">
       <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div className="flex flex-row justify-between">
         <h1 className="font-black">1 {product?.title}</h1> <span className="font-black">{product?.cost} zł</span>
