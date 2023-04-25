@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+}
+
+.css-jpln7h-MuiTabs-scroller {
+  overflow-x: auto !important;
+}
