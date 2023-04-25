@@ -9,6 +9,7 @@ export default function Basket() {
   const [cost, setCost] = useState(0);
 
   useEffect(() => {
+    setCost(0);
     basketData?.map((product: IProduct) => {
       const resuls = product.cost;
       let reduceResults = 0;
@@ -17,8 +18,7 @@ export default function Basket() {
           return accumulator + currentValue?.cost;
         }, 0);
       }
-
-      setCost(cost + resuls + reduceResults);
+      setCost((num) => Math.floor(num + resuls + reduceResults));
     });
   }, [basketData]);
   return (
