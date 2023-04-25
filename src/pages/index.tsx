@@ -15,13 +15,13 @@ export default function Home() {
   return (
     <div className="w-full h-full">
       <Banner />
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={valueTab} onChange={handleChange} aria-label="basic tabs example">
+      <div className="overflow-y-auto">
+        <Tabs value={valueTab} onChange={handleChange} aria-label="basic tabs example" className="w-[1170px]">
           {categories.map((category: any) => (
             <Tab label={category?.title} key={category?.index} />
           ))}
         </Tabs>
-      </Box>
+      </div>
       <div className="p-4 md:p-8 flex flex-row flex-wrap w-full h-full justify-around mb-14">
         {products
           .filter((product: IProduct) => product?.category?.index === valueTab)
