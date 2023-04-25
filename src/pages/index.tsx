@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
-import { Banner } from "@/containers/banner";
 import { ProductCard } from "@/containers/product-card";
 import { IProduct } from "@/types";
 import { categories, products } from "@/constant";
+import { Banner } from "@/containers/banner";
 
 export default function Home() {
   const [valueTab, setValueTab] = useState(0);
