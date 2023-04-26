@@ -100,8 +100,6 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   };
 
   const handleAddToBasket = () => {
-    console.log(order);
-    console.log(product);
     if (!product.category?.isAddition) addOneToBasket(order);
     else {
       addOneToBasket(order);

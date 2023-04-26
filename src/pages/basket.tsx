@@ -34,18 +34,18 @@ export default function Basket() {
   };
 
   return (
-    <div className="flex overflow-y-auto">
+    <div className="flex h-full overflow-hidden">
       <div className={`${openFormAdderss ? "flex" : "hidden"} md:flex w-full`}>
         <FormAddress cost={cost} setOpenFormAdderss={setOpenFormAdderss} />
       </div>
 
       <div
-        className={`w-full h-full md:min-h-[90vh] md:w-[40%] overflow-y-auto px-5 py-5 mb-[160px] md:mb-0 md:border-l-2 flex flex-col justify-between relative ${
+        className={`w-full h-full md:min-h-[90vh] md:w-[40%] overflow-y-hidden px-5 py-5 mb-[160px] md:mb-0 md:border-l-2 flex flex-col justify-between relative ${
           openFormAdderss ? "hidden md:flex" : "flex"
         }`}
       >
         <h1 className="text-2xl font-black">Koszyk</h1>
-        <div className="flex flex-col w-full mb-[200px]">
+        <div className="flex flex-col w-full h-full mb-[200px] md:mb-10 overflow-y-auto">
           {basketData?.map((order: IOrder, index: number) => (
             <BasketCard
               key={order?.id + index}

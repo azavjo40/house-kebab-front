@@ -1,88 +1,147 @@
 import { useGeneral } from "@/hooks/useGeneral";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { TextField, Box, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { useState } from "react";
 
 export interface IFormAddressProps {
   cost: number;
   setOpenFormAdderss: any;
 }
+export interface IForm {
+  name: string;
+  phone: string;
+  street: string;
+  home: string;
+  apartment: string;
+  entrance: string;
+  orderMethod: string;
+}
 
 export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressProps) {
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    street: "",
+    home: "",
+    apartment: "",
+    entrance: "",
+    orderMethod: "delivery",
+  });
   const { basketData } = useGeneral();
+  const [error, setError] = useState<any>();
+
+  const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((pre: IForm) => ({ ...pre, [event.target.name]: event.target.value }));
+    if (event.target.required) {
+      setError((pre: any) => ({ ...pre, [event.target.name]: !event.target.value }));
+    }
+  };
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    console.log(form);
+  };
+
+  const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((pre: IForm) => ({ ...pre, [event.target.name]: event.target.value }));
+  };
 
   return (
     <div className="p-5 w-full">
-      <form>
+      <form onSubmit={handleSubmit}>
         <ArrowBackIcon onClick={() => setOpenFormAdderss(false)} className="cursor-pointer flex md:hidden" />
-        <h1 className="mt-2 text-center mb-10 text-2xl">Dane osobowe</h1>
-        <div className="grid md:grid-cols-2 md:gap-6">
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="text"
-              name="name"
-              id="name"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="name"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Imię
-            </label>
-          </div>
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="tel"
-              pattern="\+48[0-9]{9}"
-              name="phone"
-              id="phone"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="phone"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Numer telefonu +48727266092
-            </label>
-          </div>
+        <div className="flex flex-col sm:flex-row mt-2 mb-10 justify-between">
+          <h1 className="text-xl sm:text-2xl">Wybierz sposób odbioru zamówienia</h1>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="delivery"
+            name="orderMethod"
+            onChange={handleChangeCheckbox}
+          >
+            <div className="flex">
+              <FormControlLabel value="delivery" control={<Radio />} label="Dostawa" />
+              <FormControlLabel value="pickup" control={<Radio />} label="Odbiór" />
+            </div>
+          </RadioGroup>
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="text"
-              name="street"
-              id="street"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="street"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Ulica
-            </label>
-          </div>
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="number"
-              name="home"
-              id="home"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="home"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Dom
-            </label>
-          </div>
+          <TextField
+            id="outlined-basic"
+            label="Imię"
+            name="name"
+            variant="outlined"
+            className="mb-5"
+            required
+            error={error?.name}
+            value={form?.name}
+            onChange={handleChangeTextField}
+            type="name"
+          />
+          <TextField
+            id="outlined-basic"
+            label="Numer telefonu +48727266092"
+            name="phone"
+            variant="outlined"
+            className="mb-5"
+            required
+            error={error?.phone}
+            value={form?.phone}
+            onChange={handleChangeTextField}
+            type="phone"
+          />
         </div>
+        {form?.orderMethod === "delivery" && (
+          <>
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <TextField
+                id="outlined-basic"
+                label="Ulica"
+                name="street"
+                variant="outlined"
+                className="mb-5"
+                required
+                error={error?.street}
+                value={form?.street}
+                onChange={handleChangeTextField}
+                type="street"
+              />
+              <TextField
+                id="outlined-basic"
+                label="Numer Dom"
+                name="home"
+                variant="outlined"
+                className="mb-5"
+                required
+                error={error?.home}
+                value={form?.home}
+                onChange={handleChangeTextField}
+                type="home"
+              />
+            </div>
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <TextField
+                id="outlined-basic"
+                label="Mieszkanie"
+                name="apartment"
+                variant="outlined"
+                className="mb-5"
+                value={form?.apartment}
+                onChange={handleChangeTextField}
+                type="apartment"
+              />
+              <TextField
+                id="outlined-basic"
+                label="Wejście"
+                name="entrance"
+                variant="outlined"
+                className="mb-5"
+                value={form?.entrance}
+                onChange={handleChangeTextField}
+                type="entrance"
+              />
+            </div>
+          </>
+        )}
         <div className="w-full flex md:justify-end">
           <button
             type="submit"
