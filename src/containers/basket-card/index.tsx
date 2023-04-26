@@ -1,7 +1,6 @@
-import { IAddition, IOrder, IProduct } from "@/types";
+import { IOrder } from "@/types";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useState } from "react";
 
 export interface IProductCardProps {
   order: IOrder;
@@ -12,7 +11,7 @@ export interface IProductCardProps {
 
 export function BasketCard({ order, addOneMoreOrder, removeOneMoreOrder, index }: IProductCardProps) {
   return (
-    <div className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
+    <div className="my-6 border-gray-200 dark:border-gray-700 lg:my-8">
       <div className="flex flex-row justify-between">
         <h1 className="font-black">
           {order?.count} {order?.title}

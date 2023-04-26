@@ -1,14 +1,16 @@
-import * as React from "react";
+import { useState } from "react";
 
 export function Footer() {
+  const [year] = useState(new Date().getFullYear());
+
   return (
-    <footer className="bg-white dark:bg-gray-900 p-10 mb-10 md:mb-0">
+    <footer className="bg-white dark:bg-gray-900 px-4 pb-16 pt-4 mb-12 md:mb-0 relative">
       <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div className="flex items-center justify-between">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-          © 2023
+          © {year}
           <a href="https://flowbite.com/" className="hover:underline">
-            House Kebab™
+            House Kebab™ All Rights Reserved.
           </a>
         </span>
         <div className="flex space-x-6 sm:justify-center sm:mt-0">

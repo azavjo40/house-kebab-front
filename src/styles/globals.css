@@ -2,5 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+html {
+  min-height: 100%;
+  height: 100%;
+}
+
+._app {
+  font-family: "Open Sans", sans-serif;
+  min-height: 100%;
+  height: 100%;
 }

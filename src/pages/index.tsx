@@ -15,14 +15,14 @@ export default function Home() {
   return (
     <div className="w-full h-full">
       <Banner />
-      <div className="overflow-y-auto">
+      <div className="overflow-x-auto">
         <Tabs value={valueTab} onChange={handleChange} aria-label="basic tabs example" className="w-[1170px]">
           {categories.map((category: any) => (
             <Tab label={category?.title} key={category?.index} />
           ))}
         </Tabs>
       </div>
-      <div className="p-4 md:p-8 flex flex-row flex-wrap w-full h-full justify-around mb-14">
+      <div className="p-4 md:p-8 flex flex-row flex-wrap w-full justify-around">
         {products
           .filter((product: IProduct) => product?.category?.index === valueTab)
           .map((product: IProduct, index) => (

@@ -1,3 +1,4 @@
+import FormAddress from "@/components/form-address";
 import { BasketCard } from "@/containers/basket-card";
 import { useGeneral } from "@/hooks/useGeneral";
 import { IOrder } from "@/types";
@@ -13,6 +14,7 @@ function calculateCost(basketData: IOrder[]) {
 export default function Basket() {
   const { basketData, updateRewriteAllBasket, removeOneFromBasket } = useGeneral();
   const [cost, setCost] = useState(0);
+  const [openFormAdderss, setOpenFormAdderss] = useState(false);
 
   useEffect(() => {
     setCost(calculateCost(basketData));
@@ -32,27 +34,41 @@ export default function Basket() {
   };
 
   return (
-    <div className="w-full h-full overflow-y-auto px-5 py-5 mb-[160px] md:mb-0">
-      <h1 className="text-2xl font-black">Koszyk</h1>
-      <div className="flex flex-col w-full mb-[200px">
-        {basketData?.map((order: IOrder, index: number) => (
-          <BasketCard
-            key={order?.id + index}
-            order={order}
-            addOneMoreOrder={addOneMoreOrder}
-            removeOneMoreOrder={removeOneMoreOrder}
-            index={index}
-          />
-        ))}
+    <div className="flex overflow-y-auto">
+      <div className={`${openFormAdderss ? "flex" : "hidden"} md:flex w-full`}>
+        <FormAddress cost={cost} setOpenFormAdderss={setOpenFormAdderss} />
       </div>
-      <div className="flex flex-col fixed bottom-[40px] md:bottom-0 w-full bg-white left-0 px-5 md:relative md:mt-16 h-[110px]">
-        <div className="flex justify-between">
-          <span>Razem</span> <span>{cost} zł</span>
+
+      <div
+        className={`w-full h-full md:min-h-[90vh] md:w-[40%] overflow-y-auto px-5 py-5 mb-[160px] md:mb-0 md:border-l-2 flex flex-col justify-between relative ${
+          openFormAdderss ? "hidden md:flex" : "flex"
+        }`}
+      >
+        <h1 className="text-2xl font-black">Koszyk</h1>
+        <div className="flex flex-col w-full mb-[200px]">
+          {basketData?.map((order: IOrder, index: number) => (
+            <BasketCard
+              key={order?.id + index}
+              order={order}
+              addOneMoreOrder={addOneMoreOrder}
+              removeOneMoreOrder={removeOneMoreOrder}
+              index={index}
+            />
+          ))}
         </div>
-        <div className="w-full flex justify-end mt-5">
-          <Button variant="contained" className="rounded-2xl w-full md:w-[200px] bg-blue-400 py-3 font-black text-sm">
-            Kasa ({cost} zł)
-          </Button>
+        <div className="flex flex-col fixed bottom-[40px] md:bottom-0 md:relative w-full bg-white right-0 px-5 h-[110px] md:h-[50px]">
+          <div className="flex justify-between">
+            <span>Razem</span> <span>{cost} zł</span>
+          </div>
+          <div className="w-full flex justify-end mt-5">
+            <Button
+              variant="contained"
+              className="rounded-2xl w-full md:w-[200px] bg-blue-400 py-3 font-black text-sm md:hidden"
+              onClick={() => setOpenFormAdderss(true)}
+            >
+              Kasa ({cost} zł)
+            </Button>
+          </div>
         </div>
       </div>
     </div>

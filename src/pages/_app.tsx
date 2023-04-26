@@ -1,5 +1,6 @@
 import { CustomizedSnackbars } from "@/components/customized-snackbars";
 import { DenseAppBar } from "@/containers/dense-app-bar";
+import { Footer } from "@/containers/footer";
 import { MobileAppBar } from "@/containers/mobile-app-bar";
 import { GeneralContextProvider } from "@/stores/general";
 import "@/styles/globals.css";
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <DenseAppBar />
       <Component {...pageProps} />
       <MobileAppBar />
+      <Footer />
       <CustomizedSnackbars />
     </GeneralContextProvider>
   );
