@@ -1,33 +1,48 @@
 import { BasketCard } from "@/containers/basket-card";
 import { useGeneral } from "@/hooks/useGeneral";
-import { IAddition, IProduct } from "@/types";
+import { IOrder } from "@/types";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
+function calculateCost(basketData: IOrder[]) {
+  return basketData?.reduce((accumulator: number, currentValue: IOrder) => {
+    return Math.floor(accumulator + currentValue?.cost * currentValue?.count);
+  }, 0);
+}
+
 export default function Basket() {
-  const { basketData } = useGeneral();
+  const { basketData, updateRewriteAllBasket, removeOneFromBasket } = useGeneral();
   const [cost, setCost] = useState(0);
 
   useEffect(() => {
-    setCost(0);
-    basketData?.map((product: IProduct) => {
-      const resuls = product.cost;
-      let reduceResults = 0;
-      if (product?.additions !== undefined) {
-        reduceResults = product?.additions?.reduce((accumulator: number, currentValue: IAddition) => {
-          if (currentValue?.isChoosed) return accumulator + currentValue?.cost;
-          return accumulator;
-        }, 0);
-      }
-      setCost((num) => Math.floor(num + resuls + reduceResults));
-    });
+    setCost(calculateCost(basketData));
   }, [basketData]);
+
+  const addOneMoreOrder = (index: number) => {
+    basketData[index].count += 1;
+    updateRewriteAllBasket([...basketData]);
+  };
+
+  const removeOneMoreOrder = (index: number) => {
+    if (basketData[index].count === 1) removeOneFromBasket(index);
+    else {
+      basketData[index].count -= 1;
+      updateRewriteAllBasket([...basketData]);
+    }
+  };
+
   return (
     <div className="w-full h-full overflow-y-auto px-5 py-5 mb-[160px] md:mb-0">
       <h1 className="text-2xl font-black">Koszyk</h1>
       <div className="flex flex-col w-full mb-[200px">
-        {basketData?.map((product: IProduct, index: number) => (
-          <BasketCard key={product?.id + index} product={product} />
+        {basketData?.map((order: IOrder, index: number) => (
+          <BasketCard
+            key={order?.id + index}
+            order={order}
+            addOneMoreOrder={addOneMoreOrder}
+            removeOneMoreOrder={removeOneMoreOrder}
+            index={index}
+          />
         ))}
       </div>
       <div className="flex flex-col fixed bottom-[40px] md:bottom-0 w-full bg-white left-0 px-5 md:relative md:mt-16 h-[110px]">

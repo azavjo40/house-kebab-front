@@ -1,17 +1,23 @@
 import { createContext, useState } from "react";
 import { IGeneralContext, GeneralPropsType, IErrorData } from "./generalTypes";
+import { IOrder } from "@/types";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
 export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
-  const [basketData, setBasketData] = useState([]);
+  const [basketData, setBasketData] = useState<IOrder[]>([]);
   const [errorData, setErrorData] = useState<IErrorData>({ message: "", type: "" });
-  const addToBasket = (data: any) => {
-    const newBasketData: any = [...data, ...basketData];
+
+  const addOneToBasket = (data: IOrder) => {
+    const newBasketData: IOrder[] = [data, ...basketData];
     setBasketData(newBasketData);
   };
 
-  const removeToBasket = (index: number) => {
+  const updateRewriteAllBasket = (data: IOrder[]) => {
+    setBasketData(data);
+  };
+
+  const removeOneFromBasket = (index: number) => {
     basketData.splice(index, 1);
     setBasketData([...basketData]);
   };
@@ -21,7 +27,9 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     setTimeout(() => setErrorData({ message: "", type: "" }), 3000);
   };
   return (
-    <GeneralContext.Provider value={{ basketData, addToBasket, removeToBasket, errorData, setError }}>
+    <GeneralContext.Provider
+      value={{ basketData, addOneToBasket, removeOneFromBasket, errorData, setError, updateRewriteAllBasket }}
+    >
       {children}
     </GeneralContext.Provider>
   );

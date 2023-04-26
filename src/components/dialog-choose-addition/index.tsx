@@ -1,17 +1,15 @@
-import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGeneral } from "@/hooks/useGeneral";
-import AddIcon from "@mui/icons-material/Add";
 import { Checkbox, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Select } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { IAddition, IProduct } from "@/types";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import { styled } from "@mui/material/styles";
+import { IAddition, IOrder, IProduct } from "@/types";
+import { BootstrapDialogTitle } from "../bootstrap-dialog-title";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -22,104 +20,93 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export interface IDialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-}
-
-function BootstrapDialogTitle(props: IDialogTitleProps) {
-  const { children, onClose, ...other } = props;
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-}
-
 export interface IDialogChooseAdditionProps {
   product: IProduct;
 }
 
 export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
-  const [value, setValue] = useState("Łagodny");
   const [open, setOpen] = useState(false);
-  const { addToBasket, setError } = useGeneral();
-  const [cost, setCost] = useState(0);
-  const [products, setProducts] = useState<Array<IProduct>>([product]);
+  const { addOneToBasket, setError } = useGeneral();
+  const [order, setOrder] = useState<IOrder>({
+    title: product?.title,
+    sauce: product?.sauce,
+    count: 1,
+    additions: product?.additions,
+    cost: product?.cost,
+    category: product?.category,
+    id: product?.id,
+  });
 
-  const countCost = () => {
-    const result: number | undefined = product?.additions?.reduce((accumulator: number, currentValue: IAddition) => {
-      if (currentValue?.isChoosed) return accumulator + currentValue?.cost;
-      return accumulator;
-    }, product?.cost);
-    setCost(result ? result : 0);
+  useEffect(() => {
+    if (product.category?.isAddition) product.sauce = "Łagodny";
+  }, []);
+
+  const makeOrder = (product: IProduct, count: number = 1) => {
+    const additions = product?.additions?.filter((item: IAddition) => item.isChoosed);
+    const cost =
+      additions?.reduce((accumulator: number, currentValue: IAddition) => {
+        return Math.floor(accumulator + currentValue?.cost);
+      }, product?.cost) ||
+      product?.cost ||
+      0;
+    setOrder({
+      title: product?.title,
+      sauce: product?.sauce,
+      count: count,
+      additions,
+      cost,
+      category: product?.category,
+      id: product?.id,
+    });
   };
+
+  useEffect(() => {
+    makeOrder(product, 1);
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
-    setProducts([product]);
   };
 
   const handleClickOpen = () => {
-    countCost();
     if (!product.category?.isAddition) {
       handleAddToBasket();
     } else setOpen(true);
   };
 
-  const addOneMore = () => {
-    setProducts((pre: Array<IProduct>) => [...pre, pre[0]]);
+  const addOneMoreOrder = () => {
+    makeOrder(product, (order.count += 1));
   };
 
-  const removeOneMore = () => {
-    if (products?.length > 1) {
-      products?.splice(0, 1);
-      setProducts([...products]);
+  const removeOneMoreOrder = () => {
+    if (order?.count !== undefined && order?.count > 1) {
+      makeOrder(product, (order.count -= 1));
     }
   };
 
-  const handleSelectChange = (event: any) => {
-    setValue(event.target.value);
-    const results = products.map((item: any) => {
-      item = { ...item, [event.target.name]: event.target.value };
-      return item;
-    });
-    setProducts(results);
+  const handleSelectChangeSouce = (event: any) => {
+    product.sauce = event.target.value;
+    makeOrder(product, order.count);
   };
 
-  const handlecheckboxChange = (event: any, index: number) => {
-    const results = products.map((item: IProduct) => {
-      if (item?.additions !== undefined) {
-        item.additions[index] = { ...item.additions[index], isChoosed: event.target.checked };
-      }
-      return item;
-    });
-    setProducts(results);
-    countCost();
+  const handlecheckboxChangeAdditions = (event: any, getIndex: number) => {
+    if (product?.additions !== undefined) {
+      product.additions = product.additions?.map((addition: IAddition, index: number) => {
+        if (getIndex === index) addition.isChoosed = event.target.checked;
+        return addition;
+      });
+    }
+    makeOrder(product, order.count);
   };
 
   const handleAddToBasket = () => {
-    if (!product.category?.isAddition) addToBasket(products);
+    console.log(order);
+    console.log(product);
+    if (!product.category?.isAddition) addOneToBasket(order);
     else {
-      addToBasket(products);
+      addOneToBasket(order);
       setTimeout(handleClose, 500);
     }
-    setProducts([product]);
     setError({ message: "Twój zakup został dodany!", type: "success" });
   };
 
@@ -143,8 +130,8 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
               labelId="demo-select-small-label"
               id="demo-select-small"
               label="Sos"
-              value={value}
-              onChange={handleSelectChange}
+              value={product?.sauce}
+              onChange={handleSelectChangeSouce}
               name="sauce"
             >
               <MenuItem value="Ostry">Ostry</MenuItem>
@@ -164,7 +151,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
                   <Checkbox
                     checked={item?.isChoosed}
                     required
-                    onChange={(event) => handlecheckboxChange(event, index)}
+                    onChange={(event) => handlecheckboxChangeAdditions(event, index)}
                   />
                 }
                 label={item?.title + " " + item?.cost + " zł"}
@@ -177,16 +164,16 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
           <div className="mr-auto">
             <RemoveIcon
               className="bg-slate-100 hover:bg-slate-200 w-[40px] h-[40px] z-0 rounded-full p-1 cursor-pointer mr-2"
-              onClick={removeOneMore}
+              onClick={removeOneMoreOrder}
             />
-            <FormLabel id="demo-radio-buttons-group-label">{products?.length}</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label">{order?.count}</FormLabel>
             <AddIcon
               className="bg-slate-100 hover:bg-slate-200 w-[40px] h-[40px] z-0 rounded-full p-1 cursor-pointer ml-2"
-              onClick={addOneMore}
+              onClick={addOneMoreOrder}
             />
           </div>
           <Button variant="contained" className="rounded-2xl w-[150px] bg-blue-400" onClick={handleAddToBasket}>
-            {Math.floor(cost * products?.length)} zł
+            {Math.floor(order.cost * order.count)} zł
           </Button>
         </DialogActions>
       </BootstrapDialog>

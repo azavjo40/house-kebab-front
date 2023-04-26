@@ -1,13 +1,14 @@
-import { IProduct } from "@/types";
+import { IOrder, IProduct } from "@/types";
 
 export interface IErrorData {
   message: string;
   type: string;
 }
 export interface IGeneralContext {
-  basketData: Array<IProduct>;
-  addToBasket: (data: Array<IProduct>) => void;
-  removeToBasket: (index: number) => void;
+  basketData: IOrder[];
+  addOneToBasket: (data: IOrder) => void;
+  updateRewriteAllBasket: (data: IOrder[]) => void;
+  removeOneFromBasket: (index: number) => void;
   errorData: IErrorData;
   setError: (data: IErrorData) => void;
 }

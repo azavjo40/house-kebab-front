@@ -27,7 +27,7 @@ export function ProductCard({ product }: IProductCardProps) {
         <Typography variant="h5" color="text.secondary">
           {product?.cost} zł
         </Typography>
-        <DialogChooseAddition product={product} />
+        <DialogChooseAddition product={{ ...product }} />
       </CardActions>
     </Card>
   );

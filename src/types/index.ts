@@ -19,4 +19,15 @@ export interface IProduct {
   image: string;
   category: ICategory;
   additions?: Array<IAddition>;
+  sauce?: string;
+}
+
+export interface IOrder {
+  title: string;
+  sauce: string | undefined;
+  count: number;
+  additions?: IAddition[];
+  cost: number;
+  category: ICategory;
+  id: string;
 }
