@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 
 export function Footer() {
@@ -14,7 +15,7 @@ export function Footer() {
           </a>
         </span>
         <div className="flex space-x-6 sm:justify-center sm:mt-0">
-          <a href="/" className="text-gray-500">
+          <Link href="/" className="text-gray-500">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 fill-rule="evenodd"
@@ -23,8 +24,8 @@ export function Footer() {
               />
             </svg>
             <span className="sr-only">Facebook page</span>
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://instagram.com/housekebab_pizza?igshid=OGRjNzg3M2Y="
             target="_blank"
             className="text-gray-500"
@@ -37,7 +38,7 @@ export function Footer() {
               />
             </svg>
             <span className="sr-only">Instagram page</span>
-          </a>
+          </Link>
         </div>
       </div>
     </footer>
