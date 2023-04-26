@@ -47,7 +47,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
   };
 
   return (
-    <div className="p-5 w-full">
+    <div className="p-5 w-full pb-20 md:pb-0">
       <form onSubmit={handleSubmit}>
         <ArrowBackIcon onClick={() => setOpenFormAdderss(false)} className="cursor-pointer flex md:hidden" />
         <div className="flex flex-col sm:flex-row mt-2 mb-10 justify-between">
@@ -64,7 +64,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
             </div>
           </RadioGroup>
         </div>
-        <div className="grid md:grid-cols-2 md:gap-6">
+        <div className="grid md:grid-cols-2 md:gap-6 gap-3">
           <TextField
             id="outlined-basic"
             label="Imię"
@@ -92,7 +92,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
         </div>
         {form?.orderMethod === "delivery" && (
           <>
-            <div className="grid md:grid-cols-2 md:gap-6">
+            <div className="grid md:grid-cols-2 md:gap-6 gap-3">
               <TextField
                 id="outlined-basic"
                 label="Ulica"
@@ -118,7 +118,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
                 type="home"
               />
             </div>
-            <div className="grid md:grid-cols-2 md:gap-6">
+            <div className="grid md:grid-cols-2 md:gap-6 gap-3">
               <TextField
                 id="outlined-basic"
                 label="Mieszkanie"
