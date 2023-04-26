@@ -4,17 +4,17 @@ export function Footer() {
   const [year] = useState(new Date().getFullYear());
 
   return (
-    <footer className="bg-white dark:bg-gray-900 px-4 pb-16 pt-4 mb-12 md:mb-0 relative">
-      <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+    <footer className="bg-white  px-4 pb-16 pt-4 mb-12 md:p-10 md:mb-0 relative">
+      <hr className="my-6 border-gray-200 sm:mx-auto  lg:my-8" />
       <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+        <span className="text-sm text-gray-500 sm:text-center ">
           © {year}
           <a href="https://flowbite.com/" className="hover:underline">
             House Kebab™ All Rights Reserved.
           </a>
         </span>
         <div className="flex space-x-6 sm:justify-center sm:mt-0">
-          <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+          <a href="/" className="text-gray-500">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 fill-rule="evenodd"
@@ -24,7 +24,11 @@ export function Footer() {
             </svg>
             <span className="sr-only">Facebook page</span>
           </a>
-          <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+          <a
+            href="https://instagram.com/housekebab_pizza?igshid=OGRjNzg3M2Y="
+            target="_blank"
+            className="text-gray-500"
+          >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 fill-rule="evenodd"
