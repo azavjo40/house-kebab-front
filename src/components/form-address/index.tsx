@@ -32,9 +32,6 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
 
   const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((pre: IForm) => ({ ...pre, [event.target.name]: event.target.value }));
-    if (event.target.required) {
-      setError((pre: any) => ({ ...pre, [event.target.name]: !event.target.value }));
-    }
   };
 
   const handleSubmit = (event: any) => {
@@ -44,6 +41,16 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
 
   const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((pre: IForm) => ({ ...pre, [event.target.name]: event.target.value }));
+  };
+
+  const handleBlur = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    const phoneRegex = /^\+48\d{9}$/;
+    if (name === "phone" && !phoneRegex.test(value)) setError((pre: any) => ({ ...pre, [name]: true }));
+    else if (event.target.required) {
+      setError((pre: any) => ({ ...pre, [name]: !value }));
+    }
   };
 
   return (
@@ -76,10 +83,13 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
             value={form?.name}
             onChange={handleChangeTextField}
             type="name"
+            onBlur={handleBlur}
+            helperText={error?.name ? "Wartość nie może być pusta" : ""}
           />
+          <div className="p-1 md:p-0 block md:hidden"></div>
           <TextField
             id="outlined-basic"
-            label="Numer telefonu +48727266092"
+            label="Numer telefonu"
             name="phone"
             variant="outlined"
             className="mb-5"
@@ -88,7 +98,10 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
             value={form?.phone}
             onChange={handleChangeTextField}
             type="phone"
+            onBlur={handleBlur}
+            helperText={error?.phone ? "Twój numer telefonu musi być +48727266092" : ""}
           />
+          <div className="p-1 md:p-0 block md:hidden"></div>
         </div>
         {form?.orderMethod === "delivery" && (
           <>
@@ -104,7 +117,10 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
                 value={form?.street}
                 onChange={handleChangeTextField}
                 type="street"
+                onBlur={handleBlur}
+                helperText={error?.street ? "Wartość nie może być pusta" : ""}
               />
+              <div className="p-1 md:p-0 block md:hidden"></div>
               <TextField
                 id="outlined-basic"
                 label="Numer Dom"
@@ -116,7 +132,10 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
                 value={form?.home}
                 onChange={handleChangeTextField}
                 type="home"
+                onBlur={handleBlur}
+                helperText={error?.home ? "Wartość nie może być pusta" : ""}
               />
+              <div className="p-1 md:p-0 block md:hidden"></div>
             </div>
             <div className="grid md:grid-cols-2 md:gap-6 gap-3">
               <TextField
@@ -129,6 +148,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
                 onChange={handleChangeTextField}
                 type="apartment"
               />
+              <div className="p-1 md:p-0 block md:hidden"></div>
               <TextField
                 id="outlined-basic"
                 label="Wejście"
@@ -139,6 +159,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
                 onChange={handleChangeTextField}
                 type="entrance"
               />
+              <div className="p-1 md:p-0 block md:hidden"></div>
             </div>
           </>
         )}
