@@ -31,3 +31,20 @@ export interface IOrder {
   category: ICategory;
   id: string;
 }
+
+export interface IForm {
+  name: string;
+  phone: string;
+  street: string;
+  home: string;
+  apartment: string;
+  entrance: string;
+  orderMethod: string;
+}
+
+export interface IOrders {
+  address: IForm;
+  numberOrder: string;
+  order: IOrder[];
+  totalCost: Number;
+}

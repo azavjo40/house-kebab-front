@@ -9,6 +9,7 @@ export interface IGeneralContext {
   addOneToBasket: (data: IOrder) => void;
   updateRewriteAllBasket: (data: IOrder[]) => void;
   removeOneFromBasket: (index: number) => void;
+  clearBasket: () => void;
   errorData: IErrorData;
   setError: (data: IErrorData) => void;
 }

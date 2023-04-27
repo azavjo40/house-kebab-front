@@ -1,20 +1,13 @@
 import { useGeneral } from "@/hooks/useGeneral";
+import { IForm, IOrders } from "@/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { TextField, Box, FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import { useState } from "react";
+import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export interface IFormAddressProps {
   cost: number;
   setOpenFormAdderss: any;
-}
-export interface IForm {
-  name: string;
-  phone: string;
-  street: string;
-  home: string;
-  apartment: string;
-  entrance: string;
-  orderMethod: string;
 }
 
 export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressProps) {
@@ -27,8 +20,27 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
     entrance: "",
     orderMethod: "delivery",
   });
-  const { basketData } = useGeneral();
   const [error, setError] = useState<any>();
+  const { basketData, clearBasket } = useGeneral();
+  const { push } = useRouter();
+
+  //for test
+  useEffect(() => {
+    const data = localStorage.getItem("orders");
+    if (data) {
+      const getOrders: IOrders[] = JSON.parse(data);
+      const address = getOrders[0]?.address;
+      setForm({
+        name: address?.name,
+        phone: address?.phone,
+        street: address?.street,
+        home: address?.home,
+        apartment: address?.apartment || "",
+        entrance: address?.entrance || "",
+        orderMethod: "delivery",
+      });
+    }
+  }, []);
 
   const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((pre: IForm) => ({ ...pre, [event.target.name]: event.target.value }));
@@ -36,7 +48,23 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log(form);
+    const order = {
+      order: basketData,
+      address: form,
+      totalCost: cost,
+      numberOrder: `#${Date.now()}BKHJKHKJ`,
+    };
+    //for test
+    const data = localStorage.getItem("orders");
+    if (data) {
+      const getOrders = JSON.parse(data);
+      localStorage.setItem("orders", JSON.stringify([order, ...getOrders]));
+    } else localStorage.setItem("orders", JSON.stringify([order]));
+    setTimeout(() => {
+      push("/");
+      clearBasket();
+      setForm({ name: "", phone: "", street: "", home: "", apartment: "", entrance: "", orderMethod: "delivery" });
+    }, 500);
   };
 
   const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {

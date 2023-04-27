@@ -26,9 +26,21 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     setErrorData({ message, type });
     setTimeout(() => setErrorData({ message: "", type: "" }), 3000);
   };
+
+  const clearBasket = () => {
+    setBasketData([]);
+  };
   return (
     <GeneralContext.Provider
-      value={{ basketData, addOneToBasket, removeOneFromBasket, errorData, setError, updateRewriteAllBasket }}
+      value={{
+        basketData,
+        addOneToBasket,
+        removeOneFromBasket,
+        errorData,
+        setError,
+        updateRewriteAllBasket,
+        clearBasket,
+      }}
     >
       {children}
     </GeneralContext.Provider>
