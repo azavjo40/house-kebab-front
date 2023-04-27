@@ -23,9 +23,9 @@ export function PurchasedOrders() {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className="flex flex-col">
-                    {item?.order?.map((order: IOrder) => {
+                    {item?.order?.map((order: IOrder, index: number) => {
                       return (
-                        <ListItem component="div" disablePadding>
+                        <ListItem component="div" disablePadding key={index}>
                           <ListItemText primary={`${order?.count}: ${order?.title}`} />
                         </ListItem>
                       );
