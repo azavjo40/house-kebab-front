@@ -13,7 +13,7 @@ export default function Basket() {
       <div className="">
         <Tabs value={valueTab} onChange={handleChange} aria-label="basic tabs example" className="w-[1170px]">
           <Tab label="Na etapie zakupu" />
-          <Tab label="Zakupy" />
+          <Tab label="Moje  Zamówienia" />
         </Tabs>
       </div>
       {valueTab === 0 && <ProcessBuying />}

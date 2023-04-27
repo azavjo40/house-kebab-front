@@ -4,10 +4,11 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useGeneral } from "@/hooks/useGeneral";
 import { useRouter } from "next/router";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import RecentActorsIcon from "@mui/icons-material/RecentActors";
 
 export function DenseAppBar() {
   const { basketData } = useGeneral();
@@ -21,6 +22,17 @@ export function DenseAppBar() {
         <Box sx={{ flexGrow: 1 }} />
 
         <Box>
+          <IconButton
+            size="large"
+            edge="end"
+            aria-label="account of current user"
+            aria-haspopup="true"
+            color="inherit"
+            onClick={() => push("/")}
+          >
+            <MenuBookIcon />
+          </IconButton>
+
           <IconButton
             size="large"
             aria-label="show 17 new notifications"
@@ -37,9 +49,9 @@ export function DenseAppBar() {
             aria-label="account of current user"
             aria-haspopup="true"
             color="inherit"
-            onClick={() => push("/admin")}
+            onClick={() => push("/contact")}
           >
-            <AccountCircle />
+            <RecentActorsIcon />
           </IconButton>
         </Box>
       </Toolbar>

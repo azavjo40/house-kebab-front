@@ -38,7 +38,7 @@ export function PurchasedOrders() {
           })}
         </div>
       ) : (
-        <ListItemText primary="Nie masz jeszcze zakupu!" className="text-center" />
+        <ListItemText primary="Nie masz jeszcze zamówienia!" className="text-center text-red-400" />
       )}
     </div>
   );

@@ -75,7 +75,7 @@ export function ProcessBuying() {
           </div>
         </div>
       ) : (
-        <ListItemText primary="Musisz dodać producty do koszyka!" className="text-center" />
+        <ListItemText primary="Brak produkt w koszyku!" className="text-center text-red-400" />
       )}
     </div>
   );
