@@ -179,7 +179,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
               <div className="p-1 md:p-0 block md:hidden"></div>
               <TextField
                 id="outlined-basic"
-                label="Wejście"
+                label="Klatka"
                 name="entrance"
                 variant="outlined"
                 className="mb-5"
