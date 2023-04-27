@@ -46,7 +46,6 @@ export function ProcessBuying() {
               openFormAdderss ? "hidden md:flex" : "flex"
             }`}
           >
-            {/* <h1 className="text-2xl font-black">Koszyk</h1> */}
             <div className="flex flex-col w-full h-full mb-[200px] md:mb-10 overflow-y-auto">
               {basketData?.map((order: IOrder, index: number) => (
                 <BasketCard

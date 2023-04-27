@@ -30,6 +30,7 @@ export interface IOrder {
   cost: number;
   category: ICategory;
   id: string;
+  note: string;
 }
 
 export interface IForm {

@@ -1,9 +1,9 @@
 import { IOrder } from "@/types";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import { TextField } from "@mui/material";
 import { useState } from "react";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
+import { useGeneral } from "@/hooks/useGeneral";
 export interface IProductCardProps {
   order: IOrder;
   addOneMoreOrder: (index: number) => void;
@@ -12,8 +12,18 @@ export interface IProductCardProps {
 }
 
 export function BasketCard({ order, addOneMoreOrder, removeOneMoreOrder, index }: IProductCardProps) {
+  const { basketData, updateRewriteAllBasket } = useGeneral();
   const [isNote, setIsNote] = useState(false);
-  const [noteValue, setNoteValue] = useState("");
+  const [noteValue, setNoteValue] = useState<any>({ note: "" });
+
+  const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNoteValue({ [event.target.name]: event.target.value });
+    order.note = event.target.value;
+    const index = basketData.findIndex((item: IOrder) => item?.id === order?.id);
+    basketData.splice(index, 1, order);
+    updateRewriteAllBasket([...basketData]);
+  };
+
   return (
     <div className="my-6 border-gray-200 dark:border-gray-700 lg:my-8">
       <div className="flex flex-row justify-between">
@@ -26,17 +36,18 @@ export function BasketCard({ order, addOneMoreOrder, removeOneMoreOrder, index }
       <div className="flex flex-row ml-2 mt-1 items-center">
         {!isNote && (
           <span className="cursor-pointer" onClick={() => setIsNote(true)}>
-            {noteValue ? noteValue.slice(0, 25) : "Dodaj notatkę"}
+            {noteValue?.note ? noteValue?.note?.slice(0, 25) : "Dodaj notatkę"}
           </span>
         )}
 
         {isNote && (
           <div className="border-2 p-1 flex">
             <input
-              value={noteValue}
+              value={noteValue?.note}
               className="p-0 outline-none"
-              onChange={(event) => setNoteValue(event.target.value)}
+              onChange={handleChangeTextField}
               onBlur={() => setIsNote(false)}
+              name="note"
             />
             <div className="cursor-pointer">
               <SaveAsIcon onClick={() => setIsNote(false)} />
