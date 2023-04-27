@@ -61,7 +61,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
       localStorage.setItem("orders", JSON.stringify([order, ...getOrders]));
     } else localStorage.setItem("orders", JSON.stringify([order]));
     setTimeout(() => {
-      push("/");
+      push("/basket");
       clearBasket();
       setForm({ name: "", phone: "", street: "", home: "", apartment: "", entrance: "", orderMethod: "delivery" });
     }, 500);

@@ -19,9 +19,13 @@ export function BasketCard({ order, addOneMoreOrder, removeOneMoreOrder, index }
   const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNoteValue({ [event.target.name]: event.target.value });
     order.note = event.target.value;
+  };
+
+  const handleSaveNote = () => {
     const index = basketData.findIndex((item: IOrder) => item?.id === order?.id);
     basketData.splice(index, 1, order);
     updateRewriteAllBasket([...basketData]);
+    setIsNote(false);
   };
 
   return (
@@ -46,11 +50,11 @@ export function BasketCard({ order, addOneMoreOrder, removeOneMoreOrder, index }
               value={noteValue?.note}
               className="p-0 outline-none"
               onChange={handleChangeTextField}
-              onBlur={() => setIsNote(false)}
+              onBlur={handleSaveNote}
               name="note"
             />
             <div className="cursor-pointer">
-              <SaveAsIcon onClick={() => setIsNote(false)} />
+              <SaveAsIcon onClick={handleSaveNote} />
             </div>
           </div>
         )}
