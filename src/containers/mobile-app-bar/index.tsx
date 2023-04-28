@@ -10,7 +10,7 @@ import RecentActorsIcon from "@mui/icons-material/RecentActors";
 
 export function MobileAppBar() {
   const { push, asPath } = useRouter();
-  const [value, setValue] = useState(asPath === "/admin" ? 0 : asPath === "/" ? 1 : asPath === "/basket" ? 2 : 100);
+  const [value, setValue] = useState(asPath === "/" ? 0 : asPath === "/basket" ? 1 : asPath === "/contact" ? 2 : 100);
   const { basketData } = useGeneral();
 
   return (
