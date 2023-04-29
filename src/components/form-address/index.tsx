@@ -1,5 +1,5 @@
 import { useGeneral } from "@/hooks/useGeneral";
-import { IForm, IOrders } from "@/types";
+import { IForm, IOrders, ISebdOrder } from "@/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useRouter } from "next/router";
@@ -28,7 +28,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
   useEffect(() => {
     const data = localStorage.getItem("orders");
     if (data) {
-      const getOrders: IOrders[] = JSON.parse(data);
+      const getOrders: ISebdOrder[] = JSON.parse(data);
       const address = getOrders[0]?.address;
       setForm({
         name: address?.name,
@@ -48,24 +48,26 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const order = {
+    const order: ISebdOrder = {
       order: basketData,
       address: form,
       totalCost: cost,
-      numberOrder: `#${Date.now()}BKHJKHKJ`,
+      numberOrder: `BKHJKHKJ${Date.now().toString().slice(7, 100)}`,
     };
-    //for test
-    const data = localStorage.getItem("orders");
-    if (data) {
-      const getOrders = JSON.parse(data);
-      localStorage.setItem("orders", JSON.stringify([order, ...getOrders]));
-    } else localStorage.setItem("orders", JSON.stringify([order]));
 
-    setTimeout(() => {
-      push("/basket");
-      clearBasket();
-      setForm({ name: "", phone: "", street: "", home: "", apartment: "", entrance: "", orderMethod: "delivery" });
-    }, 500);
+    console.log(order);
+    //for test
+    // const data = localStorage.getItem("orders");
+    // if (data) {
+    //   const getOrders = JSON.parse(data);
+    //   localStorage.setItem("orders", JSON.stringify([order, ...getOrders]));
+    // } else localStorage.setItem("orders", JSON.stringify([order]));
+
+    // setTimeout(() => {
+    //   push("/basket");
+    //   clearBasket();
+    //   setForm({ name: "", phone: "", street: "", home: "", apartment: "", entrance: "", orderMethod: "delivery" });
+    // }, 500);
   };
 
   const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {

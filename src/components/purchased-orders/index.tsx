@@ -19,7 +19,7 @@ export function PurchasedOrders() {
             return (
               <Accordion key={index} className="mb-2">
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-                  <Typography>Order: {item?.numberOrder}</Typography>
+                  <Typography>Numer zamówienia: {item?.numberOrder}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className="flex flex-col">

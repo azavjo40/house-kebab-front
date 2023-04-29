@@ -1,7 +1,11 @@
+import { useGeneral } from "@/hooks/useGeneral";
+
 export default function Contact() {
+  const { openClose } = useGeneral();
+
   return (
     <div className="w-full bg-slate-200 h-[90vh] p-3 md:p-10">
-      <div className="w-full h-full bg-white rounded-xl flex flex-col-reverse md:flex-row">
+      <div className="w-full h-full bg-white rounded-xl flex flex-col md:flex-row">
         <div className="w-full md:w-[60%] h-full">
           <iframe
             className="w-full h-full bg-white md:rounded-l-xl rounded-b-xl"
@@ -13,19 +17,38 @@ export default function Contact() {
         </div>
 
         <div className="h-full w-full">
-          <h1 className="mb-2 text-lg font-semibold text-gray-900  text-center mt-6">Skontaktuj się z nami</h1>
-          <div className="flex h-full w-full justify-around pt-10">
+          <h1 className="mb-2 text-lg font-semibold text-yellow-300  text-center mt-6">Informacje</h1>
+          <div className="flex h-full w-full md:justify-around mb-4 md:mb-0 md:pt-10 md:flex-row flex-col items-center">
             <div>
-              <h1 className="mb-2 text-lg font-semibold text-gray-900 ">House Kebab Pizza</h1>
+              <h1 className="mb-2 text-lg font-semibold text-gray-900 "> Informacja prawna</h1>
               <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+                <li className="flex items-center"> House Kebab Pizza Klaudyny</li>
                 <li className="flex items-center">Klaudyny 26</li>
                 <li className="flex items-center">01-684 Warszawa</li>
+                <li className="flex items-center text-blue-500">
+                  <a href="mailto:housekebab606@gmail.com">Wyslij nam e-mail</a>
+                </li>
+                <li className="flex items-center text-blue-500">
+                  <a href="tel:+48 579 250 176">+48 579 250 176</a>
+                </li>
               </ul>
             </div>
-            <div>
-              <h1 className="mb-2 text-lg font-semibold text-gray-900 ">Colophon</h1>
+
+            <div className="mt-4 md:mt-0">
+              <h1 className="mb-2 text-lg font-semibold text-gray-900 "> Godziny otwarty</h1>
               <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-                <li className="flex items-center">+48 579 250 176</li>
+                <li className="flex items-center">
+                  Dziśaj: {openClose?.open} - {openClose?.close}
+                </li>
+                <li className="flex items-center">
+                  Dziśaj: {openClose?.open} - {openClose?.close}
+                </li>
+                <li className="flex items-center">
+                  Jutro: {openClose?.open} - {openClose?.close}
+                </li>
+                <li className="flex items-center">
+                  Pojutrze: {openClose?.open} - {openClose?.close}
+                </li>
               </ul>
             </div>
           </div>

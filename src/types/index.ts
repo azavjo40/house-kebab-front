@@ -63,6 +63,13 @@ export interface IForm {
   orderMethod: string;
 }
 
+export interface ISebdOrder {
+  address: IForm;
+  numberOrder: string;
+  order: IOrder[];
+  totalCost: number;
+}
+
 export interface IOrders {
   address: IForm;
   numberOrder: string;
