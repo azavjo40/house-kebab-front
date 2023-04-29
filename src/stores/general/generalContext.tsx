@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { IGeneralContext, GeneralPropsType, IErrorData } from "./generalTypes";
-import { IOpenClose, IOrder, IProduct } from "@/types";
+import { IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
+import { useApiFetch } from "@/hooks/useFetch";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
@@ -33,6 +34,28 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       const res = await fetch(process.env.apiUrl + "/open-closeds");
       const data = await res.json();
       setOpenClose(data[0]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const makeOrder = async (newOrder: ISebdOrder) => {
+    try {
+      const res = await useApiFetch(process.env.apiUrl + "/orders", {
+        method: "POST",
+        body: newOrder,
+      });
+      const data = await res?.json();
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getOrdersByPhone = async (phone: string) => {
+    try {
+      const res = await fetch(process.env.apiUrl + "/orders?clientPhone=" + phone);
+      return await res?.json();
     } catch (e) {
       console.log(e);
     }
@@ -80,6 +103,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         products,
         showInfoOpenClose,
         openClose,
+        makeOrder,
+        getOrdersByPhone,
       }}
     >
       {children}

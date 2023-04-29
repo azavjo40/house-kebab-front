@@ -68,6 +68,7 @@ export interface ISebdOrder {
   numberOrder: string;
   order: IOrder[];
   totalCost: number;
+  clientPhone: string;
 }
 
 export interface IOrders {

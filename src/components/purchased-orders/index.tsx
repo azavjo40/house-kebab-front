@@ -1,16 +1,23 @@
 import { Accordion, AccordionSummary, AccordionDetails, Typography, ListItem, ListItemText } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState } from "react";
-import { IOrder, IOrders } from "@/types";
+import { IForm, IOrder, IOrders, ISebdOrder } from "@/types";
+import { useGeneral } from "@/hooks/useGeneral";
+import { getLocalStorage } from "@/hooks/useLocalStorage";
 
 export function PurchasedOrders() {
-  const [orders, setOrders] = useState<IOrders[]>();
+  const [orders, setOrders] = useState<ISebdOrder[]>();
+  const { getOrdersByPhone } = useGeneral();
 
   useEffect(() => {
-    // for test
-    const data = localStorage.getItem("orders");
-    if (data) setOrders(JSON.parse(data));
+    const address: IForm = getLocalStorage("address");
+    if (address?.phone) getPurchasedOrders(address?.phone);
   }, []);
+
+  const getPurchasedOrders = async (phone: string) => {
+    const data = await getOrdersByPhone(phone);
+    setOrders(data);
+  };
   return (
     <div>
       {orders?.length ? (

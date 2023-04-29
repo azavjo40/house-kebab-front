@@ -1,4 +1,4 @@
-import { IOpenClose, IOrder, IProduct } from "@/types";
+import { IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
 
 export interface IErrorData {
   message: string;
@@ -16,6 +16,8 @@ export interface IGeneralContext {
   products: IProduct[];
   showInfoOpenClose: () => boolean;
   openClose: IOpenClose;
+  makeOrder: (newOrder: ISebdOrder) => void;
+  getOrdersByPhone: (phone: string) => Promise<ISebdOrder[]>;
 }
 
 export type GeneralPropsType = {
