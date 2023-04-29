@@ -28,7 +28,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   const [open, setOpen] = useState(false);
   const [sauce, setSauce] = useState("Łagodny");
   const [size, setSize] = useState<ISize>({ cost: 0, id: "", title: "" });
-  const { addOneToBasket, setError } = useGeneral();
+  const { addOneToBasket, setError, showInfoOpenClose } = useGeneral();
   const [order, setOrder] = useState<IOrder>({
     title: product?.title,
     sauce,
@@ -122,7 +122,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   return (
     <div className="ml-auto">
       <AddIcon
-        onClick={handleClickOpen}
+        onClick={() => showInfoOpenClose() && handleClickOpen()}
         className="bg-slate-100 hover:bg-slate-200 w-[60px] h-[60px] md:w-[40px] md:h-[40px] z-0 rounded-full p-1 cursor-pointer"
       />
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>

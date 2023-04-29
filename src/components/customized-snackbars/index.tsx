@@ -7,6 +7,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+//'success' | 'info' | 'warning' | 'error';
 export function CustomizedSnackbars() {
   const { errorData }: any = useGeneral();
   return (

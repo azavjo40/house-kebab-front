@@ -20,6 +20,14 @@ export interface ISize {
   id: string | null;
   cost: number;
 }
+
+export interface IOpenClose {
+  message: string;
+  isOpen: boolean;
+  open: string;
+  close: string;
+}
+
 export interface IProduct {
   id: string;
   title: string;

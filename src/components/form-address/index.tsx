@@ -21,7 +21,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
     orderMethod: "delivery",
   });
   const [error, setError] = useState<any>();
-  const { basketData, clearBasket } = useGeneral();
+  const { basketData, clearBasket, showInfoOpenClose } = useGeneral();
   const { push } = useRouter();
 
   //for test
@@ -60,6 +60,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
       const getOrders = JSON.parse(data);
       localStorage.setItem("orders", JSON.stringify([order, ...getOrders]));
     } else localStorage.setItem("orders", JSON.stringify([order]));
+
     setTimeout(() => {
       push("/basket");
       clearBasket();
@@ -83,7 +84,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
 
   return (
     <div className="p-5 w-full pb-20 md:pb-0">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(event) => showInfoOpenClose() && handleSubmit(event)}>
         <ArrowBackIcon onClick={() => setOpenFormAdderss(false)} className="cursor-pointer flex md:hidden" />
         <div className="flex flex-col sm:flex-row mt-2 mb-10 justify-between">
           <h1 className="text-xl sm:text-2xl">Wybierz sposób odbioru zamówienia</h1>

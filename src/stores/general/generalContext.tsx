@@ -1,19 +1,38 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IGeneralContext, GeneralPropsType, IErrorData } from "./generalTypes";
-import { IOrder, IProduct } from "@/types";
+import { IOpenClose, IOrder, IProduct } from "@/types";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
 export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [basketData, setBasketData] = useState<IOrder[]>([]);
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [openClose, setOpenClose] = useState<IOpenClose>({ message: "", isOpen: false, open: "", close: "" });
   const [errorData, setErrorData] = useState<IErrorData>({ message: "", type: "" });
+
+  useEffect(() => {
+    getopenClose();
+    const interval = setInterval(() => {
+      getopenClose();
+    }, 10 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const getProductsByCategoryId = async (id: number) => {
     try {
       const res = await fetch(process.env.apiUrl + "/products?category.id=" + id);
       const data = await res.json();
       setProducts(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getopenClose = async () => {
+    try {
+      const res = await fetch(process.env.apiUrl + "/open-closeds");
+      const data = await res.json();
+      setOpenClose(data[0]);
     } catch (e) {
       console.log(e);
     }
@@ -35,12 +54,18 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const setError = ({ message, type }: any) => {
     setErrorData({ message, type });
-    setTimeout(() => setErrorData({ message: "", type: "" }), 3000);
+    setTimeout(() => setErrorData({ message: "", type: "" }), 4000);
   };
 
   const clearBasket = () => {
     setBasketData([]);
   };
+
+  const showInfoOpenClose = () => {
+    if (!openClose.isOpen) setError({ message: openClose.message, type: "info" });
+    return openClose.isOpen;
+  };
+
   return (
     <GeneralContext.Provider
       value={{
@@ -53,6 +78,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         clearBasket,
         getProductsByCategoryId,
         products,
+        showInfoOpenClose,
+        openClose,
       }}
     >
       {children}
