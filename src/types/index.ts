@@ -1,5 +1,4 @@
 export interface ICategory {
-  index: number;
   type: string;
   isAddition: boolean;
   title: string;
@@ -11,15 +10,27 @@ export interface IAddition {
   title: string;
 }
 
+export interface IFreeSauces {
+  title: string;
+  id: string;
+}
+
+export interface ISize {
+  title: string;
+  id: string | null;
+  cost: number;
+}
 export interface IProduct {
   id: string;
   title: string;
   description: string;
   cost: number;
-  image: string;
+  image: { url: string };
   category: ICategory;
   additions?: Array<IAddition>;
   sauce?: string;
+  free_sauces: IFreeSauces[];
+  sizes: ISize[];
 }
 
 export interface IOrder {
@@ -30,7 +41,8 @@ export interface IOrder {
   cost: number;
   category: ICategory;
   id: string;
-  note: string;
+  note?: string;
+  size: ISize;
 }
 
 export interface IForm {

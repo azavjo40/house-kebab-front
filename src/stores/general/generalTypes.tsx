@@ -12,6 +12,8 @@ export interface IGeneralContext {
   clearBasket: () => void;
   errorData: IErrorData;
   setError: (data: IErrorData) => void;
+  getProductsByCategoryId: (id: number) => void;
+  products: IProduct[];
 }
 
 export type GeneralPropsType = {

@@ -1,12 +1,23 @@
 import { createContext, useState } from "react";
 import { IGeneralContext, GeneralPropsType, IErrorData } from "./generalTypes";
-import { IOrder } from "@/types";
+import { IOrder, IProduct } from "@/types";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
 export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [basketData, setBasketData] = useState<IOrder[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [errorData, setErrorData] = useState<IErrorData>({ message: "", type: "" });
+
+  const getProductsByCategoryId = async (id: number) => {
+    try {
+      const res = await fetch(process.env.apiUrl + "/products?category.id=" + id);
+      const data = await res.json();
+      setProducts(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const addOneToBasket = (data: IOrder) => {
     const newBasketData: IOrder[] = [data, ...basketData];
@@ -40,6 +51,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         setError,
         updateRewriteAllBasket,
         clearBasket,
+        getProductsByCategoryId,
+        products,
       }}
     >
       {children}

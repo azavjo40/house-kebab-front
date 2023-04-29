@@ -8,7 +8,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { styled } from "@mui/material/styles";
-import { IAddition, IOrder, IProduct } from "@/types";
+import { IAddition, IFreeSauces, IOrder, IProduct, ISize } from "@/types";
 import { BootstrapDialogTitle } from "../bootstrap-dialog-title";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -26,42 +26,42 @@ export interface IDialogChooseAdditionProps {
 
 export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   const [open, setOpen] = useState(false);
+  const [sauce, setSauce] = useState("Łagodny");
+  const [size, setSize] = useState<ISize>({ cost: 0, id: "", title: "" });
   const { addOneToBasket, setError } = useGeneral();
   const [order, setOrder] = useState<IOrder>({
     title: product?.title,
-    sauce: product?.sauce,
+    sauce,
     count: 1,
     additions: product?.additions,
     cost: product?.cost,
     category: product?.category,
     id: product?.id,
+    size,
   });
 
-  useEffect(() => {
-    if (product.category?.isAddition) product.sauce = "Łagodny";
-  }, []);
-
-  const makeOrder = (product: IProduct, count: number = 1) => {
+  const makeOrder = (product: IProduct, count: number = 1, sizeOrder: ISize) => {
     const additions = product?.additions?.filter((item: IAddition) => item.isChoosed);
     const cost =
       additions?.reduce((accumulator: number, currentValue: IAddition) => {
         return Math.floor(accumulator + currentValue?.cost);
-      }, product?.cost) ||
+      }, product?.cost + sizeOrder.cost) ||
       product?.cost ||
       0;
     setOrder({
       title: product?.title,
-      sauce: product?.sauce,
+      sauce,
       count: count,
       additions,
       cost,
       category: product?.category,
       id: product?.id,
+      size: sizeOrder,
     });
   };
 
   useEffect(() => {
-    makeOrder(product, 1);
+    makeOrder(product, 1, size);
   }, []);
 
   const handleClose = () => {
@@ -75,18 +75,28 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   };
 
   const addOneMoreOrder = () => {
-    makeOrder(product, (order.count += 1));
+    makeOrder(product, (order.count += 1), size);
   };
 
   const removeOneMoreOrder = () => {
     if (order?.count !== undefined && order?.count > 1) {
-      makeOrder(product, (order.count -= 1));
+      makeOrder(product, (order.count -= 1), size);
     }
   };
 
   const handleSelectChangeSouce = (event: any) => {
-    product.sauce = event.target.value;
-    makeOrder(product, order.count);
+    setSauce(event.target.value);
+    makeOrder(product, order.count, size);
+  };
+
+  const handleSelectChangeSize = (event: any) => {
+    if (product?.sizes?.length) {
+      const results = product.sizes?.filter((sizeFil: ISize) => sizeFil?.title === event.target.value);
+      if (results?.length) {
+        setSize(results[0]);
+        makeOrder(product, order.count, results[0]);
+      }
+    }
   };
 
   const handlecheckboxChangeAdditions = (event: any, getIndex: number) => {
@@ -96,10 +106,11 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
         return addition;
       });
     }
-    makeOrder(product, order.count);
+    makeOrder(product, order.count, size);
   };
 
   const handleAddToBasket = () => {
+    console.log(order);
     if (!product.category?.isAddition) addOneToBasket(order);
     else {
       addOneToBasket(order);
@@ -119,27 +130,58 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
           {product?.title}
         </BootstrapDialogTitle>
         <DialogContent dividers className="w-full  min-w-[300px] md:min-w-[350px]">
-          <div className="mb-3">
-            <FormLabel id="demo-radio-buttons-group-label">Wybierz sos</FormLabel>
-          </div>
-          <FormControl className="w-full ml-1">
-            <InputLabel id="demo-simple-select-autowidth-label">Sos:</InputLabel>
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              label="Sos"
-              value={product?.sauce}
-              onChange={handleSelectChangeSouce}
-              name="sauce"
-            >
-              <MenuItem value="Ostry">Ostry</MenuItem>
-              <MenuItem value="Łagodny">Łagodny</MenuItem>
-              {product.category?.index === 0 && <MenuItem value="Mieszaniny">Mieszaniny</MenuItem>}
-              {product.category?.index === 1 && <MenuItem value="Czosnkowy">Czosnkowy</MenuItem>}
-              {product.category?.index === 1 && <MenuItem value="Pomidorowy ">Pomidorowy</MenuItem>}
-            </Select>
-          </FormControl>
+          {product?.free_sauces?.length && (
+            <>
+              <div className="mb-3">
+                <FormLabel id="demo-radio-buttons-group-label">Wybierz sos</FormLabel>
+              </div>
+              <FormControl className="w-full ml-1">
+                <InputLabel id="demo-simple-select-autowidth-label">Sos:</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-sauce"
+                  label="Sos"
+                  value={order?.sauce}
+                  onChange={handleSelectChangeSouce}
+                  name="sauce"
+                >
+                  {product?.free_sauces.map((item: IFreeSauces) => {
+                    return (
+                      <MenuItem key={item?.id} value={item?.title}>
+                        {item?.title}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </>
+          )}
 
+          {product?.sizes?.length && (
+            <>
+              <div className="mb-3 mt-3">
+                <FormLabel id="demo-radio-buttons-group-label">Wybierz Rozmiar</FormLabel>
+              </div>
+              <FormControl className="w-full ml-1">
+                <InputLabel id="demo-simple-select-autowidth-label">Rozmiar:</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-size"
+                  label="Rozmiar"
+                  onChange={handleSelectChangeSize}
+                  name="sauce"
+                >
+                  {product?.sizes.map((item: ISize) => {
+                    return (
+                      <MenuItem key={item?.title} value={item?.title}>
+                        {item?.title + " " + item?.cost + " zł"}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </>
+          )}
           <div className="mt-5 flex flex-col">
             <FormLabel id="demo-radio-buttons-group-label">Wybierz dodatkowe</FormLabel>
             {product?.additions?.map((item: IAddition, index: number) => (
