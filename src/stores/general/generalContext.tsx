@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { IGeneralContext, GeneralPropsType, IErrorData } from "./generalTypes";
 import { IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
 import { useApiFetch } from "@/hooks/useFetch";
+import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
@@ -12,9 +13,9 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [errorData, setErrorData] = useState<IErrorData>({ message: "", type: "" });
 
   useEffect(() => {
-    getopenClose();
+    getOpenClose();
     const interval = setInterval(() => {
-      getopenClose();
+      getOpenClose();
     }, 10 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
@@ -29,7 +30,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     }
   };
 
-  const getopenClose = async () => {
+  const getOpenClose = async () => {
     try {
       const res = await fetch(process.env.apiUrl + "/open-closeds");
       const data = await res.json();
@@ -84,9 +85,13 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     setBasketData([]);
   };
 
-  const showInfoOpenClose = () => {
-    if (!openClose.isOpen) setError({ message: openClose.message, type: "info" });
-    return openClose.isOpen;
+  const showInfoOpenCloseStore = () => {
+    if (openClose.isOpen && isStoreOpenStore(openClose?.open, openClose?.close)) {
+      return true;
+    }
+
+    setError({ message: openClose.message, type: "info" });
+    return false;
   };
 
   return (
@@ -101,7 +106,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         clearBasket,
         getProductsByCategoryId,
         products,
-        showInfoOpenClose,
+        showInfoOpenCloseStore,
         openClose,
         makeOrder,
         getOrdersByPhone,

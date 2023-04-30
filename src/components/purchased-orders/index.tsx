@@ -11,7 +11,7 @@ export function PurchasedOrders() {
 
   useEffect(() => {
     const address: IForm = getLocalStorage("address");
-    if (address?.phone) getPurchasedOrders(address?.phone);
+    if (address?.phone) getPurchasedOrders(address?.phone?.slice(3, 12));
   }, []);
 
   const getPurchasedOrders = async (phone: string) => {

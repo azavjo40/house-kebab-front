@@ -12,7 +12,7 @@ function calculateCost(basketData: IOrder[]) {
 }
 
 export function ProcessBuying() {
-  const { basketData, updateRewriteAllBasket, removeOneFromBasket, showInfoOpenClose } = useGeneral();
+  const { basketData, updateRewriteAllBasket, removeOneFromBasket, showInfoOpenCloseStore } = useGeneral();
   const [cost, setCost] = useState(0);
   const [openFormAdderss, setOpenFormAdderss] = useState(false);
 
@@ -65,7 +65,7 @@ export function ProcessBuying() {
                 <Button
                   variant="contained"
                   className="rounded-2xl w-full md:w-[200px] bg-blue-400 py-3 font-black text-sm md:hidden"
-                  onClick={() => showInfoOpenClose() && setOpenFormAdderss(true)}
+                  onClick={() => showInfoOpenCloseStore() && setOpenFormAdderss(true)}
                 >
                   Kasa ({cost} zł)
                 </Button>

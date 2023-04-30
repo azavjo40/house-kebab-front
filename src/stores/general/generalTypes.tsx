@@ -14,7 +14,7 @@ export interface IGeneralContext {
   setError: (data: IErrorData) => void;
   getProductsByCategoryId: (id: number) => void;
   products: IProduct[];
-  showInfoOpenClose: () => boolean;
+  showInfoOpenCloseStore: () => boolean;
   openClose: IOpenClose;
   makeOrder: (newOrder: ISebdOrder) => void;
   getOrdersByPhone: (phone: string) => Promise<ISebdOrder[]>;

@@ -22,7 +22,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
     orderMethod: "delivery",
   });
   const [error, setError] = useState<any>();
-  const { basketData, clearBasket, showInfoOpenClose, makeOrder } = useGeneral();
+  const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder } = useGeneral();
   const { push } = useRouter();
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
       address: form,
       totalCost: cost,
       numberOrder: `BKHJKHKJ${Date.now().toString().slice(7, 100)}`,
-      clientPhone: form?.phone,
+      clientPhone: form?.phone?.slice(3, 12),
     };
     setLocalStorage("address", form);
     makeOrder(order);
@@ -79,7 +79,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
 
   return (
     <div className="p-5 w-full pb-20 md:pb-0">
-      <form onSubmit={(event) => showInfoOpenClose() && handleSubmit(event)}>
+      <form onSubmit={(event) => showInfoOpenCloseStore() && handleSubmit(event)}>
         <ArrowBackIcon onClick={() => setOpenFormAdderss(false)} className="cursor-pointer flex md:hidden" />
         <div className="flex flex-col sm:flex-row mt-2 mb-10 justify-between">
           <h1 className="text-xl sm:text-2xl">Wybierz sposób odbioru zamówienia</h1>

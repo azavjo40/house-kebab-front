@@ -41,9 +41,6 @@ export default function Contact() {
                   Dziśaj: {openClose?.open} - {openClose?.close}
                 </li>
                 <li className="flex items-center">
-                  Dziśaj: {openClose?.open} - {openClose?.close}
-                </li>
-                <li className="flex items-center">
                   Jutro: {openClose?.open} - {openClose?.close}
                 </li>
                 <li className="flex items-center">

@@ -41,11 +41,9 @@ export default function Home({ categories }: any) {
       )}
       {products?.length && (
         <div className="p-4 md:p-8 flex flex-row flex-wrap w-full justify-around">
-          {[...products, ...products, ...products, ...products, ...products, ...products].map(
-            (product: IProduct, index) => (
-              <ProductCard product={product} key={product.id + index} />
-            )
-          )}
+          {products.map((product: IProduct, index) => (
+            <ProductCard product={product} key={product.id + index} />
+          ))}
         </div>
       )}
     </div>
