@@ -76,7 +76,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     setBasketData([...basketData]);
   };
 
-  const setError = ({ message, type }: any) => {
+  const setErrorAlert = ({ message, type }: any) => {
     setErrorData({ message, type });
     setTimeout(() => setErrorData({ message: "", type: "" }), 4000);
   };
@@ -90,7 +90,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       return true;
     }
 
-    setError({ message: openClose.message, type: "info" });
+    setErrorAlert({ message: openClose.message, type: "info" });
     return false;
   };
 
@@ -101,7 +101,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         addOneToBasket,
         removeOneFromBasket,
         errorData,
-        setError,
+        setErrorAlert,
         updateRewriteAllBasket,
         clearBasket,
         getProductsByCategoryId,

@@ -11,7 +11,7 @@ function calculateCost(basketData: IOrder[]) {
   }, 0);
 }
 
-export function ProcessBuying() {
+export function ProcessBuying({ changeValueTab }: any) {
   const { basketData, updateRewriteAllBasket, removeOneFromBasket, showInfoOpenCloseStore } = useGeneral();
   const [cost, setCost] = useState(0);
   const [openFormAdderss, setOpenFormAdderss] = useState(false);
@@ -38,7 +38,7 @@ export function ProcessBuying() {
       {basketData?.length ? (
         <div className="flex">
           <div className={`${openFormAdderss ? "flex" : "hidden"} md:flex w-full`}>
-            <FormAddress cost={cost} setOpenFormAdderss={setOpenFormAdderss} />
+            <FormAddress cost={cost} setOpenFormAdderss={setOpenFormAdderss} changeValueTab={changeValueTab} />
           </div>
 
           <div

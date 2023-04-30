@@ -11,7 +11,7 @@ export interface IGeneralContext {
   removeOneFromBasket: (index: number) => void;
   clearBasket: () => void;
   errorData: IErrorData;
-  setError: (data: IErrorData) => void;
+  setErrorAlert: (data: IErrorData) => void;
   getProductsByCategoryId: (id: number) => void;
   products: IProduct[];
   showInfoOpenCloseStore: () => boolean;

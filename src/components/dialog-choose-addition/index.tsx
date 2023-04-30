@@ -28,7 +28,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   const [open, setOpen] = useState(false);
   const [sauce, setSauce] = useState("Łagodny");
   const [size, setSize] = useState<ISize>({ cost: 0, id: "", title: "" });
-  const { addOneToBasket, setError, showInfoOpenCloseStore } = useGeneral();
+  const { addOneToBasket, setErrorAlert, showInfoOpenCloseStore } = useGeneral();
   const [order, setOrder] = useState<IOrder>({
     title: product?.title,
     sauce,
@@ -116,7 +116,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
       addOneToBasket(order);
       setTimeout(handleClose, 500);
     }
-    setError({ message: "Twój zakup został dodany!", type: "success" });
+    setErrorAlert({ message: "Twój zakup został dodany do koszyk!", type: "success" });
   };
 
   return (

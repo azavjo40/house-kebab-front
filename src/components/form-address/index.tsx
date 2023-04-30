@@ -9,9 +9,10 @@ import { useEffect, useState } from "react";
 export interface IFormAddressProps {
   cost: number;
   setOpenFormAdderss: any;
+  changeValueTab: (index: number) => void;
 }
 
-export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressProps) {
+export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }: IFormAddressProps) {
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -22,8 +23,7 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
     orderMethod: "delivery",
   });
   const [error, setError] = useState<any>();
-  const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder } = useGeneral();
-  const { push } = useRouter();
+  const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert } = useGeneral();
 
   useEffect(() => {
     const address: IForm = getLocalStorage("address");
@@ -53,14 +53,16 @@ export default function FormAddress({ cost, setOpenFormAdderss }: IFormAddressPr
       numberOrder: `BKHJKHKJ${Date.now().toString().slice(7, 100)}`,
       clientPhone: form?.phone?.slice(3, 12),
     };
+
     setLocalStorage("address", form);
     makeOrder(order);
-
+    setErrorAlert({ message: "Dziękujemy za zakup prosimy czekać na potwierdzenie zamówienia", type: "success" });
+    changeValueTab(1);
     setTimeout(() => {
-      push("/basket");
+      setOpenFormAdderss(false);
       clearBasket();
       setForm({ name: "", phone: "", street: "", home: "", apartment: "", entrance: "", orderMethod: "delivery" });
-    }, 500);
+    }, 800);
   };
 
   const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
