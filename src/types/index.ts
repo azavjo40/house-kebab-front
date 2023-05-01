@@ -77,3 +77,8 @@ export interface IOrders {
   order: IOrder[];
   totalCost: Number;
 }
+
+export interface IHeader {
+  logo: string;
+  banner: string;
+}

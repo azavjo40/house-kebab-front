@@ -47,7 +47,19 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         body: newOrder,
       });
       const data = await res?.json();
-      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getHeader = async () => {
+    try {
+      const res = await fetch(process.env.apiUrl + "/headers");
+      const data = await res?.json();
+      return {
+        banner: data[0]?.banner?.url,
+        logo: data[0]?.logo?.url,
+      };
     } catch (e) {
       console.log(e);
     }
@@ -110,6 +122,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         openClose,
         makeOrder,
         getOrdersByPhone,
+        getHeader,
       }}
     >
       {children}

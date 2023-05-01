@@ -130,7 +130,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
           {product?.title}
         </BootstrapDialogTitle>
         <DialogContent dividers className="w-full  min-w-[300px] md:min-w-[350px]">
-          {product?.free_sauces?.length && (
+          {product?.free_sauces?.length ? (
             <>
               <div className="mb-3">
                 <FormLabel id="demo-radio-buttons-group-label">Wybierz sos</FormLabel>
@@ -155,9 +155,11 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
                 </Select>
               </FormControl>
             </>
+          ) : (
+            ""
           )}
 
-          {product?.sizes?.length && (
+          {product?.sizes?.length ? (
             <>
               <div className="mb-3 mt-3">
                 <FormLabel id="demo-radio-buttons-group-label">Wybierz Rozmiar</FormLabel>
@@ -181,24 +183,30 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
                 </Select>
               </FormControl>
             </>
+          ) : (
+            ""
           )}
-          <div className="mt-5 flex flex-col">
-            <FormLabel id="demo-radio-buttons-group-label">Wybierz dodatkowe</FormLabel>
-            {product?.additions?.map((item: IAddition, index: number) => (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={item?.isChoosed}
-                    required
-                    onChange={(event) => handlecheckboxChangeAdditions(event, index)}
-                  />
-                }
-                label={item?.title + " " + item?.cost + " zł"}
-                className="ml-1"
-              />
-            ))}
-          </div>
+          {product?.additions?.length ? (
+            <div className="mt-5 flex flex-col">
+              <FormLabel id="demo-radio-buttons-group-label">Wybierz dodatkowe</FormLabel>
+              {product?.additions?.map((item: IAddition, index: number) => (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={item?.isChoosed}
+                      required
+                      onChange={(event) => handlecheckboxChangeAdditions(event, index)}
+                    />
+                  }
+                  label={item?.title + " " + item?.cost + " zł"}
+                  className="ml-1"
+                />
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
         </DialogContent>
         <DialogActions>
           <div className="mr-auto">
