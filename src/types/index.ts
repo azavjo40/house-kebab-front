@@ -2,6 +2,7 @@ export interface ICategory {
   type: string;
   isAddition: boolean;
   title: string;
+  id: number;
 }
 
 export interface IAddition {
@@ -85,4 +86,9 @@ export interface IOrders {
 export interface IHeader {
   logo: string;
   banner: string;
+}
+
+export interface IErrorLertData {
+  message: string;
+  type: string;
 }

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { IGeneralContext, GeneralPropsType, IErrorData } from "./generalTypes";
-import { IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
+import { IGeneralContext, GeneralPropsType } from "./generalTypes";
+import { ICategory, IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
 import { useApiFetch } from "@/hooks/useFetch";
 import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
 import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
@@ -10,8 +10,10 @@ export const GeneralContext = createContext<IGeneralContext>({} as IGeneralConte
 export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [basketData, setBasketData] = useState<IOrder[]>([]);
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [ordersForAdmin, setOrdersForAdmin] = useState<ISebdOrder[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [openClose, setOpenClose] = useState<IOpenClose>({ message: "", isOpen: false, open: "", close: "" });
-  const [errorData, setErrorData] = useState<IErrorData>({ message: "", type: "" });
+  const [errorAlertData, setErrorAlertData] = useState<IErrorLertData>({ message: "", type: "" });
   const [jwtToken, setJwtToken] = useState("");
 
   useEffect(() => {
@@ -22,16 +24,43 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     return () => clearInterval(interval);
   }, []);
 
+  const setErrorAlert = ({ message, type }: any) => {
+    console.log({ message, type });
+    setErrorAlertData({ message, type });
+    setTimeout(() => setErrorAlertData({ message: "", type: "" }), 4000);
+  };
+
   const start = () => {
     getOpenClose();
     setJwtToken(getLocalStorage("jwt"));
+    getCategories();
+    getOrdersForAdmin();
   };
 
   const getProductsByCategoryId = async (id: number) => {
     try {
-      const res = await fetch(process.env.apiUrl + "/products?category.id=" + id);
-      const data = await res.json();
+      const data = await useApiFetch(process.env.apiUrl + "/products?category.id=" + id, null, false, (data) =>
+        setErrorAlert(data)
+      );
       setProducts(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getCategories = async () => {
+    try {
+      const data = await useApiFetch(process.env.apiUrl + "/categories", null, false, setErrorAlert);
+      setCategories(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getOrdersForAdmin = async () => {
+    try {
+      const data = await useApiFetch(process.env.apiUrl + "/orders", null, true, (data) => setErrorAlert(data));
+      setOrdersForAdmin(data);
     } catch (e) {
       console.log(e);
     }
@@ -39,8 +68,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getOpenClose = async () => {
     try {
-      const res = await fetch(process.env.apiUrl + "/open-closeds");
-      const data = await res.json();
+      const data = await useApiFetch(process.env.apiUrl + "/open-closeds", null, false, setErrorAlert);
       setOpenClose(data[0]);
     } catch (e) {
       console.log(e);
@@ -49,11 +77,15 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const makeOrder = async (newOrder: ISebdOrder) => {
     try {
-      const res = await useApiFetch(process.env.apiUrl + "/orders", {
-        method: "POST",
-        body: newOrder,
-      });
-      const data = await res?.json();
+      await useApiFetch(
+        process.env.apiUrl + "/orders",
+        {
+          method: "POST",
+          body: newOrder,
+        },
+        false,
+        setErrorAlert
+      );
     } catch (e) {
       console.log(e);
     }
@@ -61,11 +93,15 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const loginAdmin = async (form: IFormLogin) => {
     try {
-      const res = await useApiFetch(process.env.apiUrl + "/auth/local", {
-        method: "POST",
-        body: form,
-      });
-      const data = await res?.json();
+      const data = await useApiFetch(
+        process.env.apiUrl + "/auth/local",
+        {
+          method: "POST",
+          body: form,
+        },
+        false,
+        setErrorAlert
+      );
       if (data?.jwt) {
         setJwtToken(data?.jwt);
         setLocalStorage("jwt", data?.jwt);
@@ -77,8 +113,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getHeader = async () => {
     try {
-      const res = await fetch(process.env.apiUrl + "/headers");
-      const data = await res?.json();
+      const data = await useApiFetch(process.env.apiUrl + "/headers", null, false, setErrorAlert);
       return {
         banner: data[0]?.banner?.url,
         logo: data[0]?.logo?.url,
@@ -90,8 +125,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getOrdersByPhone = async (phone: string) => {
     try {
-      const res = await fetch(process.env.apiUrl + "/orders?clientPhone=" + phone);
-      return await res?.json();
+      const data = await useApiFetch(process.env.apiUrl + "/orders?clientPhone=" + phone, null, false, setErrorAlert);
+      return data;
     } catch (e) {
       console.log(e);
     }
@@ -111,11 +146,6 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     setBasketData([...basketData]);
   };
 
-  const setErrorAlert = ({ message, type }: any) => {
-    setErrorData({ message, type });
-    setTimeout(() => setErrorData({ message: "", type: "" }), 4000);
-  };
-
   const clearBasket = () => {
     setBasketData([]);
   };
@@ -125,7 +155,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       return true;
     }
 
-    setErrorAlert({ message: openClose.message, type: "info" });
+    setErrorAlert({ message: openClose.message, type: "" });
     return false;
   };
 
@@ -135,7 +165,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         basketData,
         addOneToBasket,
         removeOneFromBasket,
-        errorData,
+        errorAlertData,
         setErrorAlert,
         updateRewriteAllBasket,
         clearBasket,
@@ -148,6 +178,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         getHeader,
         loginAdmin,
         jwtToken,
+        categories,
+        ordersForAdmin,
       }}
     >
       {children}

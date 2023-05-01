@@ -1,17 +1,12 @@
-import { IFormLogin, IHeader, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
-
-export interface IErrorData {
-  message: string;
-  type: string;
-}
+import { ICategory, IErrorLertData, IFormLogin, IHeader, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
 export interface IGeneralContext {
   basketData: IOrder[];
   addOneToBasket: (data: IOrder) => void;
   updateRewriteAllBasket: (data: IOrder[]) => void;
   removeOneFromBasket: (index: number) => void;
   clearBasket: () => void;
-  errorData: IErrorData;
-  setErrorAlert: (data: IErrorData) => void;
+  errorAlertData: IErrorLertData;
+  setErrorAlert: (data: IErrorLertData) => void;
   getProductsByCategoryId: (id: number) => void;
   products: IProduct[];
   showInfoOpenCloseStore: () => boolean;
@@ -21,6 +16,8 @@ export interface IGeneralContext {
   getHeader: () => Promise<IHeader | undefined>;
   loginAdmin: (data: IFormLogin) => void;
   jwtToken: string;
+  categories: ICategory[];
+  ordersForAdmin: ISebdOrder[];
 }
 
 export type GeneralPropsType = {

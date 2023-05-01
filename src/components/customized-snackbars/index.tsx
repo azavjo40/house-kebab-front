@@ -9,12 +9,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 
 //'success' | 'info' | 'warning' | 'error';
 export function CustomizedSnackbars() {
-  const { errorData }: any = useGeneral();
+  const { errorAlertData }: any = useGeneral();
   return (
     <>
-      {errorData?.message ? (
+      {errorAlertData?.message ? (
         <Stack spacing={2} className="fixed top-10 right-6">
-          <Alert severity={errorData?.type}>{errorData?.message}</Alert>
+          <Alert severity={errorAlertData?.type}>{errorAlertData?.message}</Alert>
         </Stack>
       ) : (
         ""

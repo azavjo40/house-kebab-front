@@ -2,18 +2,14 @@ import { useEffect, useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import { ProductCard } from "@/containers/product-card";
 import { ICategory, IProduct } from "@/types";
-// import { products } from "@/constant";
 import { Banner } from "@/containers/banner";
 import { useGeneral } from "@/hooks/useGeneral";
 
-export interface IHomeProps {
-  categories: ICategory[];
-}
+export interface IHomeProps {}
 
-export default function Home({ categories }: any) {
+export default function Home() {
   const [valueTab, setValueTab] = useState(0);
-  const { getProductsByCategoryId, products } = useGeneral();
-
+  const { getProductsByCategoryId, products, categories } = useGeneral();
   const getProducts = (id: number) => {
     getProductsByCategoryId(id || 1);
   };
@@ -48,19 +44,4 @@ export default function Home({ categories }: any) {
       )}
     </div>
   );
-}
-//house-kebab-back
-
-export async function getStaticProps() {
-  try {
-    const res = await fetch(process.env.apiUrl + "/categories");
-    const categories = await res.json();
-    return {
-      props: {
-        categories,
-      },
-    };
-  } catch (e) {
-    console.log(e);
-  }
 }
