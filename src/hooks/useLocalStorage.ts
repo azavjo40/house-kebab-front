@@ -6,7 +6,7 @@ export const getLocalStorage = (name: string) => {
   if (data) {
     return JSON.parse(data);
   }
-  return "Not Data";
+  return undefined;
 };
 
 export const removeLocalStorage = (name: string) => {

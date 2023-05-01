@@ -1,8 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { IGeneralContext, GeneralPropsType, IErrorData } from "./generalTypes";
-import { IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
+import { IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
 import { useApiFetch } from "@/hooks/useFetch";
 import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
+import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
@@ -11,14 +12,20 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [openClose, setOpenClose] = useState<IOpenClose>({ message: "", isOpen: false, open: "", close: "" });
   const [errorData, setErrorData] = useState<IErrorData>({ message: "", type: "" });
+  const [jwtToken, setJwtToken] = useState("");
 
   useEffect(() => {
-    getOpenClose();
+    start();
     const interval = setInterval(() => {
       getOpenClose();
     }, 10 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const start = () => {
+    getOpenClose();
+    setJwtToken(getLocalStorage("jwt"));
+  };
 
   const getProductsByCategoryId = async (id: number) => {
     try {
@@ -47,6 +54,22 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         body: newOrder,
       });
       const data = await res?.json();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const loginAdmin = async (form: IFormLogin) => {
+    try {
+      const res = await useApiFetch(process.env.apiUrl + "/auth/local", {
+        method: "POST",
+        body: form,
+      });
+      const data = await res?.json();
+      if (data?.jwt) {
+        setJwtToken(data?.jwt);
+        setLocalStorage("jwt", data?.jwt);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -123,6 +146,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         makeOrder,
         getOrdersByPhone,
         getHeader,
+        loginAdmin,
+        jwtToken,
       }}
     >
       {children}

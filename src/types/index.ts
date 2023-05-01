@@ -53,7 +53,7 @@ export interface IOrder {
   size: ISize;
 }
 
-export interface IForm {
+export interface IFormAddress {
   name: string;
   phone: string;
   street: string;
@@ -62,9 +62,13 @@ export interface IForm {
   entrance: string;
   orderMethod: string;
 }
+export interface IFormLogin {
+  identifier: string;
+  password: string;
+}
 
 export interface ISebdOrder {
-  address: IForm;
+  address: IFormAddress;
   numberOrder: string;
   order: IOrder[];
   totalCost: number;
@@ -72,7 +76,7 @@ export interface ISebdOrder {
 }
 
 export interface IOrders {
-  address: IForm;
+  address: IFormAddress;
   numberOrder: string;
   order: IOrder[];
   totalCost: Number;

@@ -1,9 +1,8 @@
 import { useGeneral } from "@/hooks/useGeneral";
 import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
-import { IForm, ISebdOrder } from "@/types";
+import { IFormAddress, ISebdOrder } from "@/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export interface IFormAddressProps {
@@ -26,7 +25,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
   const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert } = useGeneral();
 
   useEffect(() => {
-    const address: IForm = getLocalStorage("address");
+    const address: IFormAddress = getLocalStorage("address");
     if (address) {
       setForm({
         name: address?.name,
@@ -41,7 +40,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
   }, []);
 
   const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((pre: IForm) => ({ ...pre, [event.target.name]: event.target.value }));
+    setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
   };
 
   const handleSubmit = (event: any) => {
@@ -66,7 +65,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
   };
 
   const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((pre: IForm) => ({ ...pre, [event.target.name]: event.target.value }));
+    setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
   };
 
   const handleBlur = (event: any) => {
