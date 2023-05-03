@@ -62,6 +62,7 @@ export interface IFormAddress {
   apartment: string;
   entrance: string;
   orderMethod: string;
+  payMethod: string;
 }
 export interface IFormLogin {
   identifier: string;
@@ -74,6 +75,7 @@ export interface ISebdOrder {
   order: IOrder[];
   totalCost: number;
   clientPhone: string;
+  created_at?: string;
 }
 
 export interface IOrders {

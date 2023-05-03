@@ -18,6 +18,8 @@ export interface IGeneralContext {
   jwtToken: string;
   categories: ICategory[];
   ordersForAdmin: ISebdOrder[];
+  getOrdersForAdmin: (page?: number, size?: number) => void;
+  getCountOrdersForAdmin: () => Promise<number>;
 }
 
 export type GeneralPropsType = {

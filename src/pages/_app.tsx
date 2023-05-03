@@ -1,4 +1,4 @@
-import { CustomizedSnackbars } from "@/components/customized-snackbars";
+import { AlertMessage } from "@/components/alert-message";
 import { DenseAppBar } from "@/containers/dense-app-bar";
 import { Footer } from "@/containers/footer";
 import { MobileAppBar } from "@/containers/mobile-app-bar";
@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
       <MobileAppBar />
       {!(asPath.includes("/basket") || asPath.includes("/admin")) && <Footer />}
-      <CustomizedSnackbars />
+      <AlertMessage />
     </GeneralContextProvider>
   );
 }

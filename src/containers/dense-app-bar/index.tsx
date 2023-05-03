@@ -9,9 +9,10 @@ import { useGeneral } from "@/hooks/useGeneral";
 import { useRouter } from "next/router";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 
 export function DenseAppBar() {
-  const { basketData } = useGeneral();
+  const { basketData, jwtToken } = useGeneral();
   const { push } = useRouter();
   return (
     <div className="md:block hidden bg-[#f36805]">
@@ -53,6 +54,18 @@ export function DenseAppBar() {
           >
             <RecentActorsIcon />
           </IconButton>
+          {jwtToken && (
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={() => push("/admin")}
+            >
+              <SupervisorAccountIcon />
+            </IconButton>
+          )}
         </Box>
       </Toolbar>
     </div>

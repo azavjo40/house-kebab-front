@@ -110,9 +110,10 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   };
 
   const handleAddToBasket = () => {
-    console.log(order);
-    if (!product.category?.isAddition) addOneToBasket(order);
-    else {
+    if (!product.category?.isAddition) {
+      delete order.sauce;
+      addOneToBasket(order);
+    } else {
       addOneToBasket(order);
       setTimeout(handleClose, 500);
     }

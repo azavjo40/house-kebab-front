@@ -8,7 +8,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 });
 
 //'success' | 'info' | 'warning' | 'error';
-export function CustomizedSnackbars() {
+export function AlertMessage() {
   const { errorAlertData }: any = useGeneral();
   return (
     <>

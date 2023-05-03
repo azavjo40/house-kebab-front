@@ -57,9 +57,24 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     }
   };
 
-  const getOrdersForAdmin = async () => {
+  const getCountOrdersForAdmin = async () => {
     try {
-      const data = await useApiFetch(process.env.apiUrl + "/orders", null, true, (data) => setErrorAlert(data));
+      const data = await useApiFetch(process.env.apiUrl + `/orders/count`, null, true, (data) => setErrorAlert(data));
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getOrdersForAdmin = async (page = 1, size = 5) => {
+    const start = (page - 1) * size;
+    try {
+      const data = await useApiFetch(
+        process.env.apiUrl + `/orders?_limit=${size}&_start=${start}`,
+        null,
+        true,
+        (data) => setErrorAlert(data)
+      );
       setOrdersForAdmin(data);
     } catch (e) {
       console.log(e);
@@ -180,6 +195,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         jwtToken,
         categories,
         ordersForAdmin,
+        getOrdersForAdmin,
+        getCountOrdersForAdmin,
       }}
     >
       {children}

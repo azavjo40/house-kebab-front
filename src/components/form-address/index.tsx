@@ -2,6 +2,7 @@ import { useGeneral } from "@/hooks/useGeneral";
 import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
 import { IFormAddress, ISebdOrder } from "@/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { v4 } from "uuid";
 import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -20,6 +21,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     apartment: "",
     entrance: "",
     orderMethod: "delivery",
+    payMethod: "cash",
   });
   const [error, setError] = useState<any>();
   const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert } = useGeneral();
@@ -35,6 +37,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
         apartment: address?.apartment || "",
         entrance: address?.entrance || "",
         orderMethod: "delivery",
+        payMethod: "cash",
       });
     }
   }, []);
@@ -49,7 +52,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
       order: basketData,
       address: form,
       totalCost: cost,
-      numberOrder: `BKHJKHKJ${Date.now().toString().slice(7, 100)}`,
+      numberOrder: `${v4()?.slice(0, 6)}`,
       clientPhone: form?.phone?.slice(3, 12),
     };
 
@@ -60,11 +63,24 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     setTimeout(() => {
       setOpenFormAdderss(false);
       clearBasket();
-      setForm({ name: "", phone: "", street: "", home: "", apartment: "", entrance: "", orderMethod: "delivery" });
+      setForm({
+        name: "",
+        phone: "",
+        street: "",
+        home: "",
+        apartment: "",
+        entrance: "",
+        orderMethod: "delivery",
+        payMethod: "cash",
+      });
     }, 800);
   };
 
-  const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeCheckboxOrderMethod = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
+  };
+
+  const handleChangeCheckboxPayMethod = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
   };
 
@@ -88,7 +104,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue="delivery"
             name="orderMethod"
-            onChange={handleChangeCheckbox}
+            onChange={handleChangeCheckboxOrderMethod}
           >
             <div className="flex">
               <FormControlLabel value="delivery" control={<Radio />} label="Dostawa" />
@@ -188,7 +204,21 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
             </div>
           </>
         )}
-        <div className="w-full flex md:justify-end">
+
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="cash"
+          name="payMethod"
+          onChange={handleChangeCheckboxPayMethod}
+          className="-mt-5"
+        >
+          <div className="flex">
+            <FormControlLabel value="cash" control={<Radio />} label="Gotówka" />
+            <FormControlLabel value="card" control={<Radio />} label="Karta" />
+          </div>
+        </RadioGroup>
+
+        <div className="w-full flex md:justify-end mt-3">
           <button
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
