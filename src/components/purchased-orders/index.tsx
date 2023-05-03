@@ -25,7 +25,7 @@ export function PurchasedOrders() {
   };
 
   return (
-    <div>
+    <div className="pb-20">
       {orders?.length ? (
         <div className="w-full p-4 md:p-10">
           {orders?.map((item: ISebdOrder, index: number) => {
@@ -105,6 +105,8 @@ export function PurchasedOrders() {
                                       );
                                     })
                                   : ""}
+
+                                {order?.note ? <li className="capitalize">Note: {order?.note}</li> : ""}
                               </ol>
                             </li>
                           </ul>
