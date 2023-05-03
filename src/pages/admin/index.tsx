@@ -42,7 +42,6 @@ function Home() {
         {ordersForAdmin?.length ? (
           <div className="w-full p-4 md:p-10">
             {ordersForAdmin?.map((item: ISebdOrder, index: number) => {
-              console.log(item);
               return (
                 <Accordion key={index} className="mb-2">
                   <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
@@ -82,7 +81,7 @@ function Home() {
                       </h2>
                       {item?.order?.map((order: IOrder, index: number) => {
                         return (
-                          <div className="ml-2">
+                          <div className="ml-2" key={index}>
                             <ul className="space-y-4 text-gray-500 list-none list-inside dark:text-gray-400">
                               <li className="capitalize">
                                 <div className="flex justify-between">
@@ -110,9 +109,9 @@ function Home() {
                                   )}
 
                                   {order?.additions?.length
-                                    ? order?.additions?.map((addition) => {
+                                    ? order?.additions?.map((addition, index: number) => {
                                         return (
-                                          <li className="capitalize">
+                                          <li className="capitalize" key={index}>
                                             {" "}
                                             <div className="flex justify-between">
                                               <span>+ {addition?.title}</span>

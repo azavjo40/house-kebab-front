@@ -16,7 +16,7 @@ interface IOptionsFetch {
   signal?: AbortSignal | null;
 }
 
-export async function useApiFetch(
+export async function myApiFetch(
   url: string,
   options?: IOptionsFetch | null | undefined,
   isAuth = false,

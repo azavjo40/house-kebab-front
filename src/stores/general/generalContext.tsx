@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { IGeneralContext, GeneralPropsType } from "./generalTypes";
 import { ICategory, IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
-import { useApiFetch } from "@/hooks/useFetch";
+import { myApiFetch } from "@/hooks/myApiFetch";
 import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
 import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
 
@@ -39,7 +39,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getProductsByCategoryId = async (id: number) => {
     try {
-      const data = await useApiFetch(process.env.apiUrl + "/products?category.id=" + id, null, false, (data) =>
+      const data = await myApiFetch(process.env.apiUrl + "/products?category.id=" + id, null, false, (data) =>
         setErrorAlert(data)
       );
       setProducts(data);
@@ -50,7 +50,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getCategories = async () => {
     try {
-      const data = await useApiFetch(process.env.apiUrl + "/categories", null, false, setErrorAlert);
+      const data = await myApiFetch(process.env.apiUrl + "/categories", null, false, setErrorAlert);
       setCategories(data);
     } catch (e) {
       console.log(e);
@@ -59,7 +59,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getCountOrdersForAdmin = async () => {
     try {
-      const data = await useApiFetch(process.env.apiUrl + `/orders/count`, null, true, (data) => setErrorAlert(data));
+      const data = await myApiFetch(process.env.apiUrl + `/orders/count`, null, true, (data) => setErrorAlert(data));
       return data;
     } catch (e) {
       console.log(e);
@@ -69,11 +69,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const getOrdersForAdmin = async (page = 1, size = 5) => {
     const start = (page - 1) * size;
     try {
-      const data = await useApiFetch(
-        process.env.apiUrl + `/orders?_limit=${size}&_start=${start}`,
-        null,
-        true,
-        (data) => setErrorAlert(data)
+      const data = await myApiFetch(process.env.apiUrl + `/orders?_limit=${size}&_start=${start}`, null, true, (data) =>
+        setErrorAlert(data)
       );
       setOrdersForAdmin(data);
     } catch (e) {
@@ -83,7 +80,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getOpenClose = async () => {
     try {
-      const data = await useApiFetch(process.env.apiUrl + "/open-closeds", null, false, setErrorAlert);
+      const data = await myApiFetch(process.env.apiUrl + "/open-closeds", null, false, setErrorAlert);
       setOpenClose(data[0]);
     } catch (e) {
       console.log(e);
@@ -92,7 +89,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const makeOrder = async (newOrder: ISebdOrder) => {
     try {
-      await useApiFetch(
+      await myApiFetch(
         process.env.apiUrl + "/orders",
         {
           method: "POST",
@@ -108,7 +105,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const loginAdmin = async (form: IFormLogin) => {
     try {
-      const data = await useApiFetch(
+      const data = await myApiFetch(
         process.env.apiUrl + "/auth/local",
         {
           method: "POST",
@@ -128,7 +125,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getHeader = async () => {
     try {
-      const data = await useApiFetch(process.env.apiUrl + "/headers", null, false, setErrorAlert);
+      const data = await myApiFetch(process.env.apiUrl + "/headers", null, false, setErrorAlert);
       return {
         banner: data[0]?.banner?.url,
         logo: data[0]?.logo?.url,
@@ -140,7 +137,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getOrdersByPhone = async (phone: string) => {
     try {
-      const data = await useApiFetch(process.env.apiUrl + "/orders?clientPhone=" + phone, null, false, setErrorAlert);
+      const data = await myApiFetch(process.env.apiUrl + "/orders?clientPhone=" + phone, null, false, setErrorAlert);
       return data;
     } catch (e) {
       console.log(e);
