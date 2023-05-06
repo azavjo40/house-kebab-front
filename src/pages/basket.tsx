@@ -22,8 +22,7 @@ export default function Basket() {
           <Tab label="Moje  Zamówienia" />
         </Tabs>
       </div>
-      {valueTab === 0 && <ProcessBuying changeValueTab={changeValueTab} />}
-      {valueTab === 1 && <PurchasedOrders />}
+      {valueTab === 0 ? <ProcessBuying changeValueTab={changeValueTab} /> : <PurchasedOrders />}
     </div>
   );
 }

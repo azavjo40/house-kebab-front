@@ -130,10 +130,12 @@ export function PurchasedOrders() {
                             </div>
                           </li>
                           <li>
-                            <div className="flex justify-between">
-                              <span>koszt dostawy</span>
-                              <span>0,00 zł</span>
-                            </div>
+                            {item?.address?.orderMethod === "delivery" && (
+                              <div className="flex justify-between">
+                                <span>koszt dostawy</span>
+                                <span>0,00 zł</span>
+                              </div>
+                            )}
                           </li>
                           <li>
                             <div className="flex justify-between">

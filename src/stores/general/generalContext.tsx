@@ -25,7 +25,6 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   }, []);
 
   const setErrorAlert = ({ message, type }: any) => {
-    console.log({ message, type });
     setErrorAlertData({ message, type });
     setTimeout(() => setErrorAlertData({ message: "", type: "" }), 4000);
   };
@@ -51,6 +50,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const getCategories = async () => {
     try {
       const data = await myApiFetch(process.env.apiUrl + "/categories", null, false, setErrorAlert);
+      getProductsByCategoryId(data[0]?.id || 1);
       setCategories(data);
     } catch (e) {
       console.log(e);
@@ -69,8 +69,11 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const getOrdersForAdmin = async (page = 1, size = 5) => {
     const start = (page - 1) * size;
     try {
-      const data = await myApiFetch(process.env.apiUrl + `/orders?_limit=${size}&_start=${start}`, null, true, (data) =>
-        setErrorAlert(data)
+      const data = await myApiFetch(
+        process.env.apiUrl + `/orders?_limit=${size}&_start=${start}&_sort=created_at:desc`,
+        null,
+        true,
+        (data) => setErrorAlert(data)
       );
       setOrdersForAdmin(data);
     } catch (e) {
@@ -137,7 +140,12 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getOrdersByPhone = async (phone: string) => {
     try {
-      const data = await myApiFetch(process.env.apiUrl + "/orders?clientPhone=" + phone, null, false, setErrorAlert);
+      const data = await myApiFetch(
+        process.env.apiUrl + "/orders?clientPhone=" + phone + "&_sort=created_at:desc",
+        null,
+        false,
+        setErrorAlert
+      );
       return data;
     } catch (e) {
       console.log(e);

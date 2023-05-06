@@ -46,7 +46,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     const order: ISebdOrder = {
       order: basketData,
@@ -57,7 +57,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     };
 
     setLocalStorage("address", form);
-    makeOrder(order);
+    await makeOrder(order);
     setErrorAlert({ message: "Dziękujemy za zakup prosimy czekać na potwierdzenie zamówienia", type: "success" });
     changeValueTab(1);
     setTimeout(() => {

@@ -133,12 +133,16 @@ function Home() {
                         <li>
                           Adres i kontakt
                           <ol className="pl-5 mt-2 space-y-1  list-inside">
-                            <li>
-                              Ulica: {item?.address?.street} {item?.address?.home}
-                            </li>
-                            <li>
-                              Mieszkanie: {item?.address?.apartment}, Klatka {item?.address?.entrance}{" "}
-                            </li>
+                            {item?.address?.orderMethod === "delivery" && (
+                              <>
+                                <li>
+                                  Ulica: {item?.address?.street} {item?.address?.home}
+                                </li>
+                                <li>
+                                  Mieszkanie: {item?.address?.apartment}, Klatka {item?.address?.entrance}{" "}
+                                </li>
+                              </>
+                            )}
                             <li>Tel. {item?.address?.phone}</li>
                           </ol>
                         </li>
@@ -161,10 +165,12 @@ function Home() {
                               </div>
                             </li>
                             <li>
-                              <div className="flex justify-between capitalize">
-                                <span>koszt dostawy</span>
-                                <span>0,00 zł</span>
-                              </div>
+                              {item?.address?.orderMethod === "delivery" && (
+                                <div className="flex justify-between capitalize">
+                                  <span>koszt dostawy</span>
+                                  <span>0,00 zł</span>
+                                </div>
+                              )}
                             </li>
                             <li>
                               <div className="flex justify-between capitalize">
@@ -185,9 +191,9 @@ function Home() {
           <ListItemText primary="Nie masz jeszcze zamówienia!" className="text-center text-red-400" />
         )}
       </div>
-      {count === 5 && (
+      {count > 4 && (
         <Stack spacing={2}>
-          <Pagination count={Math.floor(count / 5)} page={page} onChange={handleChange} />
+          <Pagination count={Math.ceil(count / 5)} page={page} onChange={handleChange} />
         </Stack>
       )}
     </div>
