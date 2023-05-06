@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function Login() {
   const { jwtToken } = useGeneral();
   const [form, setForm] = useState<IFormLogin>({
-    identifier: "",
+    email: "",
     password: "",
   });
 
@@ -42,7 +42,7 @@ export default function Login() {
                 </label>
                 <input
                   type="email"
-                  name="identifier"
+                  name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="name@company.com"

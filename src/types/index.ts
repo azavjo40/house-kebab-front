@@ -65,7 +65,7 @@ export interface IFormAddress {
   payMethod: string;
 }
 export interface IFormLogin {
-  identifier: string;
+  email: string;
   password: string;
 }
 

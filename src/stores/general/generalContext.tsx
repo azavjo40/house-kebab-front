@@ -106,7 +106,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const loginAdmin = async (form: IFormLogin) => {
     try {
       const data = await myApiFetch(
-        process.env.apiUrl + "/auth/local",
+        process.env.apiUrl + "/admin/login",
         {
           method: "POST",
           body: form,
@@ -114,9 +114,9 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         false,
         setErrorAlert
       );
-      if (data?.jwt) {
-        setJwtToken(data?.jwt);
-        setLocalStorage("jwt", data?.jwt);
+      if (data?.data?.token) {
+        setJwtToken(data?.data?.token);
+        setLocalStorage("jwt", data?.data?.token);
       }
     } catch (e) {
       console.log(e);
