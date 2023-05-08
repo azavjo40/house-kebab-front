@@ -12,7 +12,7 @@ export interface IProductCardProps {
 
 export function ProductCard({ product }: IProductCardProps) {
   return (
-    <Card sx={{ maxWidth: 330 }} className="mt-4 md:m-4">
+    <Card sx={{ minWidth: 330, maxWidth: 330 }} className="mt-4 md:m-4 ">
       <CardMedia sx={{ height: 140 }} image={product?.image?.url || ""} title="green iguana" />
 
       <CardContent>

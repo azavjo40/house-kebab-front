@@ -78,13 +78,17 @@ export function PurchasedOrders() {
                                 <span>{order?.cost},00 zł</span>
                               </div>
                               <ol className="pl-5 mt-2 space-y-1 list-inside">
-                                <li className="capitalize">
-                                  <div className="flex justify-between">+ sos {order?.sauce}</div>
-                                </li>
-                                {order?.size ? (
+                                {order?.sauce ? (
+                                  <li className="capitalize">
+                                    <div className="flex justify-between">+ {order?.sauce}</div>
+                                  </li>
+                                ) : (
+                                  ""
+                                )}
+                                {order?.size?.title ? (
                                   <li className="capitalize">
                                     <div className="flex justify-between">
-                                      + Rozmiar {order?.size?.title} <span>{order?.size?.cost},00 zł</span>
+                                      + {order?.size?.title} <span>{order?.size?.cost},00 zł</span>
                                     </div>
                                   </li>
                                 ) : (
