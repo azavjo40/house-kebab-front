@@ -76,6 +76,10 @@ export interface ISebdOrder {
   totalCost: number;
   clientPhone: string;
   created_at?: string;
+  isConfirmed?: boolean;
+  isDelivered?: boolean;
+  minutes?: string;
+  id?: string;
 }
 
 export interface IOrders {

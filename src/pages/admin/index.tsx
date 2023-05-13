@@ -19,6 +19,7 @@ function Home() {
   const [count, setCount] = useState(1);
   const { ordersForAdmin, getOrdersForAdmin, getCountOrdersForAdmin } = useGeneral();
   const { sendConfirmsOrder, newOrderData } = useSocket();
+  const [openConfirmsOrderModal, setOpenConfirmsOrderModal] = useState<boolean>(false);
 
   useEffect(() => {
     getCountPage();
@@ -27,6 +28,10 @@ function Home() {
   useEffect(() => {
     getOrdersForAdmin(1, 5);
   }, [newOrderData]);
+
+  const handleClickOpen = () => {
+    setOpenConfirmsOrderModal(false);
+  };
 
   const getCountPage = async () => {
     const count = await getCountOrdersForAdmin();
@@ -75,8 +80,15 @@ function Home() {
                           <li>Zamówienie #{item?.numberOrder}</li>
                         </ul>
                       </div>
-                      <div className="flex flex-col items-center">
-                        <AccessTimeIcon className="mb-2" />
+                      <div
+                        className="flex flex-col items-center"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setOpenConfirmsOrderModal(true);
+                          console.log("test");
+                        }}
+                      >
+                        <AccessTimeIcon className="mb-2 text-blue-600" />
                         <span>{getTime(item?.created_at || "")}</span>
                       </div>
                     </div>
@@ -203,7 +215,11 @@ function Home() {
           <Pagination count={Math.ceil(count / 5)} page={page} onChange={handleChange} />
         </Stack>
       )}
-      <ConfirmsOrderModal />
+      <ConfirmsOrderModal
+        newOpen={openConfirmsOrderModal}
+        handleClickOpen={handleClickOpen}
+        ordersForAdmin={ordersForAdmin}
+      />
     </div>
   );
 }

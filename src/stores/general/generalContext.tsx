@@ -106,6 +106,22 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     }
   };
 
+  const updateOrder = async (newOrder: ISebdOrder, id: string) => {
+    try {
+      await myApiFetch(
+        process.env.apiUrl + "/orders/:" + id,
+        {
+          method: "PUT",
+          body: newOrder,
+        },
+        false,
+        setErrorAlert
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const loginAdmin = async (form: IFormLogin) => {
     try {
       const data = await myApiFetch(
@@ -202,6 +218,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         ordersForAdmin,
         getOrdersForAdmin,
         getCountOrdersForAdmin,
+        updateOrder,
       }}
     >
       {children}

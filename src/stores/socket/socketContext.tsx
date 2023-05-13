@@ -5,8 +5,8 @@ import io, { Socket } from "socket.io-client";
 export const SocketContext = createContext<ISocketContext>({} as ISocketContext);
 
 export const SocketContextProvider = ({ children }: SocketPropsType) => {
-  const [confirmsOrderData, setConfirmsOrderData] = useState();
-  const [newOrderData, setNewOrderOrderData] = useState(0);
+  const [confirmsOrderData, setConfirmsOrderData] = useState({ phone: "", minutes: "20", isConfirmed: false });
+  const [newOrderData, setNewOrderOrderData] = useState("");
   const [socket, setSocket] = useState<Socket | undefined>(undefined);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const SocketContextProvider = ({ children }: SocketPropsType) => {
 
   const connectSocketAsync = (): Promise<Socket> => {
     return new Promise((resolve, reject) => {
-      const socketInstance = io("http://localhost:3001", { transports: ["websocket"] });
+      const socketInstance = io(process.env.wcUrl ?? "", { transports: ["websocket"] });
 
       socketInstance.on("739699581", (data: any) => {
         setConfirmsOrderData(data);
@@ -52,9 +52,9 @@ export const SocketContextProvider = ({ children }: SocketPropsType) => {
     }
   };
 
-  const sendNewOrder = () => {
+  const sendNewOrder = (phone: string) => {
     if (socket) {
-      socket.emit("newOrder", Date.now());
+      socket.emit("newOrder", phone);
     }
   };
 

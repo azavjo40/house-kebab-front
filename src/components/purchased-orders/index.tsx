@@ -1,4 +1,4 @@
-import { Accordion, AccordionSummary, AccordionDetails, Typography, ListItem, ListItemText } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, ListItemText } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState } from "react";
 import { IFormAddress, IOrder, IOrders, ISebdOrder } from "@/types";
@@ -14,6 +14,11 @@ import { useSocket } from "@/hooks/useSocket";
 export function PurchasedOrders() {
   const [orders, setOrders] = useState<ISebdOrder[]>();
   const { getOrdersByPhone } = useGeneral();
+  const { confirmsOrderData } = useSocket();
+
+  useEffect(() => {
+    getPurchasedOrders(confirmsOrderData.phone);
+  }, [confirmsOrderData]);
 
   useEffect(() => {
     const address: IFormAddress = getLocalStorage("address");
@@ -35,9 +40,18 @@ export function PurchasedOrders() {
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                   <div className="flex justify-between w-full mr-2 items-center">
                     <div className="flex flex-col">
-                      <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                        {item?.address?.name}
-                      </h2>
+                      <div className="flex">
+                        <h2 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                          {item?.address?.name}
+                        </h2>
+                        <h2
+                          className={`mb-2 ml-4 dark:text-white text-[14px] ${
+                            item?.isConfirmed ? "text-[#1976d2]" : "text-red-500"
+                          }`}
+                        >
+                          {item?.isConfirmed ? "Potwierdzony!" : "Nie potwierdzony!"}
+                        </h2>
+                      </div>
                       <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
                         <li className="capitalize flex items-center">
                           {item?.address?.orderMethod === "delivery" ? (
@@ -57,8 +71,8 @@ export function PurchasedOrders() {
                       </ul>
                     </div>
                     <div className="flex flex-col items-center">
-                      <AccessTimeIcon className="mb-2" />
-                      <span>20</span>
+                      <AccessTimeIcon className="mb-2 text-[#1976d2]" />
+                      <span>{item?.minutes ?? "20"} M</span>
                     </div>
                   </div>
                 </AccordionSummary>

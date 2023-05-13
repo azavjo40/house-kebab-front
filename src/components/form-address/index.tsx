@@ -76,7 +76,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
         payMethod: "cash",
       });
     }, 800);
-    sendNewOrder();
+    sendNewOrder(order?.clientPhone);
   };
 
   const handleChangeCheckboxOrderMethod = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -12,6 +12,7 @@ export interface IGeneralContext {
   showInfoOpenCloseStore: () => boolean;
   openClose: IOpenClose;
   makeOrder: (newOrder: ISebdOrder) => Promise<void>;
+  updateOrder: (newOrder: ISebdOrder, id: string) => Promise<void>;
   getOrdersByPhone: (phone: string) => Promise<ISebdOrder[]>;
   getHeader: () => Promise<IHeader | undefined>;
   loginAdmin: (data: IFormLogin) => void;

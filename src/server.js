@@ -15,12 +15,10 @@ io.on("connection", (socket) => {
   console.log("connection...");
 
   socket.on("confirmsOrder", (data) => {
-    console.log("Получено сообщение:", data);
     io.emit(data?.phone, data);
   });
 
   socket.on("newOrder", (data) => {
-    console.log("Получено сообщение:", data);
     io.emit("admin", data);
   });
 
