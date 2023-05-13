@@ -11,15 +11,22 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import { useSocket } from "@/hooks/useSocket";
+import { ConfirmsOrderModal } from "@/components/confirms-order-modal/ConfirmsOrderModal";
 
 function Home() {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(1);
   const { ordersForAdmin, getOrdersForAdmin, getCountOrdersForAdmin } = useGeneral();
+  const { sendConfirmsOrder, newOrderData } = useSocket();
 
   useEffect(() => {
     getCountPage();
   }, []);
+
+  useEffect(() => {
+    getOrdersForAdmin(1, 5);
+  }, [newOrderData]);
 
   const getCountPage = async () => {
     const count = await getCountOrdersForAdmin();
@@ -43,7 +50,7 @@ function Home() {
           <div className="w-full p-4 md:p-10">
             {ordersForAdmin?.map((item: ISebdOrder, index: number) => {
               return (
-                <Accordion key={index} className="mb-2">
+                <Accordion key={index} className="mb-2" onClick={() => sendConfirmsOrder("739699581", "40", true)}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                     <div className="flex justify-between w-full mr-2 items-center">
                       <div className="flex flex-col">
@@ -196,6 +203,7 @@ function Home() {
           <Pagination count={Math.ceil(count / 5)} page={page} onChange={handleChange} />
         </Stack>
       )}
+      <ConfirmsOrderModal />
     </div>
   );
 }

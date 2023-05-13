@@ -5,6 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { v4 } from "uuid";
 import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useSocket } from "@/hooks/useSocket";
 
 export interface IFormAddressProps {
   cost: number;
@@ -25,6 +26,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
   });
   const [error, setError] = useState<any>();
   const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert } = useGeneral();
+  const { sendNewOrder } = useSocket();
 
   useEffect(() => {
     const address: IFormAddress = getLocalStorage("address");
@@ -74,6 +76,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
         payMethod: "cash",
       });
     }, 800);
+    sendNewOrder();
   };
 
   const handleChangeCheckboxOrderMethod = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -9,6 +9,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import { useSocket } from "@/hooks/useSocket";
 
 export function PurchasedOrders() {
   const [orders, setOrders] = useState<ISebdOrder[]>();
@@ -157,7 +158,7 @@ export function PurchasedOrders() {
           })}
         </div>
       ) : (
-        <ListItemText primary="Nie masz jeszcze zamówienia!" className="text-center text-red-400" />
+        <ListItemText primary="Nie masz jeszcze zamówienia!" className="text-center text-red-400 cursor-pointer" />
       )}
     </div>
   );
