@@ -16,28 +16,28 @@ export function PurchasedOrders() {
   const { getOrdersByPhone } = useGeneral();
   const { confirmsOrderData } = useSocket();
 
-  const showNotification = () => {
-    if ("Notification" in window) {
-      console.log(Notification.permission);
-      if (Notification.permission === "granted") {
-        const title = "Zezwolenie na zawiadomienie";
-        const options = {
-          body: "Zezwól na powiadomienie.",
-        };
-        new Notification(title, options);
-      } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            const title = "Zmienił się status zamówienia";
-            const options = {
-              body: "Zmieniliśmy czas zamówienia i potwierdziliśmy zamówienie.",
-            };
-            new Notification(title, options);
-          }
-        });
-      }
-    }
-  };
+  // const showNotification = () => {
+  //   if ("Notification" in window) {
+  //     console.log(Notification.permission);
+  //     if (Notification.permission === "granted") {
+  //       const title = "Zezwolenie na zawiadomienie";
+  //       const options = {
+  //         body: "Zezwól na powiadomienie.",
+  //       };
+  //       new Notification(title, options);
+  //     } else if (Notification.permission !== "denied") {
+  //       Notification.requestPermission().then((permission) => {
+  //         if (permission === "granted") {
+  //           const title = "Zmienił się status zamówienia";
+  //           const options = {
+  //             body: "Zmieniliśmy czas zamówienia i potwierdziliśmy zamówienie.",
+  //           };
+  //           new Notification(title, options);
+  //         }
+  //       });
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     getPurchasedOrders(confirmsOrderData.phone);
