@@ -1,2 +1,2 @@
-web: npm run start
 socket: npm run socket
+web: npm run start
