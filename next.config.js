@@ -5,7 +5,7 @@ const nextConfig = {
     // apiUrl: 'http://localhost:1337',
     apiUrl: 'https://house-kebab-back.herokuapp.com',
     // wcUrl: 'http://localhost:3001',
-    wcUrl: 'https://house-kebab-front.herokuapp.com',
+    wcUrl: 'wss://house-kebab-front.herokuapp.com',
   },
 }
 
