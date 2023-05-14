@@ -40,7 +40,6 @@ export function PurchasedOrders() {
   };
 
   useEffect(() => {
-    showNotification();
     getPurchasedOrders(confirmsOrderData.phone);
   }, [confirmsOrderData]);
 
