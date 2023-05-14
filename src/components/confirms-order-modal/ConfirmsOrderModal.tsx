@@ -36,7 +36,7 @@ export function ConfirmsOrderModal({ newOpen, handleClickOpen, ordersForAdmin }:
 
   const audioPlay = () => {
     const audio = new Audio();
-    audio.src = process.env.wcUrl ?? "" + "/audio";
+    audio.src = process.env.api1Url ?? "" + "/audio";
     audio.play();
   };
 
