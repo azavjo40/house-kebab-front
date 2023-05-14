@@ -13,6 +13,7 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { useSocket } from "@/hooks/useSocket";
 import { ConfirmsOrderModal } from "@/components/confirms-order-modal/ConfirmsOrderModal";
+import { NotificationAdmin } from "@/components/notification-admin/NotificationAdmin";
 
 function Home() {
   const [page, setPage] = useState(1);
@@ -20,21 +21,24 @@ function Home() {
   const { ordersForAdmin, getOrdersForAdmin, getCountOrdersForAdmin } = useGeneral();
   const { newOrderData } = useSocket();
   const [openConfirmsOrderModal, setOpenConfirmsOrderModal] = useState<boolean>(false);
+  const [orderForModal, setOrderForModal] = useState<ISebdOrder | any>();
 
   useEffect(() => {
     getCountPage();
   }, []);
 
   useEffect(() => {
-    getOrdersForAdmin(1, 5);
+    if (newOrderData) {
+      getOrdersForAdmin(1, 5);
+    }
   }, [newOrderData]);
 
   const handleClickClose = () => {
     setOpenConfirmsOrderModal(false);
   };
 
-  const handleClickOpen = (event: any) => {
-    event.preventDefault();
+  const handleClickOpen = (order: ISebdOrder) => {
+    setOrderForModal(order);
     setOpenConfirmsOrderModal(true);
   };
 
@@ -54,7 +58,7 @@ function Home() {
   };
 
   return (
-    <div className="w-full h-full overflow-y-auto pb-20">
+    <div className="w-full h-full overflow-y-auto pb-20 relative">
       <div className="min-h-[80vh] h-full">
         {ordersForAdmin?.length ? (
           <div className="w-full p-4 md:p-10">
@@ -70,7 +74,7 @@ function Home() {
                             className={`mb-2 ml-4  text-[14px] cursor-pointer ${
                               item?.isConfirmed ? "text-[#1976d2]" : "text-red-500"
                             }`}
-                            onClick={handleClickOpen}
+                            onClick={() => handleClickOpen(item)}
                           >
                             {item?.isConfirmed ? "Potwierdzony!" : "potwierdzać!"}
                           </h2>
@@ -94,7 +98,7 @@ function Home() {
                           <li>Zamówienie #{item?.numberOrder}</li>
                         </ul>
                       </div>
-                      <div className="flex flex-col items-center" onClick={handleClickOpen}>
+                      <div className="flex flex-col items-center" onClick={() => handleClickOpen(item)}>
                         <AccessTimeIcon className="mb-2 text-blue-600" />
                         <span>{item?.minutes ?? "20"} M</span>
                       </div>
@@ -223,9 +227,10 @@ function Home() {
       <ConfirmsOrderModal
         newOpen={openConfirmsOrderModal}
         handleClickClose={handleClickClose}
-        ordersForAdmin={ordersForAdmin}
+        orderForModal={orderForModal}
         refreshOrdersForAdmin={getOrdersForAdmin}
       />
+      <NotificationAdmin />
     </div>
   );
 }

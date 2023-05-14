@@ -13,22 +13,15 @@ import { useEffect, useState } from "react";
 interface Props {
   newOpen: boolean;
   handleClickClose: () => void;
-  ordersForAdmin: ISebdOrder[];
+  orderForModal: ISebdOrder;
   refreshOrdersForAdmin: (page?: number | undefined, size?: number | undefined) => void;
 }
 
-export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin, refreshOrdersForAdmin }: Props) {
+export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, refreshOrdersForAdmin }: Props) {
   const [open, setOpen] = useState(newOpen);
   const { newOrderData, sendConfirmsOrder } = useSocket();
   const [minutes, setMinutes] = useState<string>("20");
   const { updateOrder } = useGeneral();
-
-  useEffect(() => {
-    setOpen(!!newOrderData);
-    if (newOrderData) {
-      setTimeout(audioPlay, 1000);
-    }
-  }, [newOrderData]);
 
   const handleClose = () => {
     setOpen(false);
@@ -42,12 +35,12 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin, 
   };
 
   const sendHandler = async () => {
-    const order = { ...ordersForAdmin[0] };
-    order.isConfirmed = true;
-    order.isDelivered = false;
-    order.minutes = minutes;
-    await updateOrder(order, order?.id ?? "");
-    sendConfirmsOrder(ordersForAdmin[0]?.clientPhone ?? newOrderData, minutes, true);
+    orderForModal.isConfirmed = true;
+    orderForModal.isDelivered = false;
+    orderForModal.minutes = minutes;
+
+    await updateOrder(orderForModal, orderForModal?.id ?? "");
+    sendConfirmsOrder(orderForModal?.clientPhone ?? newOrderData, minutes, true);
     refreshOrdersForAdmin(1, 5);
     handleClose();
   };
