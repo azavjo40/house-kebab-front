@@ -17,6 +17,7 @@ export function PurchasedOrders() {
   const { confirmsOrderData } = useSocket();
 
   useEffect(() => {
+    console.log(confirmsOrderData.phone);
     getPurchasedOrders(confirmsOrderData.phone);
   }, [confirmsOrderData]);
 

@@ -41,13 +41,13 @@ export function ConfirmsOrderModal({ newOpen, handleClickOpen, ordersForAdmin }:
   };
 
   const sendHandler = async () => {
-    sendConfirmsOrder(ordersForAdmin[0]?.clientPhone ?? newOrderData, minutes, true);
     const order = { ...ordersForAdmin[0] };
     order.isConfirmed = true;
     order.isDelivered = false;
     order.minutes = minutes;
     console.log(order);
     await updateOrder(order, order?.id ?? "");
+    sendConfirmsOrder(ordersForAdmin[0]?.clientPhone ?? newOrderData, minutes, true);
     handleClose();
   };
 
@@ -56,41 +56,43 @@ export function ConfirmsOrderModal({ newOpen, handleClickOpen, ordersForAdmin }:
   };
 
   return (
-    <Dialog
-      open={open || newOpen}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Potwierdzenie zamówienia"}</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          <FormControl fullWidth>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={minutes}
-              label=""
-              onChange={handleChange}
-            >
-              <MenuItem value="20">20 Minutes</MenuItem>
-              <MenuItem value="40">40 Minutes</MenuItem>
-              <MenuItem value="60">60 Minutes</MenuItem>
-              <MenuItem value="80">80 Minutes</MenuItem>
-              <MenuItem value="100">100 Minutes</MenuItem>
-              <MenuItem value="120">120 Minutes</MenuItem>
-              <MenuItem value="140">140 Minutes</MenuItem>
-              <MenuItem value="160">160 Minutes</MenuItem>
-              <MenuItem value="180">180 Minutes</MenuItem>
-              <MenuItem value="200">200 Minutes</MenuItem>
-            </Select>
-          </FormControl>
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={sendHandler}>Zaakceptować</Button>
-        <Button onClick={handleClose}>Nie akceptować</Button>
-      </DialogActions>
-    </Dialog>
+    <div>
+      <Dialog
+        open={open || newOpen}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Potwierdzenie zamówienia"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <FormControl fullWidth>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={minutes}
+                label=""
+                onChange={handleChange}
+              >
+                <MenuItem value="20">20 Minutes</MenuItem>
+                <MenuItem value="40">40 Minutes</MenuItem>
+                <MenuItem value="60">60 Minutes</MenuItem>
+                <MenuItem value="80">80 Minutes</MenuItem>
+                <MenuItem value="100">100 Minutes</MenuItem>
+                <MenuItem value="120">120 Minutes</MenuItem>
+                <MenuItem value="140">140 Minutes</MenuItem>
+                <MenuItem value="160">160 Minutes</MenuItem>
+                <MenuItem value="180">180 Minutes</MenuItem>
+                <MenuItem value="200">200 Minutes</MenuItem>
+              </Select>
+            </FormControl>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={sendHandler}>Zaakceptować</Button>
+          <Button onClick={handleClose}>Nie akceptować</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }
