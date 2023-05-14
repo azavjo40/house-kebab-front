@@ -18,7 +18,7 @@ function Home() {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(1);
   const { ordersForAdmin, getOrdersForAdmin, getCountOrdersForAdmin } = useGeneral();
-  const { sendConfirmsOrder, newOrderData } = useSocket();
+  const { newOrderData } = useSocket();
   const [openConfirmsOrderModal, setOpenConfirmsOrderModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -94,15 +94,9 @@ function Home() {
                           <li>Zamówienie #{item?.numberOrder}</li>
                         </ul>
                       </div>
-                      <div
-                        className="flex flex-col items-center"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          setOpenConfirmsOrderModal(true);
-                        }}
-                      >
+                      <div className="flex flex-col items-center" onClick={handleClickOpen}>
                         <AccessTimeIcon className="mb-2 text-blue-600" />
-                        <span>{getTime(item?.created_at || "")}</span>
+                        <span>{item?.minutes ?? "20"} M</span>
                       </div>
                     </div>
                   </AccordionSummary>
@@ -230,6 +224,7 @@ function Home() {
         newOpen={openConfirmsOrderModal}
         handleClickClose={handleClickClose}
         ordersForAdmin={ordersForAdmin}
+        refreshOrdersForAdmin={getOrdersForAdmin}
       />
     </div>
   );

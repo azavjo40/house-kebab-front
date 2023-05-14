@@ -14,9 +14,10 @@ interface Props {
   newOpen: boolean;
   handleClickClose: () => void;
   ordersForAdmin: ISebdOrder[];
+  refreshOrdersForAdmin: (page?: number | undefined, size?: number | undefined) => void;
 }
 
-export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin }: Props) {
+export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin, refreshOrdersForAdmin }: Props) {
   const [open, setOpen] = useState(newOpen);
   const { newOrderData, sendConfirmsOrder } = useSocket();
   const [minutes, setMinutes] = useState<string>("20");
@@ -45,8 +46,10 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin }
     order.isConfirmed = true;
     order.isDelivered = false;
     order.minutes = minutes;
+    console.log(order);
     await updateOrder(order, order?.id ?? "");
     sendConfirmsOrder(ordersForAdmin[0]?.clientPhone ?? newOrderData, minutes, true);
+    refreshOrdersForAdmin(1, 5);
     handleClose();
   };
 
@@ -89,7 +92,7 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin }
         </DialogContent>
         <DialogActions>
           <Button onClick={sendHandler}>Zaakceptować</Button>
-          <Button onClick={handleClose}>Nie akceptować</Button>
+          <Button onClick={handleClose}>Zamknąć</Button>
         </DialogActions>
       </Dialog>
     </div>
