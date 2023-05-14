@@ -46,7 +46,6 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin, 
     order.isConfirmed = true;
     order.isDelivered = false;
     order.minutes = minutes;
-    console.log(order);
     await updateOrder(order, order?.id ?? "");
     sendConfirmsOrder(ordersForAdmin[0]?.clientPhone ?? newOrderData, minutes, true);
     refreshOrdersForAdmin(1, 5);
