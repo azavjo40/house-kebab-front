@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --kill-others \"next dev\" \"cd src; node server.js\"",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "socket":"concurrently --kill-others \"cd src; node server.js\"",
     "lint": "next lint"
   },
   "dependencies": {
