@@ -42,18 +42,14 @@ export function PurchasedOrders() {
                   <div className="flex justify-between w-full mr-2 items-center">
                     <div className="flex flex-col">
                       <div className="flex">
-                        <h2 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-                          {item?.address?.name}
-                        </h2>
+                        <h2 className="mb-2 text-sm font-semibold text-gray-900 ">{item?.address?.name}</h2>
                         <h2
-                          className={`mb-2 ml-4 dark:text-white text-[14px] ${
-                            item?.isConfirmed ? "text-[#1976d2]" : "text-red-500"
-                          }`}
+                          className={`mb-2 ml-4  text-[14px] ${item?.isConfirmed ? "text-[#1976d2]" : "text-red-500"}`}
                         >
                           {item?.isConfirmed ? "Potwierdzony!" : "Nie potwierdzony!"}
                         </h2>
                       </div>
-                      <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
+                      <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside ">
                         <li className="capitalize flex items-center">
                           {item?.address?.orderMethod === "delivery" ? (
                             <DeliveryDiningIcon className="mr-1" />
@@ -79,13 +75,11 @@ export function PurchasedOrders() {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className="flex flex-col">
-                    <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white ml-2">
-                      Szczegóły zamówienia
-                    </h2>
+                    <h2 className="mb-2 text-lg font-semibold text-gray-900 ">Szczegóły zamówienia</h2>
                     {item?.order?.map((order: IOrder, index: number) => {
                       return (
                         <div className="ml-2" key={index}>
-                          <ul className="space-y-4 text-gray-500 list-none list-inside dark:text-gray-400">
+                          <ul className="space-y-4 text-gray-500 list-none list-inside ">
                             <li className="capitalize">
                               <div className="flex justify-between">
                                 <span>
@@ -132,7 +126,7 @@ export function PurchasedOrders() {
                         </div>
                       );
                     })}
-                    <ul className="space-y-4 text-gray-500 list-none list-inside dark:text-gray-400 mt-10 border-t-2 pt-3">
+                    <ul className="space-y-4 text-gray-500 list-none list-inside  mt-10 border-t-2 pt-3">
                       <li>
                         <div className="capitalize flex items-center">
                           {item?.address?.payMethod === "card" ? (

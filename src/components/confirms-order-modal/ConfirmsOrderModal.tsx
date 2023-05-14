@@ -12,11 +12,11 @@ import { useEffect, useState } from "react";
 
 interface Props {
   newOpen: boolean;
-  handleClickOpen: () => void;
+  handleClickClose: () => void;
   ordersForAdmin: ISebdOrder[];
 }
 
-export function ConfirmsOrderModal({ newOpen, handleClickOpen, ordersForAdmin }: Props) {
+export function ConfirmsOrderModal({ newOpen, handleClickClose, ordersForAdmin }: Props) {
   const [open, setOpen] = useState(newOpen);
   const { newOrderData, sendConfirmsOrder } = useSocket();
   const [minutes, setMinutes] = useState<string>("20");
@@ -31,7 +31,7 @@ export function ConfirmsOrderModal({ newOpen, handleClickOpen, ordersForAdmin }:
 
   const handleClose = () => {
     setOpen(false);
-    handleClickOpen();
+    handleClickClose();
   };
 
   const audioPlay = () => {
@@ -45,7 +45,6 @@ export function ConfirmsOrderModal({ newOpen, handleClickOpen, ordersForAdmin }:
     order.isConfirmed = true;
     order.isDelivered = false;
     order.minutes = minutes;
-    console.log(order);
     await updateOrder(order, order?.id ?? "");
     sendConfirmsOrder(ordersForAdmin[0]?.clientPhone ?? newOrderData, minutes, true);
     handleClose();

@@ -29,8 +29,13 @@ function Home() {
     getOrdersForAdmin(1, 5);
   }, [newOrderData]);
 
-  const handleClickOpen = () => {
+  const handleClickClose = () => {
     setOpenConfirmsOrderModal(false);
+  };
+
+  const handleClickOpen = (event: any) => {
+    event.preventDefault();
+    setOpenConfirmsOrderModal(true);
   };
 
   const getCountPage = async () => {
@@ -55,14 +60,23 @@ function Home() {
           <div className="w-full p-4 md:p-10">
             {ordersForAdmin?.map((item: ISebdOrder, index: number) => {
               return (
-                <Accordion key={index} className="mb-2" onClick={() => sendConfirmsOrder("739699581", "40", true)}>
+                <Accordion key={index} className="mb-2">
                   <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                     <div className="flex justify-between w-full mr-2 items-center">
                       <div className="flex flex-col">
-                        <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                          {item?.address?.name}
-                        </h2>
-                        <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
+                        <div className="flex">
+                          <h2 className="mb-2 text-sm font-semibold text-gray-900 ">{item?.address?.name}</h2>
+                          <h2
+                            className={`mb-2 ml-4  text-[14px] cursor-pointer ${
+                              item?.isConfirmed ? "text-[#1976d2]" : "text-red-500"
+                            }`}
+                            onClick={handleClickOpen}
+                          >
+                            {item?.isConfirmed ? "Potwierdzony!" : "potwierdzać!"}
+                          </h2>
+                        </div>
+
+                        <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside ">
                           <li className="capitalize flex items-center">
                             {item?.address?.orderMethod === "delivery" ? (
                               <DeliveryDiningIcon className="mr-1" />
@@ -85,7 +99,6 @@ function Home() {
                         onClick={(event) => {
                           event.preventDefault();
                           setOpenConfirmsOrderModal(true);
-                          console.log("test");
                         }}
                       >
                         <AccessTimeIcon className="mb-2 text-blue-600" />
@@ -95,13 +108,11 @@ function Home() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="flex flex-col">
-                      <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white ml-2">
-                        Szczegóły zamówienia
-                      </h2>
+                      <h2 className="mb-2 text-lg font-semibold text-gray-900 ">Szczegóły zamówienia</h2>
                       {item?.order?.map((order: IOrder, index: number) => {
                         return (
                           <div className="ml-2" key={index}>
-                            <ul className="space-y-4 text-gray-500 list-none list-inside dark:text-gray-400">
+                            <ul className="space-y-4 text-gray-500 list-none list-inside ">
                               <li className="capitalize">
                                 <div className="flex justify-between">
                                   <span>
@@ -148,7 +159,7 @@ function Home() {
                           </div>
                         );
                       })}
-                      <ul className="space-y-4 text-gray-500 list-none list-inside dark:text-gray-400 mt-10 border-t-2 pt-3">
+                      <ul className="space-y-4 text-gray-500 list-none list-inside  mt-10 border-t-2 pt-3">
                         <li>
                           Adres i kontakt
                           <ol className="pl-5 mt-2 space-y-1  list-inside">
@@ -166,7 +177,7 @@ function Home() {
                           </ol>
                         </li>
                       </ul>
-                      <ul className="space-y-4 text-gray-500 list-none list-inside dark:text-gray-400 mt-10 border-t-2 pt-3">
+                      <ul className="space-y-4 text-gray-500 list-none list-inside mt-10 border-t-2 pt-3">
                         <li>
                           <div className="capitalize flex items-center">
                             {item?.address?.payMethod === "card" ? (
@@ -217,7 +228,7 @@ function Home() {
       )}
       <ConfirmsOrderModal
         newOpen={openConfirmsOrderModal}
-        handleClickOpen={handleClickOpen}
+        handleClickClose={handleClickClose}
         ordersForAdmin={ordersForAdmin}
       />
     </div>
