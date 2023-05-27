@@ -8,7 +8,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Props {
   newOpen: boolean;
@@ -26,12 +26,6 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, r
   const handleClose = () => {
     setOpen(false);
     handleClickClose();
-  };
-
-  const audioPlay = () => {
-    const audio = new Audio();
-    audio.src = process.env.api1Url ?? "" + "/audio";
-    audio.play();
   };
 
   const sendHandler = async () => {

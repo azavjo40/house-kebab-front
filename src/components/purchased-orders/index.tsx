@@ -1,7 +1,7 @@
 import { Accordion, AccordionSummary, AccordionDetails, ListItemText } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState } from "react";
-import { IFormAddress, IOrder, IOrders, ISebdOrder } from "@/types";
+import { IFormAddress, IOrder, ISebdOrder } from "@/types";
 import { useGeneral } from "@/hooks/useGeneral";
 import { getLocalStorage } from "@/hooks/useLocalStorage";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
@@ -15,29 +15,6 @@ export function PurchasedOrders() {
   const [orders, setOrders] = useState<ISebdOrder[]>();
   const { getOrdersByPhone } = useGeneral();
   const { confirmsOrderData } = useSocket();
-
-  // const showNotification = () => {
-  //   if ("Notification" in window) {
-  //     console.log(Notification.permission);
-  //     if (Notification.permission === "granted") {
-  //       const title = "Zezwolenie na zawiadomienie";
-  //       const options = {
-  //         body: "Zezwól na powiadomienie.",
-  //       };
-  //       new Notification(title, options);
-  //     } else if (Notification.permission !== "denied") {
-  //       Notification.requestPermission().then((permission) => {
-  //         if (permission === "granted") {
-  //           const title = "Zmienił się status zamówienia";
-  //           const options = {
-  //             body: "Zmieniliśmy czas zamówienia i potwierdziliśmy zamówienie.",
-  //           };
-  //           new Notification(title, options);
-  //         }
-  //       });
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     getPurchasedOrders(confirmsOrderData.phone);

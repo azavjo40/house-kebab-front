@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { ISocketContext, SocketPropsType } from "./socketTypes";
 import io, { Socket } from "socket.io-client";
+import { IFormAddress } from "@/types";
+import { getLocalStorage } from "@/hooks/useLocalStorage";
 
 export const SocketContext = createContext<ISocketContext>({} as ISocketContext);
 
@@ -25,10 +27,11 @@ export const SocketContextProvider = ({ children }: SocketPropsType) => {
   }, []);
 
   const connectSocketAsync = (): Promise<Socket> => {
+    const address: IFormAddress = getLocalStorage("address");
     return new Promise((resolve, reject) => {
       const socketInstance = io(process.env.wcUrl ?? "", { transports: ["websocket"] });
 
-      socketInstance.on("739699581", (data: any) => {
+      socketInstance.on(address?.phone?.slice(3, 12), (data: any) => {
         setConfirmsOrderData(data);
       });
 
@@ -59,7 +62,16 @@ export const SocketContextProvider = ({ children }: SocketPropsType) => {
   };
 
   return (
-    <SocketContext.Provider value={{ sendConfirmsOrder, sendNewOrder, confirmsOrderData, newOrderData }}>
+    <SocketContext.Provider
+      value={{
+        sendConfirmsOrder,
+        sendNewOrder,
+        confirmsOrderData,
+        setConfirmsOrderData,
+        newOrderData,
+        setNewOrderOrderData,
+      }}
+    >
       {children}
     </SocketContext.Provider>
   );

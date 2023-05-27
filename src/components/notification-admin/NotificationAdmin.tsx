@@ -16,11 +16,11 @@ export const NotificationAdmin = ({}: Props) => {
   ];
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
   const [open, setOpen] = useState<boolean>(false);
-  const { newOrderData } = useSocket();
+  const { newOrderData, setNewOrderOrderData } = useSocket();
 
   useEffect(() => {
     setOpen(!!newOrderData);
-    setTimeout(() => playAudio(), 1000);
+    setTimeout(() => playAudio(), 2000);
   }, [newOrderData]);
 
   useEffect(() => {
@@ -46,7 +46,10 @@ export const NotificationAdmin = ({}: Props) => {
       {open ? (
         <div
           className={`${colors[currentColorIndex]} fixed z-50  w-full h-screen top-0 flex justify-center items-center`}
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            setOpen(false);
+            setNewOrderOrderData("");
+          }}
         >
           <h1 className="text-xl font-semibold text-blue-600/100 dark:text-blue-500/100">
             Przyszło nowe zamówienie...
@@ -61,5 +64,3 @@ export const NotificationAdmin = ({}: Props) => {
     </>
   );
 };
-
-export default NotificationAdmin;
