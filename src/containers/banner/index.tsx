@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useGeneral } from "@/hooks/useGeneral";
+import { IHeader } from "@/types";
 
-export const Banner = () => {
-  const [header, setHeader] = useState<any>();
-  const { getHeader } = useGeneral();
+interface Props {
+  header: IHeader;
+}
 
-  useEffect(() => {
-    start();
-  }, []);
-
-  const start = async () => {
-    const data = await getHeader();
-    setHeader(data);
-  };
+export const Banner = ({ header }: Props) => {
   return (
     <div className="w-full h-[150px] md:h-[200px] relative">
       {header?.banner ? <img className="w-full h-[90%]" src={header?.banner || ""} alt="house Bnner" /> : ""}

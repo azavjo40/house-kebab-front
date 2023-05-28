@@ -1,4 +1,4 @@
-import { ICategory, IErrorLertData, IFormLogin, IHeader, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
+import { IErrorLertData, IFormLogin, IHeader, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
 export interface IGeneralContext {
   basketData: IOrder[];
   addOneToBasket: (data: IOrder) => void;
@@ -14,10 +14,8 @@ export interface IGeneralContext {
   makeOrder: (newOrder: ISebdOrder) => Promise<void>;
   updateOrder: (newOrder: ISebdOrder, id: string) => Promise<void>;
   getOrdersByPhone: (phone: string, page?: number, size?: number) => Promise<ISebdOrder[]>;
-  getHeader: () => Promise<IHeader | undefined>;
   loginAdmin: (data: IFormLogin) => void;
   jwtToken: string;
-  categories: ICategory[];
   ordersForAdmin: ISebdOrder[];
   getOrdersForAdmin: (page?: number, size?: number) => void;
   getCountOrdersForAdmin: () => Promise<number>;

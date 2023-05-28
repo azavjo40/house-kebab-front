@@ -12,7 +12,6 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [basketData, setBasketData] = useState<IOrder[]>([]);
   const [products, setProducts] = useState<IProduct[]>([]);
   const [ordersForAdmin, setOrdersForAdmin] = useState<ISebdOrder[]>([]);
-  const [categories, setCategories] = useState<ICategory[]>([]);
   const [openClose, setOpenClose] = useState<IOpenClose>({ message: "", isOpen: false, open: "", close: "" });
   const [errorAlertData, setErrorAlertData] = useState<IErrorLertData>({ message: "", type: "" });
   const [jwtToken, setJwtToken] = useState("");
@@ -37,7 +36,6 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const start = () => {
     getOpenClose();
-    getCategories();
     getOrdersForAdmin();
   };
 
@@ -47,16 +45,6 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         setErrorAlert(data)
       );
       setProducts(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getCategories = async () => {
-    try {
-      const data = await myApiFetch(process.env.apiUrl + "/categories", null, false, setErrorAlert);
-      getProductsByCategoryId(data[0]?.id || 1);
-      setCategories(data);
     } catch (e) {
       console.log(e);
     }
@@ -158,18 +146,6 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     }
   };
 
-  const getHeader = async () => {
-    try {
-      const data = await myApiFetch(process.env.apiUrl + "/headers", null, false, setErrorAlert);
-      return {
-        banner: data[0]?.banner?.url,
-        logo: data[0]?.logo?.url,
-      };
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const getOrdersByPhone = async (phone: string, page = 1, size = 5) => {
     const start = (page - 1) * size;
     try {
@@ -228,10 +204,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         openClose,
         makeOrder,
         getOrdersByPhone,
-        getHeader,
         loginAdmin,
         jwtToken,
-        categories,
         ordersForAdmin,
         getOrdersForAdmin,
         getCountOrdersForAdmin,
