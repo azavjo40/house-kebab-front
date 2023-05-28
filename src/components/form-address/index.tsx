@@ -50,6 +50,10 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    if (!/^\+48\d{9}$/.test(form?.phone)) {
+      setError((pre: any) => ({ ...pre, phone: true }));
+      return;
+    }
     const order: ISebdOrder = {
       order: basketData,
       address: form,
