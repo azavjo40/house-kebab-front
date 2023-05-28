@@ -14,6 +14,7 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { useSocket } from "@/hooks/useSocket";
 import { ConfirmsOrderModal } from "@/components/confirms-order-modal/ConfirmsOrderModal";
 import { NotificationAdmin } from "@/components/notification-admin/NotificationAdmin";
+import { Loader } from "@/components/Loader/indext";
 
 function Home() {
   const [page, setPage] = useState(1);
@@ -226,6 +227,7 @@ function Home() {
         refreshOrdersForAdmin={getOrdersForAdmin}
       />
       <NotificationAdmin />
+      <Loader />
     </div>
   );
 }

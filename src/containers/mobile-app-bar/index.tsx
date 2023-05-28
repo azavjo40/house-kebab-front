@@ -9,7 +9,6 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { removeLocalStorage } from "@/hooks/useLocalStorage";
 
 export function MobileAppBar() {
   const { push, asPath } = useRouter();
@@ -17,7 +16,7 @@ export function MobileAppBar() {
   const [value, setValue] = useState(
     asPath === "/" ? 0 : asPath === "/basket" ? 1 : asPath === "/contact" ? 2 : asPath === "/admin" ? 3 : 100
   );
-  const { basketData } = useGeneral();
+  const { basketData, logOut } = useGeneral();
 
   return (
     <div className="block md:hidden fixed bottom-0 right-0 w-full z-50">
@@ -56,7 +55,7 @@ export function MobileAppBar() {
           <BottomNavigationAction
             style={{ minWidth: !!jwtToken ? "70px" : "" }}
             onClick={() => {
-              removeLocalStorage("jwt");
+              logOut();
               push("/");
             }}
             label="Log out"

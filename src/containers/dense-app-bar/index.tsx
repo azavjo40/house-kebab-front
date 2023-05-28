@@ -14,7 +14,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { removeLocalStorage } from "@/hooks/useLocalStorage";
 
 export function DenseAppBar() {
-  const { basketData, jwtToken } = useGeneral();
+  const { basketData, jwtToken, logOut } = useGeneral();
   const { push } = useRouter();
   return (
     <div className="md:block hidden bg-blue-600">
@@ -80,7 +80,7 @@ export function DenseAppBar() {
               aria-haspopup="true"
               color="inherit"
               onClick={() => {
-                removeLocalStorage("jwt");
+                logOut();
                 push("/");
               }}
               className="mr-5"

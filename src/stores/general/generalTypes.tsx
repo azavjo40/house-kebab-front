@@ -21,6 +21,7 @@ export interface IGeneralContext {
   getCountOrdersForAdmin: () => Promise<number>;
   getCountOrdersForClient: (phone: string) => Promise<number>;
   isLoading: boolean;
+  logOut: () => void;
 }
 
 export type GeneralPropsType = {

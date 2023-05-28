@@ -15,12 +15,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [openClose, setOpenClose] = useState<IOpenClose>({ message: "", isOpen: false, open: "", close: "" });
   const [errorAlertData, setErrorAlertData] = useState<IErrorLertData>({ message: "", type: "" });
   const [jwtToken, setJwtToken] = useState("");
-  const { route } = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setJwtToken(getLocalStorage("jwt") ?? "");
-  }, [route]);
 
   useEffect(() => {
     start();
@@ -36,8 +31,14 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   };
 
   const start = () => {
+    setJwtToken(getLocalStorage("jwt") ?? "");
     getOpenClose();
     getOrdersForAdmin();
+  };
+
+  const logOut = () => {
+    localStorage.removeItem("jwt");
+    setJwtToken(getLocalStorage("jwt") ?? "");
   };
 
   const getProductsByCategoryId = async (id: number) => {
@@ -240,6 +241,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         updateOrder,
         getCountOrdersForClient,
         isLoading,
+        logOut,
       }}
     >
       {children}

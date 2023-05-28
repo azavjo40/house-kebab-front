@@ -1,3 +1,4 @@
+import { Loader } from "@/components/Loader/indext";
 import { ProcessBuying } from "@/components/process-buying";
 import { PurchasedOrders } from "@/components/purchased-orders";
 import { useGeneral } from "@/hooks/useGeneral";
@@ -21,6 +22,7 @@ export default function Basket() {
           <Tab label="Na etapie zakupu" />
           <Tab label="Moje  Zamówienia" />
         </Tabs>
+        <Loader />
       </div>
       {valueTab === 0 ? <ProcessBuying changeValueTab={changeValueTab} /> : <PurchasedOrders />}
     </div>
