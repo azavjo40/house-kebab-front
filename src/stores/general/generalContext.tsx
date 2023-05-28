@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { IGeneralContext, GeneralPropsType } from "./generalTypes";
-import { ICategory, IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
+import { IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
 import { myApiFetch } from "@/hooks/myApiFetch";
 import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
 import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
@@ -16,6 +16,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [errorAlertData, setErrorAlertData] = useState<IErrorLertData>({ message: "", type: "" });
   const [jwtToken, setJwtToken] = useState("");
   const { route } = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setJwtToken(getLocalStorage("jwt") ?? "");
@@ -41,38 +42,48 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const getProductsByCategoryId = async (id: number) => {
     try {
+      setIsLoading(true);
       const data = await myApiFetch(process.env.apiUrl + "/products?category.id=" + id, null, false, (data) =>
         setErrorAlert(data)
       );
       setProducts(data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getCountOrdersForAdmin = async () => {
     try {
+      setIsLoading(true);
       const data = await myApiFetch(process.env.apiUrl + `/orders/count`, null, true, (data) => setErrorAlert(data));
       return data;
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getCountOrdersForClient = async (phone: string) => {
     try {
+      setIsLoading(true);
       const data = await myApiFetch(process.env.apiUrl + `/orders/count?clientPhone=${phone}`, null, true, (data) =>
         setErrorAlert(data)
       );
       return data;
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getOrdersForAdmin = async (page = 1, size = 5) => {
     const start = (page - 1) * size;
     try {
+      setIsLoading(true);
       const data = await myApiFetch(
         process.env.apiUrl + `/orders?_limit=${size}&_start=${start}&_sort=created_at:desc`,
         null,
@@ -82,20 +93,26 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       setOrdersForAdmin(data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getOpenClose = async () => {
     try {
+      setIsLoading(true);
       const data = await myApiFetch(process.env.apiUrl + "/open-closeds", null, false, setErrorAlert);
       setOpenClose(data[0]);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const makeOrder = async (newOrder: ISebdOrder) => {
     try {
+      setIsLoading(true);
       await myApiFetch(
         process.env.apiUrl + "/orders",
         {
@@ -107,11 +124,14 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       );
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const updateOrder = async (newOrder: ISebdOrder, id: string) => {
     try {
+      setIsLoading(true);
       await myApiFetch(
         process.env.apiUrl + "/orders/" + id,
         {
@@ -123,11 +143,14 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       );
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const loginAdmin = async (form: IFormLogin) => {
     try {
+      setIsLoading(true);
       const data = await myApiFetch(
         process.env.apiUrl + "/admin/login",
         {
@@ -143,12 +166,15 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getOrdersByPhone = async (phone: string, page = 1, size = 5) => {
     const start = (page - 1) * size;
     try {
+      setIsLoading(true);
       const data = await myApiFetch(
         process.env.apiUrl + `/orders?clientPhone=${phone}&_limit=${size}&_start=${start}&_sort=created_at:desc`,
         null,
@@ -158,6 +184,8 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       return data;
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -211,6 +239,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         getCountOrdersForAdmin,
         updateOrder,
         getCountOrdersForClient,
+        isLoading,
       }}
     >
       {children}

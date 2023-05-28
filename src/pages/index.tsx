@@ -4,6 +4,7 @@ import { ProductCard } from "@/containers/product-card";
 import { ICategory, IHeader, IProduct } from "@/types";
 import { Banner } from "@/containers/banner";
 import { useGeneral } from "@/hooks/useGeneral";
+import { Loader } from "@/components/Loader/indext";
 
 export interface IHomeProps {
   header: IHeader;
@@ -12,7 +13,7 @@ export interface IHomeProps {
 
 export default function Home({ header, categories }: IHomeProps) {
   const [valueTab, setValueTab] = useState(0);
-  const { getProductsByCategoryId, products } = useGeneral();
+  const { getProductsByCategoryId, products, isLoading } = useGeneral();
 
   useEffect(() => {
     getProducts(categories[0]?.id ?? 1);
@@ -44,6 +45,7 @@ export default function Home({ header, categories }: IHomeProps) {
           {products.map((product: IProduct, index) => (
             <ProductCard product={product} key={product.id + index} />
           ))}
+          <Loader />
         </Box>
       )}
     </Box>

@@ -20,6 +20,7 @@ export interface IGeneralContext {
   getOrdersForAdmin: (page?: number, size?: number) => void;
   getCountOrdersForAdmin: () => Promise<number>;
   getCountOrdersForClient: (phone: string) => Promise<number>;
+  isLoading: boolean;
 }
 
 export type GeneralPropsType = {

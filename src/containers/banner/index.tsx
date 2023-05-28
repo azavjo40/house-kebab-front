@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { useGeneral } from "@/hooks/useGeneral";
 import { IHeader } from "@/types";
 
 interface Props {

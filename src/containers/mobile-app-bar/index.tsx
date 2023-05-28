@@ -23,13 +23,13 @@ export function MobileAppBar() {
     <div className="block md:hidden fixed bottom-0 right-0 w-full z-50">
       <BottomNavigation showLabels value={value} onChange={(event, newValue) => setValue(newValue)} className="py-4">
         <BottomNavigationAction
-          className={jwtToken ? "min-w-[70px]" : ""}
+          style={{ minWidth: !!jwtToken ? "70px" : "" }}
           onClick={() => push("/")}
           label="Menu"
           icon={<MenuBookIcon />}
         />
         <BottomNavigationAction
-          className={jwtToken ? "min-w-[70px]" : ""}
+          style={{ minWidth: !!jwtToken ? "70px" : "" }}
           onClick={() => push("/basket")}
           label="Koszyk"
           icon={
@@ -39,14 +39,14 @@ export function MobileAppBar() {
           }
         />
         <BottomNavigationAction
-          className={jwtToken ? "min-w-[70px]" : ""}
+          style={{ minWidth: !!jwtToken ? "70px" : "" }}
           onClick={() => push("/contact")}
           label="Kontakt"
           icon={<RecentActorsIcon />}
         />
         {jwtToken && (
           <BottomNavigationAction
-            className={jwtToken ? "min-w-[70px]" : ""}
+            style={{ minWidth: !!jwtToken ? "70px" : "" }}
             onClick={() => push("/admin")}
             label="Admin"
             icon={<SupervisorAccountIcon />}
@@ -54,7 +54,7 @@ export function MobileAppBar() {
         )}
         {jwtToken && (
           <BottomNavigationAction
-            className={jwtToken ? "min-w-[70px]" : ""}
+            style={{ minWidth: !!jwtToken ? "70px" : "" }}
             onClick={() => {
               removeLocalStorage("jwt");
               push("/");
