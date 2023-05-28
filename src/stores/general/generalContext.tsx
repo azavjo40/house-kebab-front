@@ -66,6 +66,17 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     }
   };
 
+  const getCountOrdersForClient = async (phone: string) => {
+    try {
+      const data = await myApiFetch(process.env.apiUrl + `/orders/count?clientPhone=${phone}`, null, true, (data) =>
+        setErrorAlert(data)
+      );
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const getOrdersForAdmin = async (page = 1, size = 5) => {
     const start = (page - 1) * size;
     try {
@@ -154,10 +165,11 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     }
   };
 
-  const getOrdersByPhone = async (phone: string) => {
+  const getOrdersByPhone = async (phone: string, page = 1, size = 5) => {
+    const start = (page - 1) * size;
     try {
       const data = await myApiFetch(
-        process.env.apiUrl + "/orders?clientPhone=" + phone + "&_sort=created_at:desc",
+        process.env.apiUrl + `/orders?clientPhone=${phone}&_limit=${size}&_start=${start}&_sort=created_at:desc`,
         null,
         false,
         setErrorAlert
@@ -219,6 +231,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         getOrdersForAdmin,
         getCountOrdersForAdmin,
         updateOrder,
+        getCountOrdersForClient,
       }}
     >
       {children}

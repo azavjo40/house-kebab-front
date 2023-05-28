@@ -52,11 +52,6 @@ function Home() {
     setPage(value);
   };
 
-  const getTime = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return `${date.getUTCHours()}:${date.getUTCMinutes().toString().padStart(2, "0")}`;
-  };
-
   return (
     <div className="w-full h-full overflow-y-auto pb-20 relative">
       <div className="min-h-[80vh] h-full">

@@ -13,7 +13,7 @@ export interface IGeneralContext {
   openClose: IOpenClose;
   makeOrder: (newOrder: ISebdOrder) => Promise<void>;
   updateOrder: (newOrder: ISebdOrder, id: string) => Promise<void>;
-  getOrdersByPhone: (phone: string) => Promise<ISebdOrder[]>;
+  getOrdersByPhone: (phone: string, page?: number, size?: number) => Promise<ISebdOrder[]>;
   getHeader: () => Promise<IHeader | undefined>;
   loginAdmin: (data: IFormLogin) => void;
   jwtToken: string;
@@ -21,6 +21,7 @@ export interface IGeneralContext {
   ordersForAdmin: ISebdOrder[];
   getOrdersForAdmin: (page?: number, size?: number) => void;
   getCountOrdersForAdmin: () => Promise<number>;
+  getCountOrdersForClient: (phone: string) => Promise<number>;
 }
 
 export type GeneralPropsType = {
