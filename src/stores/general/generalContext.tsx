@@ -4,6 +4,7 @@ import { ICategory, IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, IS
 import { myApiFetch } from "@/hooks/myApiFetch";
 import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
 import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
+import { useRouter } from "next/router";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
@@ -15,6 +16,11 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [openClose, setOpenClose] = useState<IOpenClose>({ message: "", isOpen: false, open: "", close: "" });
   const [errorAlertData, setErrorAlertData] = useState<IErrorLertData>({ message: "", type: "" });
   const [jwtToken, setJwtToken] = useState("");
+  const { route } = useRouter();
+
+  useEffect(() => {
+    setJwtToken(getLocalStorage("jwt") ?? "");
+  }, [route]);
 
   useEffect(() => {
     start();
@@ -31,7 +37,6 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
 
   const start = () => {
     getOpenClose();
-    setJwtToken(getLocalStorage("jwt"));
     getCategories();
     getOrdersForAdmin();
   };

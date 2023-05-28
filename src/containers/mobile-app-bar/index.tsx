@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { removeLocalStorage } from "@/hooks/useLocalStorage";
 
 export function MobileAppBar() {
   const { push, asPath } = useRouter();
@@ -20,8 +22,14 @@ export function MobileAppBar() {
   return (
     <div className="block md:hidden fixed bottom-0 right-0 w-full z-50">
       <BottomNavigation showLabels value={value} onChange={(event, newValue) => setValue(newValue)} className="py-4">
-        <BottomNavigationAction onClick={() => push("/")} label="Menu" icon={<MenuBookIcon />} />
         <BottomNavigationAction
+          className={jwtToken ? "min-w-[70px]" : ""}
+          onClick={() => push("/")}
+          label="Menu"
+          icon={<MenuBookIcon />}
+        />
+        <BottomNavigationAction
+          className={jwtToken ? "min-w-[70px]" : ""}
           onClick={() => push("/basket")}
           label="Koszyk"
           icon={
@@ -30,9 +38,30 @@ export function MobileAppBar() {
             </Badge>
           }
         />
-        <BottomNavigationAction onClick={() => push("/contact")} label="Kontakt" icon={<RecentActorsIcon />} />
+        <BottomNavigationAction
+          className={jwtToken ? "min-w-[70px]" : ""}
+          onClick={() => push("/contact")}
+          label="Kontakt"
+          icon={<RecentActorsIcon />}
+        />
         {jwtToken && (
-          <BottomNavigationAction onClick={() => push("/admin")} label="Admin" icon={<SupervisorAccountIcon />} />
+          <BottomNavigationAction
+            className={jwtToken ? "min-w-[70px]" : ""}
+            onClick={() => push("/admin")}
+            label="Admin"
+            icon={<SupervisorAccountIcon />}
+          />
+        )}
+        {jwtToken && (
+          <BottomNavigationAction
+            className={jwtToken ? "min-w-[70px]" : ""}
+            onClick={() => {
+              removeLocalStorage("jwt");
+              push("/");
+            }}
+            label="Log out"
+            icon={<LogoutIcon />}
+          />
         )}
       </BottomNavigation>
     </div>

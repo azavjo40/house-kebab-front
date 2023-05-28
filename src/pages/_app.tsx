@@ -15,8 +15,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <GeneralContextProvider>
       <SocketContextProvider>
         <DenseAppBar />
-        <Component {...pageProps} />
         <MobileAppBar />
+        <Component {...pageProps} />
         {!(asPath.includes("/basket") || asPath.includes("/admin")) && <Footer />}
         <AlertMessage />
       </SocketContextProvider>
