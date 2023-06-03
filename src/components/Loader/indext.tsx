@@ -9,7 +9,7 @@ export const Loader = () => {
   useEffect(() => {
     setIsStart(true);
     setTimeout(() => setIsStart(isLoading), 1000);
-  }, [isLoading]);
+  }, []);
   return (
     <>
       {isStart && (
