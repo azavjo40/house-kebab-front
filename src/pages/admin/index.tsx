@@ -9,12 +9,12 @@ import { IOrder, ISebdOrder } from "@/types";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
+import { Loader } from "@/components/loader/indext";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { useSocket } from "@/hooks/useSocket";
 import { ConfirmsOrderModal } from "@/components/confirms-order-modal/ConfirmsOrderModal";
 import { NotificationAdmin } from "@/components/notification-admin/NotificationAdmin";
-import { Loader } from "../../components/loader/indext";
 
 function Home() {
   const [page, setPage] = useState(1);
