@@ -2,7 +2,7 @@ import { useGeneral } from "@/hooks/useGeneral";
 import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 
-export const LoaderProgress = () => {
+export const Loader = () => {
   const { isLoading } = useGeneral();
   const [isStart, setIsStart] = useState(false);
 
