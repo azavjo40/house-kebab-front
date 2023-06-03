@@ -24,7 +24,7 @@ export const SocketContextProvider = ({ children }: SocketPropsType) => {
         socket.disconnect();
       }
     };
-  }, []);
+  }, [socket]);
 
   const connectSocketAsync = (): Promise<Socket> => {
     const address: IFormAddress = getLocalStorage("address");
