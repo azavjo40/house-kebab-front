@@ -15,6 +15,10 @@ export interface IFreeSauces {
   title: string;
   id: string;
 }
+export interface IMeats {
+  meat: string;
+  id: string;
+}
 
 export interface ISize {
   title: string;
@@ -40,6 +44,7 @@ export interface IProduct {
   sauce?: string;
   free_sauces: IFreeSauces[];
   sizes: ISize[];
+  meats: IMeats[];
 }
 
 export interface IOrder {
@@ -52,6 +57,7 @@ export interface IOrder {
   id: string;
   note?: string;
   size: ISize;
+  meat: string;
 }
 
 export interface IFormAddress {

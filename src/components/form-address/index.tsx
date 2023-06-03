@@ -221,7 +221,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
         >
           <div className="flex">
             <FormControlLabel value="cash" control={<Radio />} label="Gotówka" />
-            <FormControlLabel value="card" control={<Radio />} label="Karta" />
+            {/* <FormControlLabel value="card" control={<Radio />} label="Karta" /> */}
           </div>
         </RadioGroup>
 

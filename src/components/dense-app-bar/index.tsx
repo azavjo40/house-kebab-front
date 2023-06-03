@@ -11,13 +11,12 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { removeLocalStorage } from "@/hooks/useLocalStorage";
 
 export function DenseAppBar() {
   const { basketData, jwtToken, logOut } = useGeneral();
   const { push } = useRouter();
   return (
-    <div className="md:block hidden bg-blue-600">
+    <div className="md:block hidden bg-yellow-400">
       <Toolbar>
         <Typography variant="h6" noWrap component="div" className="text-white cursor-pointer" onClick={() => push("/")}>
           HOUSE KEBAB & PIZZA

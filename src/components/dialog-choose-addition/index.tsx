@@ -8,7 +8,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { styled } from "@mui/material/styles";
-import { IAddition, IFreeSauces, IOrder, IProduct, ISize } from "@/types";
+import { IAddition, IFreeSauces, IMeats, IOrder, IProduct, ISize } from "@/types";
 import { BootstrapDialogTitle } from "../bootstrap-dialog-title";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -27,6 +27,7 @@ export interface IDialogChooseAdditionProps {
 export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   const [open, setOpen] = useState(false);
   const [sauce, setSauce] = useState("Łagodny");
+  const [meat, setMeat] = useState("");
   const [size, setSize] = useState<ISize>({ cost: 0, id: "", title: "" });
   const { addOneToBasket, setErrorAlert, showInfoOpenCloseStore } = useGeneral();
   const [order, setOrder] = useState<IOrder>({
@@ -38,6 +39,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
     category: product?.category,
     id: product?.id,
     size,
+    meat,
   });
 
   const makeOrder = (product: IProduct, count: number = 1, sizeOrder: ISize) => {
@@ -57,6 +59,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
       category: product?.category,
       id: product?.id,
       size: sizeOrder,
+      meat,
     });
   };
 
@@ -86,6 +89,11 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
 
   const handleSelectChangeSouce = (event: any) => {
     setSauce(event.target.value);
+    makeOrder(product, order.count, size);
+  };
+
+  const handleSelectChangeMeat = (event: any) => {
+    setMeat(event.target.value);
     makeOrder(product, order.count, size);
   };
 
@@ -160,6 +168,34 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
             ""
           )}
 
+          {product?.meats?.length ? (
+            <>
+              <div className="mb-3 mt-3">
+                <FormLabel id="demo-radio-buttons-group-label">Wybierz mięso</FormLabel>
+              </div>
+              <FormControl className="w-full ml-1">
+                <InputLabel id="demo-simple-select-autowidth-label">mięso:</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-sauce"
+                  label="mięso"
+                  onChange={handleSelectChangeMeat}
+                  name="meat"
+                >
+                  {product?.meats.map((item: IMeats) => {
+                    return (
+                      <MenuItem key={item?.id} value={item?.meat}>
+                        {item?.meat}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </>
+          ) : (
+            ""
+          )}
+
           {product?.sizes?.length ? (
             <>
               <div className="mb-3 mt-3">
@@ -172,7 +208,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
                   id="demo-select-size"
                   label="Rozmiar"
                   onChange={handleSelectChangeSize}
-                  name="sauce"
+                  name="size"
                 >
                   {product?.sizes.map((item: ISize) => {
                     return (

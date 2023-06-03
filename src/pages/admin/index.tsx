@@ -122,6 +122,13 @@ function Home() {
                                   ) : (
                                     ""
                                   )}
+                                  {order?.meat ? (
+                                    <li className="capitalize">
+                                      <div className="flex justify-between">+ {order?.meat}</div>
+                                    </li>
+                                  ) : (
+                                    ""
+                                  )}
                                   {order?.size?.title ? (
                                     <li className="capitalize">
                                       <div className="flex justify-between">
