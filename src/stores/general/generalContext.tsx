@@ -213,7 +213,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       return true;
     }
 
-    setErrorAlert({ message: openClose.message, type: "" });
+    setErrorAlert({ message: openClose.message, type: "info" });
     return false;
   };
 

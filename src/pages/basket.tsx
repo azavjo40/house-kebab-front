@@ -1,4 +1,4 @@
-import { Loader } from "@/components/Loader/indext";
+import { Loader } from "@/components/loader/indext";
 import { ProcessBuying } from "@/components/process-buying";
 import { PurchasedOrders } from "@/components/purchased-orders";
 import { useGeneral } from "@/hooks/useGeneral";

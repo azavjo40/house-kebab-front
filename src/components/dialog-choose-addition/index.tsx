@@ -124,7 +124,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
     <div className="ml-auto">
       <AddIcon
         onClick={() => showInfoOpenCloseStore() && handleClickOpen()}
-        className="bg-slate-100 hover:bg-slate-200 w-[60px] h-[60px] md:w-[40px] md:h-[40px] z-0 rounded-full p-1 cursor-pointer"
+        className="bg-slate-100 hover:bg-slate-200 w-[30px] h-[30px] z-0 rounded-full p-1 cursor-pointer"
       />
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
