@@ -4,7 +4,7 @@ import { ProductCard } from "@/components/product-card";
 import { ICategory, IHeader, IProduct } from "@/types";
 import { Banner } from "@/components/banner";
 import { useGeneral } from "@/hooks/useGeneral";
-import { Loader } from "@/components/loader/indext";
+// import { Loader } from "@/components/loader/indext";
 
 export interface IHomeProps {
   header: IHeader;
@@ -45,7 +45,7 @@ export default function Home({ header, categories }: IHomeProps) {
           {products.map((product: IProduct, index) => (
             <ProductCard product={product} key={product.id + index} />
           ))}
-          <Loader />
+          {/* <Loader /> */}
         </Box>
       )}
     </Box>

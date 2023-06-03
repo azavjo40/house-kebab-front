@@ -9,7 +9,7 @@ import { IOrder, ISebdOrder } from "@/types";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
-import { Loader } from "@/components/loader/indext";
+// import { Loader } from "@/components/loader/indext";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { useSocket } from "@/hooks/useSocket";
@@ -234,7 +234,7 @@ function Home() {
         refreshOrdersForAdmin={getOrdersForAdmin}
       />
       <NotificationAdmin />
-      <Loader />
+      {/* <Loader /> */}
     </div>
   );
 }
