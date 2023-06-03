@@ -232,6 +232,7 @@ function Home() {
         handleClickClose={handleClickClose}
         orderForModal={orderForModal}
         refreshOrdersForAdmin={getOrdersForAdmin}
+        page={page}
       />
       <NotificationAdmin />
       {/* <Loader /> */}

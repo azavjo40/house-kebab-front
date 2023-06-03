@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 function calculateCost(basketData: IOrder[]) {
   return basketData?.reduce((accumulator: number, currentValue: IOrder) => {
-    return Math.floor(accumulator + currentValue?.cost * currentValue?.count);
+    return Math.floor(accumulator + currentValue?.totalCost * currentValue?.count);
   }, 0);
 }
 

@@ -27,7 +27,7 @@ export interface IDialogChooseAdditionProps {
 export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
   const [open, setOpen] = useState(false);
   const [sauce, setSauce] = useState("Łagodny");
-  const [meat, setMeat] = useState("");
+  const [meat, setMeat] = useState("Kurczak");
   const [size, setSize] = useState<ISize>({ cost: 0, id: "", title: "" });
   const { addOneToBasket, setErrorAlert, showInfoOpenCloseStore } = useGeneral();
   const [order, setOrder] = useState<IOrder>({
@@ -35,6 +35,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
     sauce,
     count: 1,
     additions: product?.additions,
+    totalCost: product?.cost,
     cost: product?.cost,
     category: product?.category,
     id: product?.id,
@@ -55,7 +56,8 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
       sauce,
       count: count,
       additions,
-      cost,
+      totalCost: cost,
+      cost: product?.cost,
       category: product?.category,
       id: product?.id,
       size: sizeOrder,
@@ -181,6 +183,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
                   label="mięso"
                   onChange={handleSelectChangeMeat}
                   name="meat"
+                  value={meat}
                 >
                   {product?.meats.map((item: IMeats) => {
                     return (
@@ -258,7 +261,7 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
             />
           </div>
           <Button variant="contained" className="rounded-2xl w-[150px] bg-blue-400" onClick={handleAddToBasket}>
-            {Math.floor(order.cost * order.count)} zł
+            {Math.floor(order.totalCost * order.count)} zł
           </Button>
         </DialogActions>
       </BootstrapDialog>

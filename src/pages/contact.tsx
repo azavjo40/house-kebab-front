@@ -22,7 +22,7 @@ export default function Contact() {
             <div>
               <h1 className="mb-2 text-lg font-semibold text-gray-900 "> Informacja prawna</h1>
               <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-                <li className="flex items-center"> House Kebab Pizza Klaudyny</li>
+                <li className="flex items-center"> House Kebab Pizza</li>
                 <li className="flex items-center">Klaudyny 26</li>
                 <li className="flex items-center">01-684 Warszawa</li>
                 <li className="flex items-center text-blue-500">

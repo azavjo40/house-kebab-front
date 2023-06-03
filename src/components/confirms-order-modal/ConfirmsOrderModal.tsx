@@ -15,9 +15,10 @@ interface Props {
   handleClickClose: () => void;
   orderForModal: ISebdOrder;
   refreshOrdersForAdmin: (page?: number | undefined, size?: number | undefined) => void;
+  page: number;
 }
 
-export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, refreshOrdersForAdmin }: Props) {
+export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, refreshOrdersForAdmin, page }: Props) {
   const [open, setOpen] = useState(newOpen);
   const { newOrderData, sendConfirmsOrder } = useSocket();
   const [minutes, setMinutes] = useState<string>("20");
@@ -35,7 +36,7 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, r
 
     await updateOrder(orderForModal, orderForModal?.id ?? "");
     sendConfirmsOrder(orderForModal?.clientPhone ?? newOrderData, minutes, true);
-    refreshOrdersForAdmin(1, 5);
+    refreshOrdersForAdmin(page, 5);
     handleClose();
   };
 

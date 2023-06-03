@@ -58,6 +58,7 @@ export interface IOrder {
   note?: string;
   size: ISize;
   meat: string;
+  totalCost: number;
 }
 
 export interface IFormAddress {
