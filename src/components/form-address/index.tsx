@@ -6,6 +6,7 @@ import { v4 } from "uuid";
 import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/hooks/useSocket";
+import getDistance from "geolib/es/getDistance";
 
 export interface IFormAddressProps {
   cost: number;
@@ -44,43 +45,68 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     }
   }, []);
 
+  const calculateDistance = async (): Promise<number> => {
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search.php?q=${form?.street?.toLowerCase()}+${
+          form?.home
+        }+warszawa+poland&dedupe=0&limit=1&format=jsonv2`
+      );
+      const data = await res.json();
+      const restaurantCoordinates = { latitude: 52.28277, longitude: 20.97277 };
+      const clientCoordinates = { latitude: data[0]?.lat ?? 0, longitude: data[0]?.lon ?? 0 };
+      return getDistance(restaurantCoordinates, clientCoordinates) / 1000;
+    } catch (e) {
+      console.log(e);
+    }
+    return 0;
+  };
+
   const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if (!/^\+48\d{9}$/.test(form?.phone)) {
-      setError((pre: any) => ({ ...pre, phone: true }));
-      return;
-    }
-    const order: ISebdOrder = {
-      order: basketData,
-      address: form,
-      totalCost: cost,
-      numberOrder: `${v4()?.slice(0, 6)}`,
-      clientPhone: form?.phone?.slice(3, 12),
-    };
-
-    setLocalStorage("address", form);
-    await makeOrder(order);
-    setErrorAlert({ message: "Dziękujemy za zakup prosimy czekać na potwierdzenie zamówienia", type: "success" });
-    changeValueTab(1);
-    setTimeout(() => {
-      setOpenFormAdderss(false);
-      clearBasket();
-      setForm({
-        name: "",
-        phone: "",
-        street: "",
-        home: "",
-        apartment: "",
-        entrance: "",
-        orderMethod: "delivery",
-        payMethod: "cash",
+    const disstance: number = await calculateDistance();
+    if (disstance < 5) {
+      if (!/^\+48\d{9}$/.test(form?.phone)) {
+        setError((pre: any) => ({ ...pre, phone: true }));
+        return;
+      }
+      const order: ISebdOrder = {
+        order: basketData,
+        address: form,
+        totalCost: cost,
+        numberOrder: `${v4()?.slice(0, 6)}`,
+        clientPhone: form?.phone?.slice(3, 12),
+      };
+      setLocalStorage("address", form);
+      await makeOrder(order);
+      setErrorAlert({ message: "Dziękujemy za zakup prosimy czekać na potwierdzenie zamówienia", type: "success" });
+      changeValueTab(1);
+      setTimeout(() => {
+        setOpenFormAdderss(false);
+        clearBasket();
+        setForm({
+          name: "",
+          phone: "",
+          street: "",
+          home: "",
+          apartment: "",
+          entrance: "",
+          orderMethod: "delivery",
+          payMethod: "cash",
+        });
+      }, 800);
+      sendNewOrder(order?.clientPhone);
+    } else {
+      setErrorAlert({
+        message:
+          "Przepraszamy, być może wpisałeś zły adres lub Twój adres znajduje się dalej niż 5 km od restauracji Sprawdź adres.",
+        type: "error",
       });
-    }, 800);
-    sendNewOrder(order?.clientPhone);
+    }
   };
 
   const handleChangeCheckboxOrderMethod = (event: React.ChangeEvent<HTMLInputElement>) => {
