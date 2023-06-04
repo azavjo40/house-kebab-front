@@ -61,10 +61,10 @@ export function ProcessBuying({ changeValueTab }: any) {
               <div className="flex justify-between">
                 <span>Razem</span> <span>{cost} zł</span>
               </div>
-              <div className="w-full flex justify-end mt-5">
+              <div className="w-full flex justify-end mt-5 md:hidden">
                 <Button
                   variant="contained"
-                  className="rounded-2xl w-full md:w-[200px] bg-blue-400 py-3 font-black text-sm md:hidden"
+                  className="rounded-2xl w-full md:w-[200px] bg-blue-400 py-3 font-black text-sm "
                   onClick={() => showInfoOpenCloseStore() && setOpenFormAdderss(true)}
                 >
                   Kasa ({cost} zł)
