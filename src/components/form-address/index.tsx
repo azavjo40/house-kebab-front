@@ -145,7 +145,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
             </div>
           </RadioGroup>
         </div>
-        <div className="grid md:grid-cols-2 md:gap-6 gap-3">
+        <div className="grid md:grid-cols-2 md:gap-6 gap-3 md:mt-5">
           <TextField
             id="outlined-basic"
             label="Imię"
@@ -179,7 +179,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
         </div>
         {form?.orderMethod === "delivery" && (
           <>
-            <div className="grid md:grid-cols-2 md:gap-6 gap-3">
+            <div className="grid md:grid-cols-2 md:gap-6 gap-3 md:mt-5">
               <TextField
                 id="outlined-basic"
                 label="Ulica"
@@ -211,7 +211,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
               />
               <div className="p-1 md:p-0 block md:hidden"></div>
             </div>
-            <div className="grid md:grid-cols-2 md:gap-6 gap-3">
+            <div className="grid md:grid-cols-2 md:gap-6 gap-3 md:mt-5">
               <TextField
                 id="outlined-basic"
                 label="Mieszkanie"
@@ -245,7 +245,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
           onChange={handleChangeCheckboxPayMethod}
           className="-mt-5"
         >
-          <div className="flex">
+          <div className="flex md:mt-5">
             <FormControlLabel value="cash" control={<Radio />} label="Gotówka" />
             {/* <FormControlLabel value="card" control={<Radio />} label="Karta" /> */}
           </div>

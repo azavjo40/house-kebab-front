@@ -34,7 +34,7 @@ export function BasketCard({ order, addOneMoreOrder, removeOneMoreOrder, index }
         <h1 className="font-black">
           {order?.count} {order?.title}
         </h1>
-        <span className="font-black">{Math.floor(order?.cost * order?.count)} zł</span>
+        <span className="font-black">{Math.floor(order?.totalCost * order?.count)} zł</span>
       </div>
       <p className="ml-2 mt-1">{order?.sauce ? order?.sauce : order?.category?.title}</p>
       <div className="flex flex-row ml-2 mt-1 items-center">

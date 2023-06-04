@@ -138,7 +138,8 @@ export function DialogChooseAddition({ product }: IDialogChooseAdditionProps) {
       />
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {product?.title}
+          {product?.title.slice(0, 20)}
+          {product?.title?.length > 20 ? "..." : ""}
         </BootstrapDialogTitle>
         <DialogContent dividers className="w-full  min-w-[300px] md:min-w-[350px]">
           {product?.free_sauces?.length ? (
