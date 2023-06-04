@@ -178,7 +178,7 @@ function Home() {
                                     target="_blank"
                                     href={`https://www.google.com/maps/place/${item?.address?.street}+${item?.address?.home},Warszawa,poland`}
                                   >
-                                    Zobacz w Google mapy
+                                    Otwórz w Mapach Google
                                   </a>
                                 </li>
                               </>
