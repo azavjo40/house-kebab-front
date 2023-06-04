@@ -162,7 +162,7 @@ function Home() {
                       })}
                       <ul className="space-y-4 text-gray-500 list-none list-inside  mt-10 border-t-2 pt-3">
                         <li>
-                          Adres i kontakt
+                          Adres i kontakt{" "}
                           <ol className="pl-5 mt-2 space-y-1  list-inside">
                             {item?.address?.orderMethod === "delivery" && (
                               <>
@@ -171,6 +171,15 @@ function Home() {
                                 </li>
                                 <li>
                                   Mieszkanie: {item?.address?.apartment}, Klatka {item?.address?.entrance}{" "}
+                                </li>
+                                <li>
+                                  <a
+                                    className="text-blue-600"
+                                    target="_blank"
+                                    href={`https://www.google.com/maps/place/${item?.address?.street}+${item?.address?.home},Warszawa,poland`}
+                                  >
+                                    Zobacz w Google mapy
+                                  </a>
                                 </li>
                               </>
                             )}
