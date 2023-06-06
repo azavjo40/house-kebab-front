@@ -70,6 +70,7 @@ export interface IFormAddress {
   entrance: string;
   orderMethod: string;
   payMethod: string;
+  disstance: number;
 }
 export interface IFormLogin {
   email: string;

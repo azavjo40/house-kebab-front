@@ -172,6 +172,7 @@ function Home() {
                                 <li>
                                   Mieszkanie: {item?.address?.apartment}, Klatka {item?.address?.entrance}{" "}
                                 </li>
+                                <li>Do klienta {item?.address?.disstance * 1000} m</li>
                                 <li>
                                   <a
                                     className="text-blue-600"

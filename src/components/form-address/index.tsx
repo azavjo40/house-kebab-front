@@ -24,6 +24,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     entrance: "",
     orderMethod: "delivery",
     payMethod: "cash",
+    disstance: 0,
   });
   const [error, setError] = useState<any>();
   const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert } = useGeneral();
@@ -41,6 +42,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
         entrance: address?.entrance || "",
         orderMethod: "delivery",
         payMethod: "cash",
+        disstance: address?.disstance,
       });
     }
   }, []);
@@ -68,15 +70,16 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    if (!/^\+48\d{9}$/.test(form?.phone)) {
+      setError((pre: any) => ({ ...pre, phone: true }));
+      return;
+    }
+
     const disstance: number = await calculateDistance();
     if (disstance < 5) {
-      if (!/^\+48\d{9}$/.test(form?.phone)) {
-        setError((pre: any) => ({ ...pre, phone: true }));
-        return;
-      }
       const order: ISebdOrder = {
         order: basketData,
-        address: form,
+        address: { ...form, disstance },
         totalCost: cost,
         numberOrder: `${v4()?.slice(0, 6)}`,
         clientPhone: form?.phone?.slice(3, 12),
@@ -97,6 +100,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
           entrance: "",
           orderMethod: "delivery",
           payMethod: "cash",
+          disstance: 0,
         });
       }, 800);
       sendNewOrder(order?.clientPhone);
@@ -245,7 +249,8 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
           onChange={handleChangeCheckboxPayMethod}
           className="-mt-5"
         >
-          <div className="flex md:mt-5">
+          <div className="flex md:mt-5 items-center">
+            <h1 className="text-base mr-3">Forma płatności</h1>
             <FormControlLabel value="cash" control={<Radio />} label="Gotówka" />
             {/* <FormControlLabel value="card" control={<Radio />} label="Karta" /> */}
           </div>

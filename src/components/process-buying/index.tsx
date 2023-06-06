@@ -64,7 +64,7 @@ export function ProcessBuying({ changeValueTab }: any) {
               <div className="w-full flex justify-end mt-5 md:hidden">
                 <Button
                   variant="contained"
-                  className="rounded-2xl w-full md:w-[200px] bg-blue-400 py-3 font-black text-sm "
+                  className="rounded-2xl w-full md:w-[200px] bg-blue-400 py-3 font-black text-sm"
                   onClick={() => showInfoOpenCloseStore() && setOpenFormAdderss(true)}
                 >
                   Kasa ({cost} zł)
