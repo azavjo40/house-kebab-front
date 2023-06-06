@@ -4,7 +4,6 @@ import { IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } 
 import { myApiFetch } from "@/hooks/myApiFetch";
 import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
 import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
-import { useRouter } from "next/router";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 
@@ -16,6 +15,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
   const [errorAlertData, setErrorAlertData] = useState<IErrorLertData>({ message: "", type: "" });
   const [jwtToken, setJwtToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [allowedDistance, setAllowedDistance] = useState({ allowedDistance: 0, message: "" });
 
   useEffect(() => {
     start();
@@ -34,6 +34,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
     setJwtToken(getLocalStorage("jwt") ?? "");
     getOpenClose();
     getOrdersForAdmin();
+    getAllowedDistance();
   };
 
   const logOut = () => {
@@ -104,6 +105,18 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
       setIsLoading(true);
       const data = await myApiFetch(process.env.apiUrl + "/open-closeds", null, false, setErrorAlert);
       setOpenClose(data[0]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getAllowedDistance = async () => {
+    try {
+      setIsLoading(true);
+      const data = await myApiFetch(process.env.apiUrl + "/allowed-distances", null, false, setErrorAlert);
+      setAllowedDistance(data[0]);
     } catch (e) {
       console.log(e);
     } finally {
@@ -242,6 +255,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         getCountOrdersForClient,
         isLoading,
         logOut,
+        allowedDistance,
       }}
     >
       {children}

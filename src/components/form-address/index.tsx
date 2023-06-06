@@ -27,7 +27,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     disstance: 0,
   });
   const [error, setError] = useState<any>();
-  const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert } = useGeneral();
+  const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert, allowedDistance } = useGeneral();
   const { sendNewOrder } = useSocket();
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     }
 
     const disstance: number = await calculateDistance();
-    if (disstance < 5) {
+    if (disstance < allowedDistance?.allowedDistance ?? 4) {
       const order: ISebdOrder = {
         order: basketData,
         address: { ...form, disstance },
@@ -106,8 +106,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
       sendNewOrder(order?.clientPhone);
     } else {
       setErrorAlert({
-        message:
-          "Przepraszamy, być może wpisałeś zły adres lub Twój adres znajduje się dalej niż 5 km od restauracji Sprawdź adres.",
+        message: allowedDistance?.message,
         type: "error",
       });
     }

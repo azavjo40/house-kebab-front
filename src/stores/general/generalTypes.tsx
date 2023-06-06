@@ -22,6 +22,7 @@ export interface IGeneralContext {
   getCountOrdersForClient: (phone: string) => Promise<number>;
   isLoading: boolean;
   logOut: () => void;
+  allowedDistance: { message: string; allowedDistance: number };
 }
 
 export type GeneralPropsType = {
