@@ -1,4 +1,4 @@
-import { IHeader } from "@/types";
+import { IHeader } from "@/src/types";
 
 interface Props {
   header: IHeader;

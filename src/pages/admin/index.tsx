@@ -6,7 +6,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
-// import { Loader } from "@/components/loader/indext";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { useGeneral } from "@/src/hooks/useGeneral";
@@ -15,6 +14,7 @@ import { IOrder, ISebdOrder } from "@/src/types";
 import { ConfirmsOrderModal } from "@/src/components/Admin/components/Confirms-order-modal/ConfirmsOrderModal";
 import { NotificationAdmin } from "@/src/components/Admin/components/Notification-admin/NotificationAdmin";
 import { withAuth } from "@/src/components/Admin/components/Middleware-auth/withAuth";
+import { Loader } from "@/src/components/Loader/indext";
 
 function Home() {
   const [page, setPage] = useState(1);
@@ -245,7 +245,7 @@ function Home() {
         page={page}
       />
       <NotificationAdmin />
-      {/* <Loader /> */}
+      <Loader />
     </div>
   );
 }

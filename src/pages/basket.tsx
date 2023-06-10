@@ -1,9 +1,9 @@
-// import { Loader } from "@/components/loader/indext";
 import { Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { useGeneral } from "../hooks/useGeneral";
 import { PurchasedOrders } from "../components/Basket/components/Purchased-orders";
 import { ProcessBuying } from "../components/Basket/components/Process-buying";
+import { Loader } from "../components/Loader/indext";
 export default function Basket() {
   const { basketData } = useGeneral();
   const [valueTab, setValueTab] = useState<number>(() => (basketData?.length ? 0 : 1));
@@ -22,7 +22,7 @@ export default function Basket() {
           <Tab label="Na etapie zakupu" />
           <Tab label="Moje  Zamówienia" />
         </Tabs>
-        {/* <Loader /> */}
+        <Loader />
       </div>
       {valueTab === 0 ? <ProcessBuying changeValueTab={changeValueTab} /> : <PurchasedOrders />}
     </div>
