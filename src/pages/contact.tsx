@@ -1,40 +1,7 @@
-import { useEffect, useState } from "react";
 import { useGeneral } from "../hooks/useGeneral";
-import { format } from "date-fns";
-import { pl } from "date-fns/locale";
-import { IWeek } from "../types";
 
 export default function Contact() {
   const { openClose } = useGeneral();
-  const [weeks, setWeeks] = useState<IWeek[]>([]);
-
-  useEffect(() => {
-    setWeeks(calculateWeeks());
-  }, []);
-
-  const calculateWeeks = () => {
-    const workingHours = [
-      { open: "10:00.00", close: "22:00.00", titleDay: "Poniedziałek", isToday: false },
-      { open: "10:00.00", close: "22:00.00", titleDay: "Wtorek", isToday: false },
-      { open: "10:00.00", close: "22:00.00", titleDay: "Środa", isToday: false },
-      { open: "10:00.00", close: "22:00.00", titleDay: "Czwartek", isToday: false },
-      { open: "10:00.00", close: "22:00.00", titleDay: "Piątek", isToday: false },
-      { open: "10:00.00", close: "22:00.00", titleDay: "Sobota", isToday: false },
-      { open: "10:00.00", close: "22:00.00", titleDay: "Niedziela", isToday: false },
-    ];
-    const currentDate = new Date();
-    const dayOfWeek = format(currentDate, "EEEE", { locale: pl });
-    return workingHours.map((day) => {
-      if (dayOfWeek.toLowerCase() === day?.titleDay.toLowerCase())
-        return {
-          open: openClose?.open ?? day?.open,
-          close: openClose?.close ?? day?.close,
-          titleDay: "Dzisiaj",
-          isToday: true,
-        };
-      else return day;
-    });
-  };
 
   return (
     <div className="w-full bg-slate-200 h-[90vh] p-3 md:p-10">
@@ -70,14 +37,15 @@ export default function Contact() {
             <div className="mt-4 md:mt-0 lg:h-full w-[200px]">
               <h1 className="mb-2 text-lg font-semibold text-gray-900"> Godziny otwarty</h1>
               <ul className="max-w-md space-y-1 text-gray-500">
-                {weeks?.map((day) => (
-                  <li className={`flex items-center ${day.isToday ? "text-red-500" : ""}`}>
-                    <span className="w-[50%]">{day.titleDay}:</span>{" "}
-                    <span>
-                      {day?.open?.slice(0, 5)} - {day?.close?.slice(0, 5)}
-                    </span>
-                  </li>
-                ))}
+                <li className={`flex items-center`}>
+                  <span className="w-[40%]">Pt – Sb:</span> <span>10:00 – 22:40</span>
+                </li>
+                <li className={`flex items-center text-red-500`}>
+                  <span className="w-[40%]">Dzisiaj:</span>
+                  <span>
+                    {openClose?.open?.slice(0, 5)} – {openClose?.close?.slice(0, 5)}
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
