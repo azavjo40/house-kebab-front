@@ -1,5 +1,5 @@
-import FormAddress from "@/components/form-address";
-import { BasketCard } from "@/components/basket-card";
+import FormAddress from "@/components/Basket/components/Form-address";
+import { BasketCard } from "@/components/Basket/components/Basket-card";
 import { useGeneral } from "@/hooks/useGeneral";
 import { IOrder } from "@/types";
 import { Button, ListItemText } from "@mui/material";

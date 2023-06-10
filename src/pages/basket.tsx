@@ -1,6 +1,6 @@
 // import { Loader } from "@/components/loader/indext";
-import { ProcessBuying } from "@/components/process-buying";
-import { PurchasedOrders } from "@/components/purchased-orders";
+import { ProcessBuying } from "@/components/Basket/components/Process-buying";
+import { PurchasedOrders } from "@/components/Basket/components/Purchased-orders";
 import { useGeneral } from "@/hooks/useGeneral";
 import { Tab, Tabs } from "@mui/material";
 import { useState } from "react";

@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { styled } from "@mui/material/styles";
 import { IAddition, IFreeSauces, IMeats, IOrder, IProduct, ISize } from "@/types";
-import { BootstrapDialogTitle } from "../bootstrap-dialog-title";
+import { BootstrapDialogTitle } from "../Bootstrap-dialog-title";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

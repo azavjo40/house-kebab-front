@@ -1,7 +1,7 @@
-import { AlertMessage } from "@/components/alert-message";
-import { DenseAppBar } from "@/components/dense-app-bar";
-import { Footer } from "@/components/footer";
-import { MobileAppBar } from "@/components/mobile-app-bar";
+import { AlertMessage } from "@/components/Alert-message";
+import { DenseAppBar } from "@/components/Navbar/components/Dense-app-bar";
+import { Footer } from "@/components/Footer";
+import { MobileAppBar } from "@/components/Navbar/components/Mobile-app-bar";
 import { GeneralContextProvider } from "@/stores/general";
 import { SocketContextProvider } from "@/stores/socket";
 import "@/styles/globals.css";

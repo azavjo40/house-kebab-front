@@ -1,4 +1,4 @@
-import { withAuth } from "@/components/middleware-auth/withAuth";
+import { withAuth } from "@/components/Admin/components/Middleware-auth/withAuth";
 import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -13,8 +13,8 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { useSocket } from "@/hooks/useSocket";
-import { ConfirmsOrderModal } from "@/components/confirms-order-modal/ConfirmsOrderModal";
-import { NotificationAdmin } from "@/components/notification-admin/NotificationAdmin";
+import { ConfirmsOrderModal } from "@/components/Admin/components/Confirms-order-modal/ConfirmsOrderModal";
+import { NotificationAdmin } from "@/components/Admin/components/Notification-admin/NotificationAdmin";
 
 function Home() {
   const [page, setPage] = useState(1);

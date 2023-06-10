@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
-import { ProductCard } from "@/components/product-card";
+import { ProductCard } from "@/components/Product/components/Product-card";
 import { ICategory, IHeader, IProduct } from "@/types";
-import { Banner } from "@/components/banner";
+import { Banner } from "@/components/Banner";
 import { useGeneral } from "@/hooks/useGeneral";
 // import { Loader } from "@/components/loader/indext";
 
