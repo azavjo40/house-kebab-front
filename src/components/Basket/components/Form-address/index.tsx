@@ -7,16 +7,21 @@ import { useGeneral } from "@/src/hooks/useGeneral";
 import { IFormAddress, ISebdOrder } from "@/src/types";
 import { getLocalStorage, setLocalStorage } from "@/src/hooks/useLocalStorage";
 import { calculateDistance } from "@/src/utils/calculate/calculateDistance";
-import { calculateDeliveryCost } from "@/src/utils/calculate/calculateDeliveryCost";
 import { calculateGrade } from "@/src/utils/calculate/calculateGrade";
 
 export interface IFormAddressProps {
   cost: number;
   setOpenFormAdderss: any;
   changeValueTab: (index: number) => void;
+  changePayDelivery: (isPay: boolean) => void;
 }
 
-export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }: IFormAddressProps) {
+export default function FormAddress({
+  cost,
+  setOpenFormAdderss,
+  changeValueTab,
+  changePayDelivery,
+}: IFormAddressProps) {
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -31,10 +36,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
   const [error, setError] = useState<any>();
   const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert, allowedDistance } = useGeneral();
   const { sendNewOrder } = useSocket();
-
-  const token: string = "5952301245:AAEWVYslZXl4AiF5-zhwkq1Pdto6Kp3LyxY";
-  const chatId: string = "-835014167";
-  const urlApi: string = `https://api.telegram.org/bot${token}/sendMessage`;
+  const [isPayDelivery, setIsPayDelivery] = useState(false);
 
   useEffect(() => {
     const address: IFormAddress = getLocalStorage("address");
@@ -53,6 +55,12 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     }
   }, []);
 
+  useEffect(() => {
+    const isPay = form?.orderMethod === "delivery" && 40 > cost;
+    changePayDelivery(isPay);
+    setIsPayDelivery(isPay);
+  }, [form?.orderMethod, cost]);
+
   const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
   };
@@ -65,15 +73,15 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     }
 
     const disstance: number = await calculateDistance(form);
-    const payDelivery = calculateDeliveryCost(cost, disstance);
+
     if (disstance < allowedDistance?.allowedDistance ?? 4) {
       const order: ISebdOrder = {
         order: basketData,
         address: { ...form, disstance },
-        totalCost: cost + payDelivery,
+        totalCost: cost + (isPayDelivery ? 5 : 0),
         numberOrder: `${v4()?.slice(0, 6)}`,
         clientPhone: form?.phone?.slice(3, 12),
-        payDelivery,
+        payDelivery: isPayDelivery ? 5 : 0,
       };
       setLocalStorage("address", form);
       await makeOrder(order);
@@ -252,7 +260,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Zamawiam i płacę z ( {cost + (cost < 40 ? 5 : 0)},00 zł )
+            Zamawiam i płacę z ( {cost + (isPayDelivery ? 5 : 0)},00 zł )
           </button>
         </div>
       </form>

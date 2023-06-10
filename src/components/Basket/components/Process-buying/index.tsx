@@ -15,6 +15,7 @@ export function ProcessBuying({ changeValueTab }: any) {
   const { basketData, updateRewriteAllBasket, removeOneFromBasket, showInfoOpenCloseStore } = useGeneral();
   const [cost, setCost] = useState(0);
   const [openFormAdderss, setOpenFormAdderss] = useState(false);
+  const [isPayDelivery, setIsPayDelivery] = useState(false);
 
   useEffect(() => {
     setCost(calculateCost(basketData));
@@ -33,12 +34,21 @@ export function ProcessBuying({ changeValueTab }: any) {
     }
   };
 
+  const changePayDelivery = (isPay: boolean) => {
+    setIsPayDelivery(isPay);
+  };
+
   return (
     <div>
       {basketData?.length ? (
         <div className="flex">
           <div className={`${openFormAdderss ? "flex" : "hidden"} md:flex w-full`}>
-            <FormAddress cost={cost} setOpenFormAdderss={setOpenFormAdderss} changeValueTab={changeValueTab} />
+            <FormAddress
+              cost={cost}
+              setOpenFormAdderss={setOpenFormAdderss}
+              changeValueTab={changeValueTab}
+              changePayDelivery={changePayDelivery}
+            />
           </div>
 
           <div
@@ -60,10 +70,10 @@ export function ProcessBuying({ changeValueTab }: any) {
             <div className="flex flex-col fixed bottom-[60px] md:bottom-0 md:relative w-full bg-white right-0 px-5 h-[110px] md:h-[50px]">
               <div className="flex justify-between">
                 <span>koszt dostawy {cost < 40 ? "(Poniżej 40,00 zł)" : ""}</span>
-                <span>{cost < 40 ? 5 : 0},00 zł</span>
+                <span>{isPayDelivery ? 5 : 0},00 zł</span>
               </div>
               <div className="flex justify-between">
-                <span>Razem</span> <span>{cost + (cost < 40 ? 5 : 0)},00 zł</span>
+                <span>Razem</span> <span>{cost + (isPayDelivery ? 5 : 0)},00 zł</span>
               </div>
               <div className="w-full flex justify-end mt-5 md:hidden">
                 <Button
