@@ -6,7 +6,7 @@ export default function Contact() {
   const { openClose } = useGeneral();
   const weeks = useMemo(() => {
     return calculateWeeks(openClose) ?? [];
-  }, []);
+  }, [calculateWeeks]);
 
   return (
     <div className="w-full bg-slate-200 h-[90vh] p-3 md:p-10">
