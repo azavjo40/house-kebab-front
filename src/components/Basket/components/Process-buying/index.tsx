@@ -59,10 +59,11 @@ export function ProcessBuying({ changeValueTab }: any) {
             </div>
             <div className="flex flex-col fixed bottom-[60px] md:bottom-0 md:relative w-full bg-white right-0 px-5 h-[110px] md:h-[50px]">
               <div className="flex justify-between">
-                <span>koszt dostawy {cost < 40 ? "(Poniżej 40,00)" : ""}</span> <span>{cost < 40 ? 5 : 0},00 zł</span>
+                <span>koszt dostawy {cost < 40 ? "(Poniżej 40,00) zł" : ""}</span>{" "}
+                <span>{cost < 40 ? 5 : 0},00 zł</span>
               </div>
               <div className="flex justify-between">
-                <span>Razem</span> <span>{cost + (cost < 40 ? 5 : 0)} zł</span>
+                <span>Razem</span> <span>{cost + (cost < 40 ? 5 : 0)},00 zł</span>
               </div>
               <div className="w-full flex justify-end mt-5 md:hidden">
                 <Button
