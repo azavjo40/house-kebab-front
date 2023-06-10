@@ -33,6 +33,13 @@ export interface IOpenClose {
   close: string;
 }
 
+export interface IWeek {
+  open: string;
+  close: string;
+  titleDay: string;
+  isToday: boolean;
+}
+
 export interface IProduct {
   id: string;
   title: string;
