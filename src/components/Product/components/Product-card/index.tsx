@@ -4,17 +4,28 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box, Rating } from "@mui/material";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { IProduct } from "@/src/types";
 import { DialogChooseAddition } from "../Dialog-choose-addition";
+import { getLocalStorage, removeLocalStorage } from "@/src/hooks/useLocalStorage";
 
 export interface IProductCardProps {
   product: IProduct;
 }
 
 export function ProductCard({ product }: IProductCardProps) {
-  const [value, setValue] = useState(Math.random() * (3 - 5) + 5);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [value, setValue] = useState(Math.random() * (4 - 5) + 5);
+  const [isDisabled, setIsDisabled] = useState(
+    useMemo(() => {
+      const grade = getLocalStorage("c") || [];
+      return !grade.includes(product.id);
+    }, [])
+  );
+
+  const removeGrade = () => {
+    removeLocalStorage("grade");
+    setIsDisabled(true);
+  };
   return (
     <Card sx={{ minWidth: 330, maxWidth: 330 }} className="mt-4 md:m-4">
       <CardMedia sx={{ height: 140 }} image={product?.image?.url || ""} title="green iguana" className="bg-center" />
@@ -23,7 +34,7 @@ export function ProductCard({ product }: IProductCardProps) {
           className=""
           onChange={(event, newValue) => {
             setValue(newValue ?? value);
-            setIsDisabled(true);
+            removeGrade();
           }}
           name="disabled"
           value={value}

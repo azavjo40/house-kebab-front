@@ -4,10 +4,11 @@ import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/src/hooks/useSocket";
 import { useGeneral } from "@/src/hooks/useGeneral";
-import { IFormAddress, ISebdOrder } from "@/src/types";
+import { IFormAddress, IOrder, ISebdOrder } from "@/src/types";
 import { getLocalStorage, setLocalStorage } from "@/src/hooks/useLocalStorage";
 import { calculateDistance } from "@/src/utils/calculate/calculateDistance";
 import { calculateDeliveryCost } from "@/src/utils/calculate/calculateDeliveryCost";
+import { calculateGrade } from "@/src/utils/calculate/calculateGrade";
 
 export interface IFormAddressProps {
   cost: number;
@@ -76,7 +77,7 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
       };
       setLocalStorage("address", form);
       await makeOrder(order);
-
+      calculateGrade(basketData);
       setErrorAlert({ message: "Dziękujemy za zakup prosimy czekać na potwierdzenie zamówienia", type: "success" });
       changeValueTab(1);
       setTimeout(() => {
