@@ -1,4 +1,4 @@
-import { useGeneral } from "@/hooks/useGeneral";
+import { useGeneral } from "@/src/hooks/useGeneral";
 import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 
