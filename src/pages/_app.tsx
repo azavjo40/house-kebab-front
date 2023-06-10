@@ -1,12 +1,12 @@
 import { DenseAppBar } from "@/components/Navbar/components/Dense-app-bar";
-// import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/Footer";
 import { MobileAppBar } from "@/components/Navbar/components/Mobile-app-bar";
 import { GeneralContextProvider } from "@/stores/general";
 import { SocketContextProvider } from "@/stores/socket";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-// import { AlertMessage } from "@/components/Alert-message";
+import { AlertMessage } from "@/components/Alert-message";
 
 export default function App({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter();
@@ -17,8 +17,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <DenseAppBar />
         <MobileAppBar />
         <Component {...pageProps} />
-        {/* {!(asPath.includes("/basket") || asPath.includes("/admin")) && <Footer />} */}
-        {/* <AlertMessage /> */}
+        {!(asPath.includes("/basket") || asPath.includes("/admin")) && <Footer />}
+        <AlertMessage />
       </SocketContextProvider>
     </GeneralContextProvider>
   );
