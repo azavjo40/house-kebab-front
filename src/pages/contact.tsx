@@ -38,7 +38,7 @@ export default function Contact() {
             <div className="mt-4 md:mt-0 lg:h-full w-[200px]">
               <h1 className="mb-2 text-lg font-semibold text-gray-900 "> Godziny otwarty</h1>
               <ul className="max-w-md space-y-1 text-gray-500">
-                {calculateWeeks(openClose).map((day) => (
+                {calculateWeeks(openClose)?.map((day) => (
                   <li className={`flex items-center ${day.isToday ? "text-red-500" : ""}`}>
                     {day.titleDay}: {day?.open?.slice(0, 5)} - {day?.close?.slice(0, 5)}
                   </li>
