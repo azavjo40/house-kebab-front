@@ -1,5 +1,5 @@
 import { DenseAppBar } from "@/components/Navbar/components/Dense-app-bar";
-import { Footer } from "@/components/Footer";
+import { Footer } from "../components/Footer";
 import { MobileAppBar } from "@/components/Navbar/components/Mobile-app-bar";
 import { GeneralContextProvider } from "@/stores/general";
 import { SocketContextProvider } from "@/stores/socket";
