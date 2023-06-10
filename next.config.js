@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    apiUrl: 'http://localhost:1337',
-    // apiUrl: 'https://house-kebab-back.herokuapp.com',
+    // apiUrl: 'http://localhost:1337',
+    apiUrl: 'https://house-kebab-back.herokuapp.com',
     // wcUrl: 'ws://localhost:3001',
     wcUrl: 'wss://house-kebab-socket.herokuapp.com',
     api1Url: 'https://house-kebab-socket.herokuapp.com',
