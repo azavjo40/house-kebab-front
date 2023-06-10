@@ -1,8 +1,12 @@
+import { useMemo } from "react";
 import { useGeneral } from "../hooks/useGeneral";
 import { calculateWeeks } from "../utils/calculate/calculateWeeks";
 
 export default function Contact() {
   const { openClose } = useGeneral();
+  const weeks = useMemo(() => {
+    return calculateWeeks(openClose) ?? [];
+  }, []);
 
   return (
     <div className="w-full bg-slate-200 h-[90vh] p-3 md:p-10">
@@ -36,13 +40,16 @@ export default function Contact() {
             </div>
 
             <div className="mt-4 md:mt-0 lg:h-full w-[200px]">
-              <h1 className="mb-2 text-lg font-semibold text-gray-900 "> Godziny otwarty</h1>
+              <h1 className="mb-2 text-lg font-semibold text-gray-900"> Godziny otwarty</h1>
               <ul className="max-w-md space-y-1 text-gray-500">
-                {/* {calculateWeeks(openClose)?.map((day) => (
+                {weeks?.map((day) => (
                   <li className={`flex items-center ${day.isToday ? "text-red-500" : ""}`}>
-                    {day.titleDay}: {day?.open?.slice(0, 5)} - {day?.close?.slice(0, 5)}
+                    <span className="w-[50%]">{day.titleDay}:</span>{" "}
+                    <span>
+                      {day?.open?.slice(0, 5)} - {day?.close?.slice(0, 5)}
+                    </span>
                   </li>
-                ))} */}
+                ))}
               </ul>
             </div>
           </div>
