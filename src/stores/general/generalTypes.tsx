@@ -1,4 +1,4 @@
-import { IErrorLertData, IFormLogin, IHeader, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
+import { IErrorLertData, IFormLogin, IHeader, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/src/types";
 export interface IGeneralContext {
   basketData: IOrder[];
   addOneToBasket: (data: IOrder) => void;

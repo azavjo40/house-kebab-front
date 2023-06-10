@@ -1,5 +1,6 @@
 import { useGeneral } from "@/src/hooks/useGeneral";
 import { CircularProgress } from "@mui/material";
+import React from "react";
 import { useEffect, useState } from "react";
 
 export const Loader = () => {
