@@ -136,10 +136,28 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         false,
         setErrorAlert
       );
+      await telegramNotification("New order: " + newOrder?.numberOrder);
     } catch (e) {
       console.log(e);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const telegramNotification = async (message: string) => {
+    try {
+      const urlApi: string = `https://api.telegram.org/bot${process.env.botToken}/sendMessage`;
+      await fetch(urlApi, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: message,
+          chat_id: process.env.chatId,
+          parse_mode: "html",
+        }),
+      });
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -256,6 +274,7 @@ export const GeneralContextProvider = ({ children }: GeneralPropsType) => {
         isLoading,
         logOut,
         allowedDistance,
+        telegramNotification,
       }}
     >
       {children}

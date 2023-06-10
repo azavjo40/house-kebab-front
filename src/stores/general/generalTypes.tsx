@@ -23,6 +23,7 @@ export interface IGeneralContext {
   isLoading: boolean;
   logOut: () => void;
   allowedDistance: { message: string; allowedDistance: number };
+  telegramNotification: (numberOrder: string) => Promise<void>;
 }
 
 export type GeneralPropsType = {

@@ -209,7 +209,7 @@ function Home() {
                               {item?.address?.orderMethod === "delivery" && (
                                 <div className="flex justify-between capitalize">
                                   <span>koszt dostawy</span>
-                                  <span>0,00 zł</span>
+                                  <span>{item?.payDelivery ?? 0},00 zł</span>
                                 </div>
                               )}
                             </li>

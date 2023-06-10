@@ -6,7 +6,8 @@ import { v4 } from "uuid";
 import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/hooks/useSocket";
-import getDistance from "geolib/es/getDistance";
+import { calculateDeliveryCost } from "@/utils/calculate/calculateDeliveryCost";
+import { calculateDistance } from "@/utils/calculate/calculateDistance";
 
 export interface IFormAddressProps {
   cost: number;
@@ -30,6 +31,10 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
   const { basketData, clearBasket, showInfoOpenCloseStore, makeOrder, setErrorAlert, allowedDistance } = useGeneral();
   const { sendNewOrder } = useSocket();
 
+  const token: string = "5952301245:AAEWVYslZXl4AiF5-zhwkq1Pdto6Kp3LyxY";
+  const chatId: string = "-835014167";
+  const urlApi: string = `https://api.telegram.org/bot${token}/sendMessage`;
+
   useEffect(() => {
     const address: IFormAddress = getLocalStorage("address");
     if (address) {
@@ -47,23 +52,6 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
     }
   }, []);
 
-  const calculateDistance = async (): Promise<number> => {
-    try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search.php?q=${form?.street?.toLowerCase()}+${
-          form?.home
-        }+warszawa+poland&dedupe=0&limit=1&format=jsonv2`
-      );
-      const data = await res.json();
-      const restaurantCoordinates = { latitude: 52.28277, longitude: 20.97277 };
-      const clientCoordinates = { latitude: data[0]?.lat ?? 0, longitude: data[0]?.lon ?? 0 };
-      return getDistance(restaurantCoordinates, clientCoordinates) / 1000;
-    } catch (e) {
-      console.log(e);
-    }
-    return 0;
-  };
-
   const handleChangeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((pre: IFormAddress) => ({ ...pre, [event.target.name]: event.target.value }));
   };
@@ -75,17 +63,20 @@ export default function FormAddress({ cost, setOpenFormAdderss, changeValueTab }
       return;
     }
 
-    const disstance: number = await calculateDistance();
+    const disstance: number = await calculateDistance(form);
+    const payDelivery = calculateDeliveryCost(cost, disstance);
     if (disstance < allowedDistance?.allowedDistance ?? 4) {
       const order: ISebdOrder = {
         order: basketData,
         address: { ...form, disstance },
-        totalCost: cost,
+        totalCost: cost + payDelivery,
         numberOrder: `${v4()?.slice(0, 6)}`,
         clientPhone: form?.phone?.slice(3, 12),
+        payDelivery,
       };
       setLocalStorage("address", form);
       await makeOrder(order);
+
       setErrorAlert({ message: "Dziękujemy za zakup prosimy czekać na potwierdzenie zamówienia", type: "success" });
       changeValueTab(1);
       setTimeout(() => {

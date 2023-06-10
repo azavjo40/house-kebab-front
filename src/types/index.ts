@@ -88,6 +88,7 @@ export interface ISebdOrder {
   isDelivered?: boolean;
   minutes?: string;
   id?: string;
+  payDelivery: number;
 }
 
 export interface IOrders {
