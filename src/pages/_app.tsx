@@ -6,7 +6,7 @@ import { SocketContextProvider } from "../stores/socket";
 import { DenseAppBar } from "../components/Navbar/components/Dense-app-bar";
 import { MobileAppBar } from "../components/Navbar/components/Mobile-app-bar";
 // import { Footer } from "../components/Footer/";
-import { AlertMessage } from "../components/Alert-message";
+// import { AlertMessage } from "../components/Alert-message";
 
 export default function App({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter();
@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <MobileAppBar />
         <Component {...pageProps} />
         {/* {!(asPath.includes("/basket") || asPath.includes("/admin")) && <Footer />} */}
-        <AlertMessage />
+        {/* <AlertMessage /> */}
       </SocketContextProvider>
     </GeneralContextProvider>
   );
