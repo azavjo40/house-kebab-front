@@ -1,4 +1,4 @@
-import { IFormAddress } from "@/types";
+import { IFormAddress } from "@/src/types";
 import { getDistance } from "geolib";
 
 export const calculateDistance = async (form: IFormAddress): Promise<number> => {
