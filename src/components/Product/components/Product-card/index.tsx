@@ -29,7 +29,7 @@ export function ProductCard({ product }: IProductCardProps) {
       color: isDisabled ? "green" : "",
     },
     "& .MuiRating-iconHover": {
-      color: isDisabled ? "green" : "",
+      color: isDisabled ? "#faaf00" : "",
     },
   });
 
