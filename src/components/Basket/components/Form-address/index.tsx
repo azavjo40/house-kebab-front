@@ -4,7 +4,7 @@ import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/src/hooks/useSocket";
 import { useGeneral } from "@/src/hooks/useGeneral";
-import { IFormAddress, IOrder, ISebdOrder } from "@/src/types";
+import { IFormAddress, ISebdOrder } from "@/src/types";
 import { getLocalStorage, setLocalStorage } from "@/src/hooks/useLocalStorage";
 import { calculateDistance } from "@/src/utils/calculate/calculateDistance";
 import { calculateDeliveryCost } from "@/src/utils/calculate/calculateDeliveryCost";
