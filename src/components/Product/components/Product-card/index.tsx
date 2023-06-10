@@ -3,11 +3,11 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box, Rating } from "@mui/material";
-import { useMemo, useState } from "react";
+import { Box, Rating, styled } from "@mui/material";
+import { useState } from "react";
 import { IProduct } from "@/src/types";
 import { DialogChooseAddition } from "../Dialog-choose-addition";
-import { getLocalStorage, removeLocalStorage } from "@/src/hooks/useLocalStorage";
+import { getLocalStorage, setLocalStorage } from "@/src/hooks/useLocalStorage";
 
 export interface IProductCardProps {
   product: IProduct;
@@ -15,30 +15,36 @@ export interface IProductCardProps {
 
 export function ProductCard({ product }: IProductCardProps) {
   const [value, setValue] = useState(Math.random() * (4 - 5) + 5);
-  const [isDisabled, setIsDisabled] = useState(
-    useMemo(() => {
-      const grade = getLocalStorage("c") || [];
-      return !grade.includes(product.id);
-    }, [])
-  );
+  const [isDisabled, setIsDisabled] = useState(!!getLocalStorage("grade")?.includes(product.id));
 
   const removeGrade = () => {
-    removeLocalStorage("grade");
-    setIsDisabled(true);
+    const grade = getLocalStorage("grade") || [];
+    const updatedGrade = grade.filter((id: string) => id !== product.id);
+    setLocalStorage("grade", updatedGrade);
+    setIsDisabled(false);
   };
+
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: isDisabled ? "green" : "",
+    },
+    "& .MuiRating-iconHover": {
+      color: isDisabled ? "green" : "",
+    },
+  });
+
   return (
     <Card sx={{ minWidth: 330, maxWidth: 330 }} className="mt-4 md:m-4">
       <CardMedia sx={{ height: 140 }} image={product?.image?.url || ""} title="green iguana" className="bg-center" />
       <Box mt={2} ml={25}>
-        <Rating
-          className=""
+        <StyledRating
           onChange={(event, newValue) => {
             setValue(newValue ?? value);
             removeGrade();
           }}
           name="disabled"
           value={value}
-          disabled={isDisabled}
+          readOnly={!isDisabled}
         />
       </Box>
       <CardContent className="-mt-5">
