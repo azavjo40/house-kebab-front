@@ -1,4 +1,4 @@
-import { IErrorLertData } from "@/types";
+import { IErrorLertData } from "../types";
 import { getLocalStorage } from "./useLocalStorage";
 
 interface IOptionsFetch {
