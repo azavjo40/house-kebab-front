@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export function Footer() {
-  const [year] = useState(new Date().getFullYear());
+  const [year] = useState(new Date()?.getFullYear());
 
   return (
     <footer className="bg-white  px-4 pb-16 pt-4 mb-12 md:p-10 md:mb-0 relative">
