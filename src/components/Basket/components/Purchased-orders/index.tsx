@@ -1,15 +1,15 @@
 import { Accordion, AccordionSummary, AccordionDetails, ListItemText, Stack, Pagination } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState } from "react";
-import { IFormAddress, IOrder, ISebdOrder } from "@/types";
-import { useGeneral } from "@/hooks/useGeneral";
-import { getLocalStorage } from "@/hooks/useLocalStorage";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
-import { useSocket } from "@/hooks/useSocket";
+import { IFormAddress, IOrder, ISebdOrder } from "@/src/types";
+import { useGeneral } from "@/src/hooks/useGeneral";
+import { useSocket } from "@/src/hooks/useSocket";
+import { getLocalStorage } from "@/src/hooks/useLocalStorage";
 
 export function PurchasedOrders() {
   const [orders, setOrders] = useState<ISebdOrder[]>();

@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { IGeneralContext, GeneralPropsType } from "./generalTypes";
-import { IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/types";
-import { myApiFetch } from "@/hooks/myApiFetch";
-import { isStoreOpenStore } from "@/utils/times/isStoreOpenStore";
-import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
+import { IErrorLertData, IFormLogin, IOpenClose, IOrder, IProduct, ISebdOrder } from "@/src/types";
+import { myApiFetch } from "@/src/hooks/myApiFetch";
+import { getLocalStorage, setLocalStorage } from "@/src/hooks/useLocalStorage";
+import { isStoreOpenStore } from "@/src/utils/times/isStoreOpenStore";
 
 export const GeneralContext = createContext<IGeneralContext>({} as IGeneralContext);
 

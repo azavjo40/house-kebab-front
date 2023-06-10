@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { ISocketContext, SocketPropsType } from "./socketTypes";
 import io, { Socket } from "socket.io-client";
-import { IFormAddress } from "@/types";
-import { getLocalStorage } from "@/hooks/useLocalStorage";
+import { IFormAddress } from "@/src/types";
+import { getLocalStorage } from "@/src/hooks/useLocalStorage";
 
 export const SocketContext = createContext<ISocketContext>({} as ISocketContext);
 

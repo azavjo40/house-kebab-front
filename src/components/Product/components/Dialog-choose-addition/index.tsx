@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useGeneral } from "@/hooks/useGeneral";
 import { Checkbox, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Select } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -8,8 +7,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { styled } from "@mui/material/styles";
-import { IAddition, IFreeSauces, IMeats, IOrder, IProduct, ISize } from "@/types";
 import { BootstrapDialogTitle } from "../Bootstrap-dialog-title";
+import { IAddition, IFreeSauces, IMeats, IOrder, IProduct, ISize } from "@/src/types";
+import { useGeneral } from "@/src/hooks/useGeneral";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

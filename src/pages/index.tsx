@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
-import { ProductCard } from "@/components/Product/components/Product-card";
-import { ICategory, IHeader, IProduct } from "@/types";
-import { Banner } from "@/components/Banner";
-import { useGeneral } from "@/hooks/useGeneral";
+import { ICategory, IHeader, IProduct } from "../types";
+import { useGeneral } from "../hooks/useGeneral";
+import { ProductCard } from "../components/Product/components/Product-card";
+import { Banner } from "../components/Banner";
 // import { Loader } from "@/components/loader/indext";
 
 export interface IHomeProps {

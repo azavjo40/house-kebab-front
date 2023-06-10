@@ -1,9 +1,9 @@
-import { IOrder } from "@/types";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
-import { useGeneral } from "@/hooks/useGeneral";
+import { IOrder } from "@/src/types";
+import { useGeneral } from "@/src/hooks/useGeneral";
 export interface IProductCardProps {
   order: IOrder;
   addOneMoreOrder: (index: number) => void;

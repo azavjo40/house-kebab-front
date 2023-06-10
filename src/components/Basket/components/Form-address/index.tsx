@@ -1,13 +1,13 @@
-import { useGeneral } from "@/hooks/useGeneral";
-import { getLocalStorage, setLocalStorage } from "@/hooks/useLocalStorage";
-import { IFormAddress, ISebdOrder } from "@/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { v4 } from "uuid";
 import { TextField, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSocket } from "@/hooks/useSocket";
-import { calculateDeliveryCost } from "@/utils/calculate/calculateDeliveryCost";
-import { calculateDistance } from "@/utils/calculate/calculateDistance";
+import { useSocket } from "@/src/hooks/useSocket";
+import { useGeneral } from "@/src/hooks/useGeneral";
+import { IFormAddress, ISebdOrder } from "@/src/types";
+import { getLocalStorage, setLocalStorage } from "@/src/hooks/useLocalStorage";
+import { calculateDistance } from "@/src/utils/calculate/calculateDistance";
+import { calculateDeliveryCost } from "@/src/utils/calculate/calculateDeliveryCost";
 
 export interface IFormAddressProps {
   cost: number;

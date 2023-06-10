@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useGeneral } from "@/hooks/useGeneral";
+import { useGeneral } from "@/src/hooks/useGeneral";
 export const withAuth = (Component: any) => {
   const Auth = (props: any) => {
     const { jwtToken } = useGeneral();

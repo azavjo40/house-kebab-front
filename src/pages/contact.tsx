@@ -1,4 +1,4 @@
-import { useGeneral } from "@/hooks/useGeneral";
+import { useGeneral } from "../hooks/useGeneral";
 
 export default function Contact() {
   const { openClose } = useGeneral();

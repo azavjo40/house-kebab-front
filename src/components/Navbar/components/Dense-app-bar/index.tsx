@@ -5,12 +5,12 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import { useGeneral } from "@/hooks/useGeneral";
 import { useRouter } from "next/router";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useGeneral } from "@/src/hooks/useGeneral";
 
 export function DenseAppBar() {
   const { basketData, jwtToken, logOut } = useGeneral();

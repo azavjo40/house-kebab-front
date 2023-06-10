@@ -1,6 +1,6 @@
-import { useGeneral } from "@/hooks/useGeneral";
-import { useSocket } from "@/hooks/useSocket";
-import { ISebdOrder } from "@/types";
+import { useGeneral } from "@/src/hooks/useGeneral";
+import { useSocket } from "@/src/hooks/useSocket";
+import { ISebdOrder } from "@/src/types";
 import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";

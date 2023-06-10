@@ -3,10 +3,10 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { DialogChooseAddition } from "@/components/Product/components/Dialog-choose-addition";
-import { IProduct } from "@/types";
 import { Box, Rating } from "@mui/material";
 import { useState } from "react";
+import { IProduct } from "@/src/types";
+import { DialogChooseAddition } from "../Dialog-choose-addition";
 
 export interface IProductCardProps {
   product: IProduct;

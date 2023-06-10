@@ -1,7 +1,7 @@
-import { useGeneral } from "@/hooks/useGeneral";
-import { IFormLogin } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useGeneral } from "@/src/hooks/useGeneral";
+import { IFormLogin } from "@/src/types";
 
 export default function Login() {
   const { jwtToken } = useGeneral();

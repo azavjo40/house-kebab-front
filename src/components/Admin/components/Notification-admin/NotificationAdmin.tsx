@@ -1,4 +1,4 @@
-import { useSocket } from "@/hooks/useSocket";
+import { useSocket } from "@/src/hooks/useSocket";
 import React, { useEffect, useRef, useState } from "react";
 
 interface Props {}

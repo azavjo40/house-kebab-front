@@ -1,9 +1,9 @@
 // import { Loader } from "@/components/loader/indext";
-import { ProcessBuying } from "@/components/Basket/components/Process-buying";
-import { PurchasedOrders } from "@/components/Basket/components/Purchased-orders";
-import { useGeneral } from "@/hooks/useGeneral";
 import { Tab, Tabs } from "@mui/material";
 import { useState } from "react";
+import { useGeneral } from "../hooks/useGeneral";
+import { PurchasedOrders } from "../components/Basket/components/Purchased-orders";
+import { ProcessBuying } from "../components/Basket/components/Process-buying";
 export default function Basket() {
   const { basketData } = useGeneral();
   const [valueTab, setValueTab] = useState<number>(() => (basketData?.length ? 0 : 1));

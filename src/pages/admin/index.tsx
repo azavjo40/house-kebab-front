@@ -1,20 +1,20 @@
-import { withAuth } from "@/components/Admin/components/Middleware-auth/withAuth";
 import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { useGeneral } from "@/hooks/useGeneral";
 import { Accordion, AccordionSummary, AccordionDetails, ListItemText } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { IOrder, ISebdOrder } from "@/types";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
 // import { Loader } from "@/components/loader/indext";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
-import { useSocket } from "@/hooks/useSocket";
-import { ConfirmsOrderModal } from "@/components/Admin/components/Confirms-order-modal/ConfirmsOrderModal";
-import { NotificationAdmin } from "@/components/Admin/components/Notification-admin/NotificationAdmin";
+import { useGeneral } from "@/src/hooks/useGeneral";
+import { useSocket } from "@/src/hooks/useSocket";
+import { IOrder, ISebdOrder } from "@/src/types";
+import { ConfirmsOrderModal } from "@/src/components/Admin/components/Confirms-order-modal/ConfirmsOrderModal";
+import { NotificationAdmin } from "@/src/components/Admin/components/Notification-admin/NotificationAdmin";
+import { withAuth } from "@/src/components/Admin/components/Middleware-auth/withAuth";
 
 function Home() {
   const [page, setPage] = useState(1);

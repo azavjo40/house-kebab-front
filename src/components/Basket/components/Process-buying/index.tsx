@@ -1,9 +1,9 @@
-import FormAddress from "@/components/Basket/components/Form-address";
-import { BasketCard } from "@/components/Basket/components/Basket-card";
-import { useGeneral } from "@/hooks/useGeneral";
-import { IOrder } from "@/types";
+import { useGeneral } from "@/src/hooks/useGeneral";
+import { IOrder } from "@/src/types";
 import { Button, ListItemText } from "@mui/material";
 import { useEffect, useState } from "react";
+import FormAddress from "../Form-address";
+import { BasketCard } from "../Basket-card";
 
 function calculateCost(basketData: IOrder[]) {
   return basketData?.reduce((accumulator: number, currentValue: IOrder) => {
