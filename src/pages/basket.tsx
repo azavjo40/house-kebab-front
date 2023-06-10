@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useGeneral } from "../hooks/useGeneral";
 import { PurchasedOrders } from "../components/Basket/components/Purchased-orders";
 import { ProcessBuying } from "../components/Basket/components/Process-buying";
-import { Loader } from "../components/Loader/indext";
+import { Loader } from "../components/General/components/Loader/indext";
 export default function Basket() {
   const { basketData } = useGeneral();
   const [valueTab, setValueTab] = useState<number>(() => (basketData?.length ? 0 : 1));

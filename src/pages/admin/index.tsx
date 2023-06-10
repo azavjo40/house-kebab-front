@@ -14,7 +14,7 @@ import { IOrder, ISebdOrder } from "@/src/types";
 import { ConfirmsOrderModal } from "@/src/components/Admin/components/Confirms-order-modal/ConfirmsOrderModal";
 import { NotificationAdmin } from "@/src/components/Admin/components/Notification-admin/NotificationAdmin";
 import { withAuth } from "@/src/components/Admin/components/Middleware-auth/withAuth";
-import { Loader } from "@/src/components/Loader/indext";
+import { Loader } from "@/src/components/General/components/Loader/indext";
 
 function Home() {
   const [page, setPage] = useState(1);

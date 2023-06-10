@@ -3,8 +3,8 @@ import { Tabs, Tab, Box } from "@mui/material";
 import { ICategory, IHeader, IProduct } from "../types";
 import { useGeneral } from "../hooks/useGeneral";
 import { ProductCard } from "../components/Product/components/Product-card";
-import { Banner } from "../components/Banner";
-import { Loader } from "../components/Loader/indext";
+import { Banner } from "../components/General/components/Banner";
+import { Loader } from "../components/General/components/Loader/indext";
 
 export interface IHomeProps {
   header: IHeader;
