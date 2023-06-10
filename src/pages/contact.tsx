@@ -1,4 +1,5 @@
 import { useGeneral } from "../hooks/useGeneral";
+import { calculateWeeks } from "../utils/calculate/calculateWeeks";
 
 export default function Contact() {
   const { openClose } = useGeneral();
@@ -16,11 +17,11 @@ export default function Contact() {
           ></iframe>
         </div>
 
-        <div className="h-full w-full">
-          <h1 className="mb-2 text-lg font-semibold text-yellow-300  text-center mt-6">Informacje</h1>
+        <div className="h-full w-full lg:pt-32">
+          <h1 className="mb-2 text-lg font-semibold text-yellow-300  text-center mt-6 lg:text-6xl">Informacje</h1>
           <div className="flex h-full w-full md:justify-around mb-4 md:mb-0 md:pt-10 md:flex-row flex-col items-center">
-            <div>
-              <h1 className="mb-2 text-lg font-semibold text-gray-900 "> Informacja prawna</h1>
+            <div className="lg:h-full w-[200px]">
+              <h1 className="mb-2 text-lg font-semibold text-gray-900"> Informacja prawna</h1>
               <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
                 <li className="flex items-center"> House Kebab Pizza</li>
                 <li className="flex items-center">Klaudyny 26</li>
@@ -34,18 +35,14 @@ export default function Contact() {
               </ul>
             </div>
 
-            <div className="mt-4 md:mt-0">
+            <div className="mt-4 md:mt-0 lg:h-full w-[200px]">
               <h1 className="mb-2 text-lg font-semibold text-gray-900 "> Godziny otwarty</h1>
-              <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-                <li className="flex items-center">
-                  Dziśaj: {openClose?.open} - {openClose?.close}
-                </li>
-                <li className="flex items-center">
-                  Jutro: {openClose?.open} - {openClose?.close}
-                </li>
-                <li className="flex items-center">
-                  Pojutrze: {openClose?.open} - {openClose?.close}
-                </li>
+              <ul className="max-w-md space-y-1 text-gray-500">
+                {calculateWeeks(openClose).map((day) => (
+                  <li className={`flex items-center ${day.isToday ? "text-red-500" : ""}`}>
+                    {day.titleDay}: {day?.open?.slice(0, 5)} - {day?.close?.slice(0, 5)}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
