@@ -84,11 +84,17 @@ export interface ISebdOrder {
   totalCost: number;
   clientPhone: string;
   created_at?: string;
-  isConfirmed?: boolean;
+  statusOrder?: string;
   isDelivered?: boolean;
   minutes?: string;
   id?: string;
   payDelivery: number;
+}
+
+export interface IConfirmsOrder {
+  minutes: string;
+  statusOrder: string;
+  isDelivered: boolean;
 }
 
 export interface IOrders {

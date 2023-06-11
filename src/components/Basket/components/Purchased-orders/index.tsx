@@ -61,9 +61,15 @@ export function PurchasedOrders() {
                       <div className="flex">
                         <h2 className="mb-2 text-sm font-semibold text-gray-900 ">{item?.address?.name}</h2>
                         <h2
-                          className={`mb-2 ml-4  text-[14px] ${item?.isConfirmed ? "text-[#1976d2]" : "text-red-500"}`}
+                          className={`mb-2 ml-4  text-[14px] ${
+                            item?.isDelivered
+                              ? "text-gray-300"
+                              : item?.statusOrder !== "Nie potwierdzony"
+                              ? "text-[#1976d2]"
+                              : "text-red-500"
+                          }`}
                         >
-                          {item?.isConfirmed ? "Potwierdzony!" : "Nie potwierdzony!"}
+                          {item?.statusOrder}!
                         </h2>
                       </div>
                       <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside ">

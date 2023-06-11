@@ -1,7 +1,7 @@
 import { useGeneral } from "@/src/hooks/useGeneral";
 import { useSocket } from "@/src/hooks/useSocket";
-import { ISebdOrder } from "@/src/types";
-import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { IConfirmsOrder, ISebdOrder } from "@/src/types";
+import { Checkbox, FormControl, FormControlLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,6 +9,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
+import { Typography } from "@mui/material";
 
 interface Props {
   newOpen: boolean;
@@ -21,27 +22,38 @@ interface Props {
 export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, refreshOrdersForAdmin, page }: Props) {
   const [open, setOpen] = useState(newOpen);
   const { newOrderData, sendConfirmsOrder } = useSocket();
-  const [minutes, setMinutes] = useState<string>("20");
   const { updateOrder } = useGeneral();
+
+  const [form, setForm] = useState<IConfirmsOrder>({
+    minutes: orderForModal?.minutes ?? "20",
+    statusOrder: orderForModal?.statusOrder ?? "Potwierdzone",
+    isDelivered: orderForModal?.isDelivered ?? false,
+  });
 
   const handleClose = () => {
     setOpen(false);
     handleClickClose();
+    setForm({ minutes: "", statusOrder: "", isDelivered: false });
   };
 
   const sendHandler = async () => {
-    orderForModal.isConfirmed = true;
-    orderForModal.isDelivered = false;
-    orderForModal.minutes = minutes;
+    console.log(form);
+    orderForModal.statusOrder = form?.statusOrder;
+    orderForModal.isDelivered = form?.isDelivered;
+    orderForModal.minutes = form?.minutes;
 
     await updateOrder(orderForModal, orderForModal?.id ?? "");
-    sendConfirmsOrder(orderForModal?.clientPhone ?? newOrderData, minutes, true);
+    sendConfirmsOrder(orderForModal?.clientPhone ?? newOrderData, form?.minutes, form?.statusOrder);
     refreshOrdersForAdmin(page, 5);
     handleClose();
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setMinutes(event.target.value as string);
+  const handleChangeTextField = (event: any) => {
+    setForm((pre: IConfirmsOrder) => ({ ...pre, [event.target.name]: event.target.value }));
+  };
+
+  const handleChangeChekbox = (event: any) => {
+    setForm((pre: IConfirmsOrder) => ({ ...pre, [event.target.name]: event.target.checked }));
   };
 
   return (
@@ -56,12 +68,14 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, r
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <FormControl fullWidth>
+              <Typography className="my-2">Wybierz czas</Typography>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={minutes}
+                value={form?.minutes}
                 label=""
-                onChange={handleChange}
+                name="minutes"
+                onChange={handleChangeTextField}
               >
                 <MenuItem value="20">20 Minutes</MenuItem>
                 <MenuItem value="40">40 Minutes</MenuItem>
@@ -74,6 +88,24 @@ export function ConfirmsOrderModal({ newOpen, handleClickClose, orderForModal, r
                 <MenuItem value="180">180 Minutes</MenuItem>
                 <MenuItem value="200">200 Minutes</MenuItem>
               </Select>
+              <Typography className="my-2">Zmienić status zamówienia</Typography>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={form?.statusOrder}
+                label=""
+                onChange={handleChangeTextField}
+                name="statusOrder"
+              >
+                <MenuItem value="Potwierdzone">Potwierdzone</MenuItem>
+                <MenuItem value="Kuchnia">Kuchnia</MenuItem>
+                <MenuItem value="W drodze">W drodze</MenuItem>
+                <MenuItem value="Smacznego 😀">Smacznego 😀</MenuItem>
+              </Select>
+              <FormControlLabel
+                control={<Checkbox checked={form?.isDelivered} name="isDelivered" onChange={handleChangeChekbox} />}
+                label="Dostarczony"
+              />
             </FormControl>
           </DialogContentText>
         </DialogContent>

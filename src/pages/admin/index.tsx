@@ -68,11 +68,15 @@ function Home() {
                           <h2 className="mb-2 text-sm font-semibold text-gray-900 ">{item?.address?.name}</h2>
                           <h2
                             className={`mb-2 ml-4  text-[14px] cursor-pointer ${
-                              item?.isConfirmed ? "text-[#1976d2]" : "text-red-500"
+                              item?.isDelivered
+                                ? "text-gray-300"
+                                : item?.statusOrder !== "Nie potwierdzony"
+                                ? "text-[#1976d2]"
+                                : "text-red-500"
                             }`}
-                            onClick={() => handleClickOpen(item)}
+                            onClick={() => !item?.isDelivered && handleClickOpen(item)}
                           >
-                            {item?.isConfirmed ? "Potwierdzony!" : "potwierdzać!"}
+                            {item?.statusOrder}!
                           </h2>
                         </div>
 
@@ -94,7 +98,10 @@ function Home() {
                           <li>Zamówienie #{item?.numberOrder}</li>
                         </ul>
                       </div>
-                      <div className="flex flex-col items-center" onClick={() => handleClickOpen(item)}>
+                      <div
+                        className="flex flex-col items-center"
+                        onClick={() => !item?.isDelivered && handleClickOpen(item)}
+                      >
                         <AccessTimeIcon className="mb-2 text-blue-600" />
                         <span>{item?.minutes ?? "20"} M</span>
                       </div>
@@ -237,13 +244,15 @@ function Home() {
           <Pagination count={Math.ceil(count / 5)} page={page} onChange={handleChange} />
         </Stack>
       )}
-      <ConfirmsOrderModal
-        newOpen={openConfirmsOrderModal}
-        handleClickClose={handleClickClose}
-        orderForModal={orderForModal}
-        refreshOrdersForAdmin={getOrdersForAdmin}
-        page={page}
-      />
+      {openConfirmsOrderModal && (
+        <ConfirmsOrderModal
+          newOpen={openConfirmsOrderModal}
+          handleClickClose={handleClickClose}
+          orderForModal={orderForModal}
+          refreshOrdersForAdmin={getOrdersForAdmin}
+          page={page}
+        />
+      )}
       <NotificationAdmin />
       <Loader />
     </div>

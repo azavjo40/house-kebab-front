@@ -7,7 +7,11 @@ import { getLocalStorage } from "@/src/hooks/useLocalStorage";
 export const SocketContext = createContext<ISocketContext>({} as ISocketContext);
 
 export const SocketContextProvider = ({ children }: SocketPropsType) => {
-  const [confirmsOrderData, setConfirmsOrderData] = useState({ phone: "", minutes: "20", isConfirmed: false });
+  const [confirmsOrderData, setConfirmsOrderData] = useState({
+    phone: "",
+    minutes: "20",
+    statusOrder: "Nie potwierdzony",
+  });
   const [newOrderData, setNewOrderOrderData] = useState("");
   const [socket, setSocket] = useState<Socket | undefined>(undefined);
 
@@ -49,9 +53,9 @@ export const SocketContextProvider = ({ children }: SocketPropsType) => {
     });
   };
 
-  const sendConfirmsOrder = (phone: string, minutes: string, isConfirmed: boolean) => {
+  const sendConfirmsOrder = (phone: string, minutes: string, statusOrder: string) => {
     if (socket) {
-      socket.emit("confirmsOrder", { phone, minutes, isConfirmed });
+      socket.emit("confirmsOrder", { phone, minutes, statusOrder });
     }
   };
 
