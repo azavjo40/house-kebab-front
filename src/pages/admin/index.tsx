@@ -39,8 +39,10 @@ function Home() {
   };
 
   const handleClickOpen = (order: ISebdOrder) => {
-    setOrderForModal(order);
-    setOpenConfirmsOrderModal(true);
+    if (!order?.isDelivered) {
+      setOrderForModal(order);
+      setOpenConfirmsOrderModal(true);
+    }
   };
 
   const getCountPage = async () => {
@@ -74,9 +76,9 @@ function Home() {
                                 ? "text-[#1976d2]"
                                 : "text-red-500"
                             }`}
-                            onClick={() => !item?.isDelivered && handleClickOpen(item)}
+                            onClick={() => handleClickOpen(item)}
                           >
-                            {item?.statusOrder}!
+                            {item?.isDelivered ? "Dostarczony" : item?.statusOrder}!
                           </h2>
                         </div>
 
@@ -98,10 +100,7 @@ function Home() {
                           <li>Zamówienie #{item?.numberOrder}</li>
                         </ul>
                       </div>
-                      <div
-                        className="flex flex-col items-center"
-                        onClick={() => !item?.isDelivered && handleClickOpen(item)}
-                      >
+                      <div className="flex flex-col items-center">
                         <AccessTimeIcon className="mb-2 text-blue-600" />
                         <span>{item?.minutes ?? "20"} M</span>
                       </div>
