@@ -101,7 +101,7 @@ function Home() {
                         </ul>
                       </div>
                       <div className="flex flex-col items-center">
-                        <AccessTimeIcon className="mb-2 text-blue-600" />
+                        <AccessTimeIcon onClick={() => handleClickOpen(item)} className="mb-2 text-blue-600" />
                         <span>{item?.minutes ?? "20"} M</span>
                       </div>
                     </div>
