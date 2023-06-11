@@ -1,6 +1,6 @@
 import { Accordion, AccordionSummary, AccordionDetails, ListItemText, Stack, Pagination } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PaymentsIcon from "@mui/icons-material/Payments";
@@ -10,6 +10,7 @@ import { IFormAddress, IOrder, ISebdOrder } from "@/src/types";
 import { useGeneral } from "@/src/hooks/useGeneral";
 import { useSocket } from "@/src/hooks/useSocket";
 import { getLocalStorage } from "@/src/hooks/useLocalStorage";
+import { useReactToPrint } from "react-to-print";
 
 export function PurchasedOrders() {
   const [orders, setOrders] = useState<ISebdOrder[]>();
@@ -17,6 +18,7 @@ export function PurchasedOrders() {
   const { confirmsOrderData } = useSocket();
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(1);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     getPurchasedOrders(confirmsOrderData.phone);
@@ -48,14 +50,25 @@ export function PurchasedOrders() {
     setCount(count);
   };
 
+  const receiptRef = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => receiptRef?.current,
+  });
+
   return (
     <div className="pb-20">
       {orders?.length ? (
         <div className="w-full p-4 md:p-10">
           {orders?.map((item: ISebdOrder, index: number) => {
             return (
-              <Accordion key={index} className="mb-2">
-                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+              <Accordion key={index} className="mb-2" expanded={isExpanded} ref={receiptRef}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                >
                   <div className="flex justify-between w-full mr-2 items-center">
                     <div className="flex flex-col">
                       <div className="flex">
@@ -185,6 +198,11 @@ export function PurchasedOrders() {
                             <div className="flex justify-between">
                               <span>Rezem</span>
                               <span>{item?.totalCost},00 zł</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div className="flex justify-between capitalize text-blue-600 cursor-pointer">
+                              <span onClick={handlePrint}>Wrukuj zamówienie</span>
                             </div>
                           </li>
                         </ol>

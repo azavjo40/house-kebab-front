@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Accordion, AccordionSummary, AccordionDetails, ListItemText } from "@mui/material";
@@ -15,6 +15,7 @@ import { ConfirmsOrderModal } from "@/src/components/Admin/components/Confirms-o
 import { NotificationAdmin } from "@/src/components/Admin/components/Notification-admin/NotificationAdmin";
 import { withAuth } from "@/src/components/Admin/components/Middleware-auth/withAuth";
 import { Loader } from "@/src/components/General/components/Loader/indext";
+import { useReactToPrint } from "react-to-print";
 
 function Home() {
   const [page, setPage] = useState(1);
@@ -23,6 +24,7 @@ function Home() {
   const { newOrderData } = useSocket();
   const [openConfirmsOrderModal, setOpenConfirmsOrderModal] = useState<boolean>(false);
   const [orderForModal, setOrderForModal] = useState<ISebdOrder | any>();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     getCountPage();
@@ -55,6 +57,12 @@ function Home() {
     setPage(value);
   };
 
+  const receiptRef = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => receiptRef?.current,
+  });
+
   return (
     <div className="w-full h-full overflow-y-auto pb-20 relative">
       <div className="min-h-[80vh] h-full">
@@ -62,8 +70,13 @@ function Home() {
           <div className="w-full p-4 md:p-10">
             {ordersForAdmin?.map((item: ISebdOrder, index: number) => {
               return (
-                <Accordion key={index} className="mb-2">
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                <Accordion key={index} className="mb-2" expanded={isExpanded} ref={receiptRef}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                  >
                     <div className="flex justify-between w-full mr-2 items-center">
                       <div className="flex flex-col">
                         <div className="flex">
@@ -223,6 +236,11 @@ function Home() {
                               <div className="flex justify-between capitalize">
                                 <span>Rezem</span>
                                 <span>{item?.totalCost},00 zł</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div className="flex justify-between capitalize text-blue-600 cursor-pointer">
+                                <span onClick={handlePrint}>Wrukuj zamówienie</span>
                               </div>
                             </li>
                           </ol>
