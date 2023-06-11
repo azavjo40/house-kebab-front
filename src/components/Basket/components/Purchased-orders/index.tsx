@@ -49,7 +49,7 @@ export function PurchasedOrders() {
       {orders?.length ? (
         <div className="w-full p-4 md:p-10">
           {orders?.map((item: ISebdOrder, index: number) => (
-            <AccordionPurchasedOrders item={item} index={index} />
+            <AccordionPurchasedOrders item={item} key={index} />
           ))}
         </div>
       ) : (

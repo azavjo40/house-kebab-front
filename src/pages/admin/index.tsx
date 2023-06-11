@@ -56,7 +56,7 @@ function Home() {
         {ordersForAdmin?.length ? (
           <div className="w-full p-4 md:p-10">
             {ordersForAdmin?.map((item: ISebdOrder, index: number) => (
-              <AccordionAdmin item={item} index={index} handleClickOpen={handleClickOpen} />
+              <AccordionAdmin item={item} key={index} handleClickOpen={handleClickOpen} />
             ))}
           </div>
         ) : (

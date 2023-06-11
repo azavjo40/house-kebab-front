@@ -11,10 +11,9 @@ import { useReactToPrint } from "react-to-print";
 
 interface Props {
   item: ISebdOrder;
-  index: number;
 }
 
-export const AccordionPurchasedOrders = ({ item, index }: Props) => {
+export const AccordionPurchasedOrders = ({ item }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const receiptRef = useRef(null);
 
@@ -23,7 +22,7 @@ export const AccordionPurchasedOrders = ({ item, index }: Props) => {
   });
 
   return (
-    <Accordion key={index} className="mb-2" expanded={isExpanded} ref={receiptRef}>
+    <Accordion className="mb-2" expanded={isExpanded} ref={receiptRef}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
